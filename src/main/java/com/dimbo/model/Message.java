@@ -1,4 +1,4 @@
-package com.dimbo.bean;
+package com.dimbo.model;
 
 public class Message {
     private int id;

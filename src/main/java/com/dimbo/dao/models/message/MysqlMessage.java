@@ -1,11 +1,15 @@
-package com.dimbo.dao.message;
+package com.dimbo.dao.models.message;
 
-import com.dimbo.bean.Message;
-import com.dimbo.dao.DAOCommon;
+import com.dimbo.dao.models.DAOCommon;
+import com.dimbo.model.Message;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MysqlMessage extends DAOCommon implements MessageDAO {
     private static final String GET_MESSAGES_BY_CHAT_ID = "SELECT\n" +
@@ -29,7 +33,7 @@ public class MysqlMessage extends DAOCommon implements MessageDAO {
         List<Message> messages = new ArrayList<>();
         ResultSet rs;
         PreparedStatement statement = null;
-
+        
         try {
             statement = connection.prepareStatement(GET_MESSAGES_BY_CHAT_ID);
             statement.setInt(1, chatId);

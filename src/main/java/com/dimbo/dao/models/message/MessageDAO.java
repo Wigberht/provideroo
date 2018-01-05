@@ -1,6 +1,6 @@
-package com.dimbo.dao.message;
+package com.dimbo.dao.models.message;
 
-import com.dimbo.bean.Message;
+import com.dimbo.model.Message;
 
 public interface MessageDAO {
 
