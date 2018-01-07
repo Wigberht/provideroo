@@ -1,11 +1,32 @@
 package com.dimbo.model;
 
 public class User {
+
     private Long id;
     private String login;
     private String password;
     private boolean banned;
     private Long role_id;
+
+    public User() {
+    }
+
+    public User(Long id, String login, String password, boolean banned, Long role_id) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.banned = banned;
+        this.role_id = role_id;
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return role_id == Roles.ADMIN.getId();
+    }
 
     public Long getId() {
         return id;
@@ -49,8 +70,12 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         User user = (User) o;
 

@@ -1,6 +1,8 @@
 package com.dimbo;
 
 import com.dimbo.managers.DBResourceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,72 +10,33 @@ import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
 
-
-/**
- * The Class ConnectionPool.
- */
 public class ConnectionPool {
-    
-    /**
-     * The Constant LOGGER.
-     */
-    static final Logger LOGGER = Logger.getLogger(String.valueOf(ConnectionPool.class));
-    
-    /**
-     * The default pool size.
-     */
+
+    static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
+
     private final int DEFAULT_POOL_SIZE = 10;
-    
-    /**
-     * The instance.
-     */
     private static ConnectionPool instance = null;
-    
-    /**
-     * The lock.
-     */
     private static ReentrantLock lock = new ReentrantLock();
-    
-    /**
-     * The pool of connections.
-     */
     private BlockingQueue<Connection> pool;
-    
-    /**
-     * pool can not grant connections if false.
-     */
     private static boolean available;
-    
-    /**
-     * Instantiates a new connection pool.
-     */
+
     private ConnectionPool() {
     }
-    
-    /**
-     * Gets the single instance of ConnectionPool.
-     *
-     * @return single instance of ConnectionPool
-     */
+
     public static ConnectionPool getInstance() {
-        
+
         if (instance == null) {
-            try {
-                lock.lock();
+            synchronized (ConnectionPool.class) {
                 if (instance == null) {
                     instance = new ConnectionPool();
                     instance.initPool();
                 }
-            } finally {
-                lock.unlock();
             }
-            
         }
         return instance;
     }
-    
+
     /**
      * Gets the connection.
      *
@@ -81,17 +44,26 @@ public class ConnectionPool {
      */
     public Connection getConnection() {
         Connection connection = null;
-        
+
         if (available) {
             try {
                 connection = pool.take();
             } catch (InterruptedException e) {
-            
+
             }
         }
         return connection;
     }
-    
+
+    /**
+     * Shortcut for ConnectionPool.getInstance().getConnection()
+     *
+     * @return Connection
+     */
+    public static Connection conn() {
+        return ConnectionPool.getInstance().getConnection();
+    }
+
     /**
      * Returns connection.
      *
@@ -102,32 +74,42 @@ public class ConnectionPool {
             pool.offer(connection);
         }
     }
-    
+
+    /**
+     * Shortcut for getInstance().returnConnection(connection)
+     *
+     * @param connection Connection to return
+     */
+    public static void returnConn(Connection connection) {
+        getInstance().returnConnection(connection);
+    }
+
     /**
      * Inits the pool of connections.
      */
     private void initPool() {
-        
+
         String url = DBResourceManager.getInstance().getParameter("url");
         String user = DBResourceManager.getInstance().getParameter("user");
         String pass = DBResourceManager.getInstance().getParameter("password");
         String driver = DBResourceManager.getInstance().getParameter("driver");
-        
+
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Unknown driver", e);
         }
-        
-        int connectionsAmount = Integer.parseInt(DBResourceManager.getInstance().getParameter("pool_size"));
-        
+
+        int connectionsAmount = Integer
+            .parseInt(DBResourceManager.getInstance().getParameter("pool_size"));
+
         if (connectionsAmount > 0) {
             pool = new ArrayBlockingQueue<>(connectionsAmount);
         } else {
             connectionsAmount = DEFAULT_POOL_SIZE;
             pool = new ArrayBlockingQueue<>(connectionsAmount);
         }
-        
+
         for (int i = 0; i < connectionsAmount; i++) {
             try {
                 pool.add(DriverManager.getConnection(url, user, pass));
@@ -135,35 +117,34 @@ public class ConnectionPool {
                 throw new RuntimeException(e);
             }
         }
-        
+
         available = true;
     }
-    
+
     /**
      * Returns all connections.
      */
     public void returnAllConnections() {
-        
+
         available = false;
         Connection connection = null;
-        
+
         for (int i = 0; i < pool.size(); i++) {
             try {
                 pool.take().close();
             } catch (InterruptedException | SQLException e) {
-            
+
             }
-            
+
             if (connection != null) {
                 try {
                     if (!connection.isClosed()) {
                         connection.close();
                     }
                 } catch (SQLException e) {
-                
+
                 }
             }
         }
     }
 }
-

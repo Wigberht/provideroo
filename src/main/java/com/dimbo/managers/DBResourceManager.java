@@ -22,14 +22,14 @@ public final class DBResourceManager implements ResourceManager {
     }
     
     /**
-     * @see ResourceManager
+     * {@inheritDoc}
      */
     public String getParameter(String key) {
         return (String) resourceBundle.getObject(key);
     }
     
     /**
-     * @see ResourceManager
+     * {@inheritDoc}
      */
     public boolean parameterExists(String key) {
         return resourceBundle.containsKey(key);

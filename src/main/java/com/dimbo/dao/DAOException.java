@@ -1,17 +1,17 @@
-package com.dimbo.dao.general;
+package com.dimbo.dao;
 
 public class DAOException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-
-    DAOException(String message) {
+    
+    public DAOException(String message) {
         super(message);
     }
-
+    
     public DAOException(Throwable cause) {
         super(cause);
     }
-
-    DAOException(String message, Throwable cause) {
+    
+    public DAOException(String message, Throwable cause) {
         super(message, cause);
     }
 }

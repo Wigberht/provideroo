@@ -1,6 +1,6 @@
 package com.dimbo.dao.models.message;
 
-import com.dimbo.dao.models.DAOCommon;
+import com.dimbo.dao.models.DAOModel;
 import com.dimbo.model.Message;
 
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MysqlMessage extends DAOCommon implements MessageDAO {
+public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     private static final String GET_MESSAGES_BY_CHAT_ID = "SELECT\n" +
             "  message.id,\n" +
             "  message.message,\n" +
@@ -25,7 +25,7 @@ public class MysqlMessage extends DAOCommon implements MessageDAO {
 
     Connection connection;
 
-    public MysqlMessage(Connection connection) {
+    public MessageDAOMySQL(Connection connection) {
         this.connection = connection;
     }
 

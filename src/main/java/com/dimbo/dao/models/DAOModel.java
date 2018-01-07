@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
-public class DAOCommon {
+public class DAOModel {
     
-    public static final Logger LOGGER = LoggerFactory.getLogger(DAOCommon.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(DAOModel.class);
     
     public void closeStatement(Statement statement) {
         try {
