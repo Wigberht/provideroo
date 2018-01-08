@@ -20,12 +20,7 @@ public class LandingController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
         String landingPage = PagesResourceManager.getPage("index");
-        Connection connection = ConnectionPool.conn();
 
-        req.setAttribute("messages",
-            FactoryGenerator.getFactory().makeMessageDAO(connection).getMessages(1));
-
-        ConnectionPool.returnConn(connection);
         RequestDispatcher rd = req.getRequestDispatcher(landingPage);
         rd.forward(req, resp);
     }

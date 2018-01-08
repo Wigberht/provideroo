@@ -1,6 +1,7 @@
 package com.dimbo.dao.models.user;
 
 import com.dimbo.dao.DAOException;
+import com.dimbo.model.Roles;
 import com.dimbo.model.User;
 
 public interface UserDAO {
@@ -10,6 +11,8 @@ public interface UserDAO {
     public User find(String login) throws DAOException;
 
     public User find(String login, String password) throws DAOException;
+
+    public User[] find(Roles role) throws DAOException;
 
     public boolean delete(Long id) throws DAOException;
 

@@ -35,6 +35,9 @@ public class CommandDispatcher {
             case REGISTRATION:
                 return Commands.REGISTRATION.getCommand();
 
+            case LOGOUT:
+                return Commands.LOGOUT.getCommand();
+
 //		default:
 //			LOGGER.warn("Unknown operation.");
 //			command = new EmptyCommand();

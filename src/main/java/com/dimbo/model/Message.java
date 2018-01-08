@@ -1,16 +1,35 @@
 package com.dimbo.model;
 
-public class Message {
-    private int id;
-    private String message;
-    private int userId;
+public class Message extends Entity {
 
-    public int getId() {
-        return id;
+    private String message;
+    private boolean wasRead;
+    private String updatedAt;
+    private String createdAt;
+    private long userId;
+
+    public Message() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Message(long id, String message) {
+        super(id);
+        this.message = message;
+    }
+
+    public Message(long id, String message, long userId) {
+        super(id);
+        this.message = message;
+        this.userId = userId;
+    }
+
+    public Message(long id, String message, boolean wasRead, String updatedAt,
+        String createdAt, long userId) {
+        super(id);
+        this.message = message;
+        this.wasRead = wasRead;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -21,11 +40,11 @@ public class Message {
         this.message = message;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

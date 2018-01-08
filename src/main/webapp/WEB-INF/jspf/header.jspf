@@ -1,0 +1,31 @@
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo left">
+            <c:if test="${sessionScope.user.roleId==1}">
+                <fmt:message key="admin_control_panel"/>
+            </c:if>
+            <c:if test="${sessionScope.user.roleId==2}">
+                <fmt:message key="subscriber_control_panel"/>
+            </c:if>
+        </a>
+        <ul id="nav-mobile" class="right">
+            <c:if test="${sessionScope.user.roleId==1}">
+                <li>
+                    <a href="/jsp/admin/subscriber_list.jsp">
+                        <fmt:message key="subscriber_list"/>
+                    </a>
+                </li>
+                <li>
+                    <a href="/jsp/admin/subscriber_list.jsp">
+                        <fmt:message key="tariff_list"/>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.user.roleId==2}">
+            </c:if>
+            <li>
+                <a href="#" onclick="runCommand('logout')"><fmt:message key="logout"/> </a>
+            </li>
+        </ul>
+    </div>
+</nav>

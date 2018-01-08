@@ -27,12 +27,14 @@ public class ConnectionPool {
     public static ConnectionPool getInstance() {
 
         if (instance == null) {
+//            lock.lock();
             synchronized (ConnectionPool.class) {
                 if (instance == null) {
                     instance = new ConnectionPool();
                     instance.initPool();
                 }
             }
+//            lock.unlock();
         }
         return instance;
     }
@@ -109,6 +111,8 @@ public class ConnectionPool {
             connectionsAmount = DEFAULT_POOL_SIZE;
             pool = new ArrayBlockingQueue<>(connectionsAmount);
         }
+
+        LOGGER.info("Connections amount on ConnectionPool.initPool(): " + connectionsAmount);
 
         for (int i = 0; i < connectionsAmount; i++) {
             try {

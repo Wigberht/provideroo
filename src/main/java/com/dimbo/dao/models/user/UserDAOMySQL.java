@@ -2,22 +2,26 @@ package com.dimbo.dao.models.user;
 
 import com.dimbo.dao.DAOException;
 import com.dimbo.dao.models.DAOModel;
+import com.dimbo.model.Roles;
 import com.dimbo.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOMySQL extends DAOModel implements UserDAO {
 
     private static final String FIND_BY_ID = "" +
-        "SELECT * from user WHERE id = ?";
+        "SELECT * FROM user WHERE id = ?";
     private static final String FIND_BY_LOGIN = "" +
-        "SELECT * from user WHERE login = ?";
+        "SELECT * FROM user WHERE login = ?";
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "" +
-        "SELECT * from user WHERE login = ? AND password = ?";
+        "SELECT * FROM user WHERE login = ? AND password = ?";
+    private static final String FIND_BY_ROLE = ""
+        + "SELECT * FROM user WHERE role_id = ?";
 
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE id=?";
     private static final String DELETE_BY_LOGIN = "DELETE FROM user WHERE login=?";
@@ -48,6 +52,11 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         return findUser(FIND_BY_LOGIN_AND_PASSWORD, login, password);
     }
 
+    public User[] find(Roles role) {
+        return findUsers(FIND_BY_ROLE, role.getId());
+    }
+
+
     @Override
     public boolean delete(Long id) throws DAOException {
         return false;
@@ -69,13 +78,14 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_USER, true,
-                user.getLogin(), user.getPassword(), user.isBanned(), user.getRole_id())
+                user.getLogin(), user.getPassword(), user.isBanned(), user.getRoleId())
         ) {
             statement.executeUpdate();
-            user.setId(1L);
-//            if (statement.getGeneratedKeys().next()) {
-//                System.out.println("Id: " + statement.getGeneratedKeys().getLong(1));
-//            }
+
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                user.setId(resultSet.getInt(1));
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
@@ -98,6 +108,23 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         }
 
         return user;
+    }
+
+    private User[] findUsers(String sql, Object... values) throws DAOException {
+        List<User> users = new ArrayList<>();
+
+        try (
+            PreparedStatement statement = prepareStatement(connection, sql, false, values);
+            ResultSet resultSet = statement.executeQuery()
+        ) {
+            while (resultSet.next()) {
+                users.add(map(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+        return users.toArray(new User[0]);
     }
 
     private static User map(ResultSet resultset) throws SQLException {

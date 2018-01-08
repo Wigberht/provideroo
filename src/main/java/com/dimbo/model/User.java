@@ -1,22 +1,13 @@
 package com.dimbo.model;
 
-public class User {
+public class User extends Entity{
 
-    private Long id;
     private String login;
     private String password;
     private boolean banned;
-    private Long role_id;
+    private long roleId;
 
     public User() {
-    }
-
-    public User(Long id, String login, String password, boolean banned, Long role_id) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.banned = banned;
-        this.role_id = role_id;
     }
 
     public User(String login, String password) {
@@ -24,15 +15,30 @@ public class User {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return role_id == Roles.ADMIN.getId();
+    public User(String login, String password, boolean banned, long roleId) {
+        this.login = login;
+        this.password = password;
+        this.banned = banned;
+        this.roleId = roleId;
     }
 
-    public Long getId() {
+    public User(long id, String login, String password, boolean banned, long roleId) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.banned = banned;
+        this.roleId = roleId;
+    }
+
+    public boolean isAdmin() {
+        return roleId == Roles.ADMIN.getId();
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -60,12 +66,12 @@ public class User {
         this.banned = banned;
     }
 
-    public Long getRole_id() {
-        return role_id;
+    public long getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(Long role_id) {
-        this.role_id = role_id;
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
     @Override
@@ -94,7 +100,7 @@ public class User {
         sb.append(", login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
         sb.append(", banned=").append(banned);
-        sb.append(", role_id=").append(role_id);
+        sb.append(", roleId=").append(roleId);
         sb.append('}');
         return sb.toString();
     }

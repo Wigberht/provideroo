@@ -1,6 +1,7 @@
 package com.dimbo.command;
 
 import com.dimbo.command.general.LoginCommand;
+import com.dimbo.command.general.LogoutCommand;
 import com.dimbo.command.general.RegistrationCommand;
 
 /**
@@ -11,7 +12,8 @@ public enum Commands {
      * Commands that are available
      */
     REGISTRATION(new RegistrationCommand()),
-    LOGIN(new LoginCommand());
+    LOGIN(new LoginCommand()),
+    LOGOUT(new LogoutCommand());
 
     private Command command;
 
