@@ -1,6 +1,8 @@
 package com.dimbo.listeners;
 
 import com.dimbo.ConnectionPool;
+import com.dimbo.dao.factory.FactoryGenerator;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -8,7 +10,11 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        // did not decide yet what to do on server start
+
+        // init database type
+        String dbType = servletContextEvent.getServletContext()
+                                           .getInitParameter("db_type");
+        FactoryGenerator.setDbType(dbType);
     }
 
     /**

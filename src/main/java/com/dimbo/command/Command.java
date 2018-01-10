@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface Command {
 
-	/**
-	 * Execute command.
-	 *
-	 * @param request the request
-	 * @return name of jsp
-	 */
-	String execute(HttpServletRequest request);
+    /**
+     * Execute command.
+     *
+     * @param request the request
+     * @return name of jsp
+     */
+    String execute(HttpServletRequest request);
 
 }

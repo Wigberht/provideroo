@@ -25,4 +25,9 @@
     <listener>
         <listener-class>com.dimbo.listeners.ContextListener</listener-class>
     </listener>
+
+    <context-param>
+        <param-name>db_type</param-name>
+        <param-value>MYSQL</param-value>
+    </context-param>
 </web-app>
