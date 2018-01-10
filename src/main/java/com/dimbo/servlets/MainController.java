@@ -24,6 +24,7 @@ public class MainController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+
         String page = processRequest(request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
 
@@ -35,6 +36,7 @@ public class MainController extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+
         String page = processRequest(request);
 
         response.sendRedirect(page);

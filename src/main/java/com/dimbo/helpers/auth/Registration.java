@@ -22,7 +22,7 @@ public class Registration {
     private Connection connection;
 
     public Registration() {
-        this.connection = ConnectionPool.conn();
+        this.connection = ConnectionPool.getInstance().getConnection();
     }
 
     public void closeConnection() {
@@ -31,7 +31,8 @@ public class Registration {
 
     public Subscriber registerSubscriber(Subscriber subscriber) {
         Subscriber resultingSubscriber = null;
-        SubscriberDAO subscriberDAO = FactoryGenerator.getFactory().makeSubscriberDAO(connection);
+        SubscriberDAO subscriberDAO = FactoryGenerator.getFactory()
+                                                      .makeSubscriberDAO(connection);
         try {
             resultingSubscriber = subscriberDAO.create(subscriber);
             LOGGER.info("Subscriber created");
@@ -44,19 +45,21 @@ public class Registration {
 
     public Account registerAccount() {
         Account resultingAccount = null;
-        AccountDAO accountDAO = FactoryGenerator.getFactory().makeAccountDAO(connection);
+        AccountDAO accountDAO = FactoryGenerator.getFactory()
+                                                .makeAccountDAO(connection);
         try {
             resultingAccount = accountDAO.create(new Account());
             LOGGER.info("User account created successfully");
         } catch (DAOException e) {
-            LOGGER.error("Failure at creating user account",e);
+            LOGGER.error("Failure at creating user account", e);
         }
 
         return resultingAccount;
     }
 
     public User registerUser(User user) {
-        UserDAO userDAO = FactoryGenerator.getFactory().makeUserDAO(connection);
+        UserDAO userDAO = FactoryGenerator.getFactory()
+                                          .makeUserDAO(connection);
         User resultingUser = null;
 
         try {

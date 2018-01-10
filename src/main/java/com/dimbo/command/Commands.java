@@ -1,5 +1,7 @@
 package com.dimbo.command;
 
+import com.dimbo.command.admin.ServiceListCommand;
+import com.dimbo.command.admin.SubscriberListCommand;
 import com.dimbo.command.general.LoginCommand;
 import com.dimbo.command.general.LogoutCommand;
 import com.dimbo.command.general.RegistrationCommand;
@@ -13,7 +15,9 @@ public enum Commands {
      */
     REGISTRATION(new RegistrationCommand()),
     LOGIN(new LoginCommand()),
-    LOGOUT(new LogoutCommand());
+    LOGOUT(new LogoutCommand()),
+    SUBSCRIBER_LIST(new SubscriberListCommand()),
+    SERVICE_LIST(new ServiceListCommand());
 
     private Command command;
 

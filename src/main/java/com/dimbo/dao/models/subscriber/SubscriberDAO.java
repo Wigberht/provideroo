@@ -2,8 +2,11 @@ package com.dimbo.dao.models.subscriber;
 
 import com.dimbo.dao.DAOException;
 import com.dimbo.model.Subscriber;
+import java.util.List;
 
 public interface SubscriberDAO {
+
+    public List<Subscriber> all() throws DAOException;
 
     public Subscriber find(Long id) throws DAOException;
 

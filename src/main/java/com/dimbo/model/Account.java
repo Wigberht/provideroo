@@ -21,4 +21,28 @@ public class Account extends Entity {
         this.currencyShortname = currencyShortname;
         this.currencySymbol = currencySymbol;
     }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getCurrencyShortname() {
+        return currencyShortname;
+    }
+
+    public void setCurrencyShortname(String currencyShortname) {
+        this.currencyShortname = currencyShortname;
+    }
+
+    public String getCurrencySymbol() {
+        return currencySymbol;
+    }
+
+    public void setCurrencySymbol(String currencySymbol) {
+        this.currencySymbol = currencySymbol;
+    }
 }

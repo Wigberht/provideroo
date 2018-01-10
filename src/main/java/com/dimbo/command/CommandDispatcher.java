@@ -25,7 +25,9 @@ public class CommandDispatcher {
     public Command getCommand(HttpServletRequest request) {
 
         Command command = null;
-        String param = request.getParameter("command").trim().toUpperCase();
+        String param = request.getParameter("command")
+                              .trim()
+                              .toUpperCase();
         Commands commandType = Commands.valueOf(param);
 
         switch (commandType) {
@@ -37,6 +39,12 @@ public class CommandDispatcher {
 
             case LOGOUT:
                 return Commands.LOGOUT.getCommand();
+
+            case SUBSCRIBER_LIST:
+                return Commands.SUBSCRIBER_LIST.getCommand();
+
+            case SERVICE_LIST:
+                return Commands.SERVICE_LIST.getCommand();
 
 //		default:
 //			LOGGER.warn("Unknown operation.");
