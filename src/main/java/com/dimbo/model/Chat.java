@@ -6,6 +6,7 @@ public class Chat extends Entity {
 
     private String title;
     private List<Message> messages;
+    private List<User> users;
 
     public Chat(long id, String title) {
         super(id);
@@ -15,6 +16,14 @@ public class Chat extends Entity {
     public Chat(long id, String title, List<Message> messages) {
         this(id, title);
         this.messages = messages;
+    }
+
+    public Chat(long id, String title, List<Message> messages,
+        List<User> users) {
+        super(id);
+        this.title = title;
+        this.messages = messages;
+        this.users = users;
     }
 
     public String getTitle() {
@@ -31,6 +40,14 @@ public class Chat extends Entity {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
@@ -64,9 +81,13 @@ public class Chat extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Chat{");
-        sb.append("id=").append(id);
-        sb.append(", title='").append(title).append('\'');
-        sb.append(", messages=").append(messages);
+        sb.append("id=")
+          .append(id);
+        sb.append(", title='")
+          .append(title)
+          .append('\'');
+        sb.append(", messages=")
+          .append(messages);
         sb.append('}');
         return sb.toString();
     }

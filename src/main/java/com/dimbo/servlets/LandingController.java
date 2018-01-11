@@ -1,10 +1,7 @@
 package com.dimbo.servlets;
 
-import com.dimbo.ConnectionPool;
-import com.dimbo.dao.factory.FactoryGenerator;
 import com.dimbo.managers.PagesResourceManager;
 
-import java.sql.Connection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -22,7 +22,8 @@ public class Registration {
     private Connection connection;
 
     public Registration() {
-        this.connection = ConnectionPool.getInstance().getConnection();
+        this.connection = ConnectionPool.getInstance()
+                                        .getConnection();
     }
 
     public void closeConnection() {
@@ -60,23 +61,19 @@ public class Registration {
     public User registerUser(User user) {
         UserDAO userDAO = FactoryGenerator.getFactory()
                                           .makeUserDAO(connection);
-        User resultingUser = null;
+
+        user.setPassword(Passwords.getPasswordHash(user.getPassword()));
+        user.setBanned(false);
+        user.setRoleId(Roles.SUBSCRIBER.getId());
 
         try {
-            resultingUser = userDAO.create(
-                new User(
-                    user.getLogin(),
-                    Passwords.getPasswordHash(user.getPassword()),
-                    false,
-                    Roles.SUBSCRIBER.getId()
-                )
-            );
-            LOGGER.info("User " + user.getLogin() + " created successfully");
+            user = userDAO.create(user);
+            LOGGER.info("User '" + user.getLogin() + "' created successfully");
         } catch (DAOException e) {
             LOGGER.error("Unable to register user");
         }
 
-        return resultingUser;
+        return user;
     }
 
 }

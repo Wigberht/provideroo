@@ -1,5 +1,7 @@
 package com.dimbo.model;
 
+import java.util.List;
+
 public class Subscriber extends Entity {
 
     private String firstName;
@@ -9,6 +11,7 @@ public class Subscriber extends Entity {
     private long accountId;
     private User user;
     private Account account;
+    private List<Tariff> tariffs;
 
     public Subscriber() {
     }
@@ -54,6 +57,19 @@ public class Subscriber extends Entity {
         this.accountId = accountId;
         this.user = user;
         this.account = account;
+    }
+
+    public Subscriber(long id, String firstName, String lastName, String birthDate, long userId,
+        long accountId, User user, Account account, List<Tariff> tariffs) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.userId = userId;
+        this.accountId = accountId;
+        this.user = user;
+        this.account = account;
+        this.tariffs = tariffs;
     }
 
     public String getFirstName() {
@@ -110,5 +126,13 @@ public class Subscriber extends Entity {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public List<Tariff> getTariffs() {
+        return tariffs;
+    }
+
+    public void setTariffs(List<Tariff> tariffs) {
+        this.tariffs = tariffs;
     }
 }

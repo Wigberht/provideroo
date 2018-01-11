@@ -38,6 +38,12 @@
                         <label for="password"><fmt:message key="password"/> </label>
                     </div>
                 </div>
+                <div>
+                    <c:if test="${not empty sessionScope.userError}">
+                        <fmt:message key="unable_to_register"/>
+                        <c:remove var="userError" scope="session"/>
+                    </c:if>
+                </div>
 
                 <div class="row">
                     <div class="input-field col s12">
@@ -72,17 +78,12 @@
                 </div>
 
                 <div>
-                    <c:if test="${not empty userError}">
+                    <c:if test="${not empty sessionScope.accountError}">
                         <fmt:message key="unable_to_register"/>
                     </c:if>
                 </div>
                 <div>
-                    <c:if test="${not empty accountError}">
-                        <fmt:message key="unable_to_register"/>
-                    </c:if>
-                </div>
-                <div>
-                    <c:if test="${not empty surscriberError}">
+                    <c:if test="${not empty sessionScope.surscriberError}">
                         <fmt:message key="unable_to_register"/>
                     </c:if>
                 </div>

@@ -1,13 +1,13 @@
 package com.dimbo.command.general;
 
 import com.dimbo.command.Command;
-import com.dimbo.helpers.auth.Auth;
 import com.dimbo.helpers.auth.Registration;
 import com.dimbo.managers.PagesResourceManager;
 import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.User;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,15 +29,17 @@ public class RegistrationCommand implements Command {
         String birthDate = request.getParameter("birth_date");
 
         Registration registration = new Registration();
+        HttpSession s = request.getSession();
 
         User user = registration.registerUser(new User(login, password));
+        LOGGER.info("user created: ", user);
         if (user == null) {
-            request.setAttribute("userError", true);
+            s.setAttribute("userError", true);
         }
 
         Account account = registration.registerAccount();
         if (account == null) {
-            request.setAttribute("accountError", true);
+            s.setAttribute("accountError", true);
         }
 
         if (account != null && user != null) {
@@ -47,7 +49,7 @@ public class RegistrationCommand implements Command {
                 )
             );
             if (subscriber == null) {
-                request.setAttribute("subscriberError", true);
+                s.setAttribute("subscriberError", true);
             }
         }
 

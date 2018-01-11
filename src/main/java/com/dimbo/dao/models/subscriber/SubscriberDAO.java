@@ -8,6 +8,12 @@ public interface SubscriberDAO {
 
     public List<Subscriber> all() throws DAOException;
 
+    public List<Subscriber> all(boolean limited) throws DAOException;
+
+    public List<Subscriber> all(int limit) throws DAOException;
+
+    public List<Subscriber> all(int limit, int offset) throws DAOException;
+
     public Subscriber find(Long id) throws DAOException;
 
     public Subscriber find(String firstName, String lastName) throws DAOException;

@@ -1,27 +1,56 @@
 package com.dimbo.command.admin;
 
-import com.dimbo.ConnectionPool;
 import com.dimbo.command.Command;
-import com.dimbo.dao.factory.FactoryGenerator;
+import com.dimbo.helpers.SubscriberService;
 import com.dimbo.managers.PagesResourceManager;
 import com.dimbo.model.Subscriber;
-import java.sql.Connection;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
-public class SubscriberListCommand implements Command {
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class SubscriberListCommand implements Command {
+    
+    Logger LOGGER = LoggerFactory.getLogger(SubscriberListCommand.class);
+    
     @Override
     public String execute(HttpServletRequest request) {
-        String page = PagesResourceManager.getPage("subscriber_list");
+        int page = 0;
+        int limit = 8;
 
-        Connection connection = ConnectionPool.conn();
-        List<Subscriber> subscribers = FactoryGenerator.getFactory()
-                                                       .makeSubscriberDAO(connection)
-                                                       .all();
+//        default list size
+        request.getSession()
+               .setAttribute("subscriber.limit", limit);
+        
+        boolean containsLimit = request.getParameterMap()
+                                       .containsKey("limit");
+        boolean limitNumeric = StringUtils.isNumeric(request.getParameter("limit"));
 
-        request.setAttribute("subscribers", subscribers);
+//        handle limit for list
+        if (containsLimit && limitNumeric) {
+            limit = Integer.parseInt(request.getParameter("limit"));
+            request.getSession()
+                   .setAttribute("subsriber.limit", limit);
+        }
 
-        return page;
+//        handle page in list
+        if (request.getParameterMap()
+                   .containsKey("page")) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+//        LOGGER.info("PAGE IS " + page);
+        
+        SubscriberService ss = new SubscriberService(page, limit);
+        
+        LOGGER.info("before fetching subscribers");
+        request.setAttribute("subscribers", ss.getSubscribers());
+        LOGGER.info("subscribers fetched");
+        ss.returnConnection();
+        LOGGER.info("connection returned to pool");
+        
+        return PagesResourceManager.getPage("subscriber_list");
     }
 }

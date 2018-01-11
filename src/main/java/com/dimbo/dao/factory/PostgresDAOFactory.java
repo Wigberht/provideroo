@@ -9,7 +9,7 @@ import com.dimbo.dao.models.tariff.TariffDAO;
 import com.dimbo.dao.models.user.UserDAO;
 import java.sql.Connection;
 
-public class OracleDAOFactory implements DAOAbstractFactory {
+public class PostgresDAOFactory implements DAOAbstractFactory {
     @Override
     public MessageDAO makeMessageDAO(Connection connection) {
         return null;

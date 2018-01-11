@@ -10,31 +10,25 @@
 -->
 <urlrewrite>
 
-    <!--<rule>-->
-    <!--<note>-->
-    <!--The rule means that requests to /test/status/ will be redirected to /rewrite-status-->
-    <!--the url will be rewritten.-->
-    <!--</note>-->
-    <!--&lt;!&ndash;<from>^/jsp/admin/(.*)$</from>&ndash;&gt;-->
-    <!--&lt;!&ndash;<to>/MainController?command=$1</to>&ndash;&gt;-->
-    <!--<from>/admin/(.*)</from>-->
-    <!--<to>/jsp/admin/$1</to>-->
-    <!--</rule>-->
+    <rule>
+        <from>^/admin/(.*)$</from>
+        <to>/MainController?command=$1</to>
+    </rule>
 
+    <outbound-rule>
+        <from>^/MainController?command=(.*)$</from>
+        <to>/admin/$1</to>
+    </outbound-rule>
 
-    <!--<outbound-rule>-->
-        <!--<note>-->
-            <!--The outbound-rule specifies that when response.encodeURL is called (if you are using-->
-            <!--JSTL c:url)-->
-            <!--the url /rewrite-status will be rewritten to /test/status/.-->
+    <rule>
+        <from>^/admin/(.*)$</from>
+        <to>/jsp/admin/$1</to>
+    </rule>
 
-            <!--The above rule and this outbound-rule means that end users should never see the-->
-            <!--url /rewrite-status only /test/status/ both in thier location bar and in hyperlinks-->
-            <!--in your pages.-->
-        <!--</note>-->
-        <!--<from>^/MainController?command=(.*)$</from>-->
-        <!--<to>/jsp/admin/$1</to>-->
-    <!--</outbound-rule>-->
+    <outbound-rule>
+        <from>^/jsp/admin/(.*)$</from>
+        <to>/admin/$1</to>
+    </outbound-rule>
 
 
     <!--

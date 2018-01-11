@@ -12,22 +12,22 @@
             <ul id="nav-mobile" class="right">
                 <c:if test="${sessionScope.user.roleId==1}">
                     <page-link
-                        active="${page.equals("subscribers")}"
-                        command="subscriber_list"
+                        active="${pagekey.equals("subscribers")}"
+                        link="${root}/admin/subscriber_list"
                         icon="people"
                         message="<fmt:message key="subscriber_list"/>"
                     ></page-link>
 
                     <page-link
-                        active="${page.equals("chats")}"
-                        link="/jsp/admin/chat_list.jsp"
+                        active="${pagekey.equals("chats")}"
+                        link="${root}/jsp/admin/chat_list.jsp"
                         icon="message"
                         message="<fmt:message key="chats"/>"
                     ></page-link>
 
                     <page-link
-                        active="${page.equals("services")}"
-                        command="service_list"
+                        active="${pagekey.equals("services")}"
+                        link="${root}/admin/service_list"
                         icon="attach_money"
                         message="<fmt:message key="service_list"/>"
                     ></page-link>

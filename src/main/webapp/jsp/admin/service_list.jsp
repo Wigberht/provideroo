@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="app">
-    <c:set var="page" value="services"/>
+    <c:set var="pagekey" value="services"/>
     <%@ include file="/WEB-INF/jspf/header.jspf" %>
 
     <div class="container">

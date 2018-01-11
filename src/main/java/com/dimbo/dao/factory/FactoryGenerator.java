@@ -14,17 +14,21 @@ public class FactoryGenerator {
         if (factory == null) {
             synchronized (FactoryGenerator.class) {
                 if (factory == null) {
+//                     db_type can be fetched from db parameter file
 //                    String dbType = DBResourceManager.getInstance().getParameter("db_type");
-//                    String dbType = new ServletContext().getInitParameter("db_type");
 
                     switch (SupportedDB.valueOf(dbType.toUpperCase())) {
                         case MYSQL:
                             factory = new MySQLDAOFactory();
                             break;
 
-//                        case ORACLE:
-//                            factory = new OracleDAOFactory();
-//                            break;
+                        case ORACLE:
+                            factory = new OracleDAOFactory();
+                            break;
+
+                        case POSTGRES:
+                            factory = new PostgresDAOFactory();
+                            break;
 
                         default:
                             throw new DAOException("Configured Database type is not supported");

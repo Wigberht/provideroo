@@ -9,8 +9,12 @@ import com.dimbo.model.Service;
 import java.sql.Connection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ServiceListCommand implements Command {
+
+    Logger LOGGER = LoggerFactory.getLogger(ServiceListCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
