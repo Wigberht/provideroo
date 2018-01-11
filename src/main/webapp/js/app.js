@@ -16,6 +16,14 @@ function runCommand(command, method, action) {
     form.submit();
 }
 
+function banUser(userId) {
+
+}
+
+function unbanUser(userId) {
+
+}
+
 // start jQuery
 $(function () {
 
