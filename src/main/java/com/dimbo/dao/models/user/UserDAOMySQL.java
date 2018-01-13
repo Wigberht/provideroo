@@ -4,6 +4,8 @@ import com.dimbo.dao.DAOException;
 import com.dimbo.dao.models.DAOModel;
 import com.dimbo.model.Roles;
 import com.dimbo.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOMySQL extends DAOModel implements UserDAO {
-
+    Logger LOGGER = LoggerFactory.getLogger(UserDAOMySQL.class);
+    
     private static final String FIND_BY_ID = "" +
         "SELECT * FROM user WHERE id = ?";
     private static final String FIND_BY_LOGIN = "" +
@@ -22,66 +25,88 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         "SELECT * FROM user WHERE login = ? AND password = ?";
     private static final String FIND_BY_ROLE = ""
         + "SELECT * FROM user WHERE role_id = ?";
-
+    
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE id=?";
     private static final String DELETE_BY_LOGIN = "DELETE FROM user WHERE login=?";
-
+    
     private static final String CREATE_USER = "INSERT INTO user VALUES(DEFAULT,?,?,?,?)";
-
+    
     private static final String UPDATE_LOGIN_WHERE_ID = "UPDATE user SET login=? WHERE id=?";
     private static final String SET_BANNED_WHERE_ID = "UPDATE user SET banned=? WHERE id=?";
     private static final String SET_BANNED_WHERE_LOGIN = "UPDATE user SET banned=? WHERE login=?";
     private static final String UPDATE_PASSWORD_WHERE_ID = "UPDATE user SET password=? WHERE id=?";
     private static final String UPDATE_PASSWORD_WHERE_LOGIN = "UPDATE user SET password=? WHERE login=?";
-
+    
     Connection connection;
-
+    
     public UserDAOMySQL(Connection connection) {
         this.connection = connection;
     }
-
+    
     public User find(Long id) throws DAOException {
         return findUser(FIND_BY_ID, id);
     }
-
+    
     public User find(String login) throws DAOException {
         return findUser(FIND_BY_LOGIN, login);
     }
-
+    
     public User find(String login, String password) throws DAOException {
         return findUser(FIND_BY_LOGIN_AND_PASSWORD, login, password);
     }
-
-    public User[] find(Roles role) {
+    
+    public List<User> find(Roles role) {
         return findUsers(FIND_BY_ROLE, role.getId());
     }
-
-
+    
+    
     @Override
     public boolean delete(Long id) throws DAOException {
         return false;
     }
-
+    
     @Override
     public boolean delete(String login) throws DAOException {
         return false;
     }
-
+    
     @Override
     public User update(User user) throws DAOException {
         return null;
     }
-
+    
+    @Override
+    public boolean ban(int userId) throws DAOException {
+        try {
+            setBanned(userId, true);
+            return true;
+        } catch (SQLException e) {
+            LOGGER.error("Unable to ban user " + userId);
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean unban(int userId) throws DAOException {
+        try {
+            setBanned(userId, false);
+            return true;
+        } catch (SQLException e) {
+            LOGGER.error("Unable to unban user " + userId);
+            return false;
+        }
+    }
+    
     @Override
     public User create(User user) throws DAOException {
-
+        
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_USER, true,
                 user.getLogin(), user.getPassword(), user.isBanned(), user.getRoleId())
         ) {
             statement.executeUpdate();
-
+            
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 user.setId(resultSet.getInt(1));
@@ -89,13 +114,13 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-
+        
         return user;
     }
-
+    
     private User findUser(String sql, Object... values) throws DAOException {
         User user = null;
-
+        
         try (
             PreparedStatement statement = prepareStatement(connection, sql, false, values);
             ResultSet resultSet = statement.executeQuery()
@@ -106,13 +131,13 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-
+        
         return user;
     }
-
-    private User[] findUsers(String sql, Object... values) throws DAOException {
+    
+    private List<User> findUsers(String sql, Object... values) throws DAOException {
         List<User> users = new ArrayList<>();
-
+        
         try (
             PreparedStatement statement = prepareStatement(connection, sql, false, values);
             ResultSet resultSet = statement.executeQuery()
@@ -123,10 +148,10 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         } catch (SQLException e) {
             throw new DAOException(e);
         }
-
-        return users.toArray(new User[0]);
+        
+        return users;
     }
-
+    
     private static User map(ResultSet resultset) throws SQLException {
         return new User(
             resultset.getLong("id"),
@@ -135,5 +160,23 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             resultset.getBoolean("banned"),
             resultset.getLong("role_id")
         );
+    }
+    
+    private void setBanned(int userId, boolean banned) throws SQLException {
+        
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, SET_BANNED_WHERE_ID, true,
+                banned, userId)
+        ) {
+            int updatedRows = statement.executeUpdate();
+            LOGGER.info("Updated rows: " + updatedRows);
+//            if (updatedRows == 0) {
+//                throw new DAOException("UserDAOMySQL#setBanned was unsuccessful");
+//            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
     }
 }

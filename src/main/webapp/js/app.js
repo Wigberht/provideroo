@@ -17,7 +17,9 @@ function runCommand(command, method, action) {
 }
 
 function banUser(userId) {
-
+    $.get("someservlet", function (responseJson) {
+        console.log("Response", responseJson);
+    });
 }
 
 function unbanUser(userId) {

@@ -1,6 +1,7 @@
-<nav>
-    <div id="navbar_header">
-        <div class="nav-wrapper">
+<div class="navbar-fixed">
+    <nav>
+        <div id="navbar_header">
+            <div class="nav-wrapper">
         <span class="brand-logo left noselect">
             <c:if test="${sessionScope.user.roleId==1}">
                 <fmt:message key="admin_control_panel"/>
@@ -9,53 +10,41 @@
                 <fmt:message key="subscriber_control_panel"/>
             </c:if>
         </span>
-            <ul id="nav-mobile" class="right">
-                <c:if test="${sessionScope.user.roleId==1}">
+                <ul id="nav-mobile" class="right">
+                    <c:if test="${sessionScope.user.roleId==1}">
+                        <page-link
+                            active="${pagekey.equals("subscribers")}"
+                            link="${root}/admin/subscriber_list"
+                            icon="people"
+                            message="<fmt:message key="subscriber_list"/>"
+                        ></page-link>
+
+                        <page-link
+                            active="${pagekey.equals("chats")}"
+                            link="${root}/jsp/admin/chat_list.jsp"
+                            icon="message"
+                            message="<fmt:message key="chats"/>"
+                        ></page-link>
+
+                        <page-link
+                            active="${pagekey.equals("services")}"
+                            link="${root}/admin/service_list"
+                            icon="attach_money"
+                            message="<fmt:message key="service_list"/>"
+                        ></page-link>
+                    </c:if>
+                    <c:if test="${sessionScope.user.roleId==2}">
+                    </c:if>
                     <page-link
-                        active="${pagekey.equals("subscribers")}"
-                        link="${root}/admin/subscriber_list"
-                        icon="people"
-                        message="<fmt:message key="subscriber_list"/>"
+                        command="logout"
+                        method="post"
+                        icon="exit_to_app"
+                        message="<fmt:message key="logout"/>"
                     ></page-link>
+                </ul>
+            </div>
 
-                    <page-link
-                        active="${pagekey.equals("chats")}"
-                        link="${root}/jsp/admin/chat_list.jsp"
-                        icon="message"
-                        message="<fmt:message key="chats"/>"
-                    ></page-link>
-
-                    <page-link
-                        active="${pagekey.equals("services")}"
-                        link="${root}/admin/service_list"
-                        icon="attach_money"
-                        message="<fmt:message key="service_list"/>"
-                    ></page-link>
-
-                    <%--<li--%>
-                    <%--<c:if test='${page=="chats"}'>--%>
-                    <%--class="active"--%>
-                    <%--</c:if>--%>
-                    <%-->--%>
-                    <%--<a href="/jsp/admin/chat_list.jsp">--%>
-                    <%--<i class="material-icons left">message</i>--%>
-                    <%--<fmt:message key="chats"/>--%>
-                    <%--</a>--%>
-                    <%--</li>--%>
-
-                </c:if>
-                <c:if test="${sessionScope.user.roleId==2}">
-                </c:if>
-                <page-link
-                    command="logout"
-                    method="post"
-                    icon="exit_to_app"
-                    message="<fmt:message key="logout"/>"
-                ></page-link>
-            </ul>
         </div>
-
-    </div>
-</nav>
-
-<jsp:include page="/jsp/vue/vue-integration.jsp"/>
+    </nav>
+</div>
+<%@ include file="/jsp/vue/vue-integration.jspf" %>

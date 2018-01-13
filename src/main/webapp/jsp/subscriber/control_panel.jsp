@@ -16,6 +16,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="/jsp/vue/vue-integration.jsp"/>
+<jsp:include page="/jsp/vue/vue-integration.jspf"/>
 </body>
 </html>

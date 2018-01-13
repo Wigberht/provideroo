@@ -41,15 +41,11 @@ public class SubscriberListCommand implements Command {
                    .containsKey("page")) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-//        LOGGER.info("PAGE IS " + page);
         
         SubscriberService ss = new SubscriberService(page, limit);
         
-        LOGGER.info("before fetching subscribers");
         request.setAttribute("subscribers", ss.getSubscribers());
-        LOGGER.info("subscribers fetched");
         ss.returnConnection();
-        LOGGER.info("connection returned to pool");
         
         return PagesResourceManager.getPage("subscriber_list");
     }

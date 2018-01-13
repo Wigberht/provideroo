@@ -1,0 +1,5 @@
+<jsp:include page="/jsp/vue/components/ban-button.jsp"/>
+
+<script>
+    new Vue().$mount("#subscriber-list");
+</script>

@@ -1,0 +1,39 @@
+<div id="subscriber-list">
+    <%@ include file="/WEB-INF/jspf/pagination.jspf" %>
+    <table class="striped responsive-table highlight bordered">
+        <thead>
+        <tr>
+            <td><fmt:message key="first_name"/></td>
+            <td><fmt:message key="last_name"/></td>
+            <td><fmt:message key="login"/></td>
+            <td><fmt:message key="banned"/></td>
+            <td><fmt:message key="balance"/></td>
+            <td><fmt:message key="birth_date"/></td>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${subscribers}" var="subscriber">
+            <tr>
+                <td class="col s2">${subscriber.firstName}</td>
+                <td class="col s2">${subscriber.lastName}</td>
+                <td class="col s2">${subscriber.user.login}</td>
+                <td class="col s1"><fmt:message
+                    key='${subscriber.user.banned?"yes":"no"}'/></td>
+                <td class="col s2">${subscriber.account.balance} ${subscriber.account.currencyShortname}</td>
+                <td class="col s2">${subscriber.birthDate}</td>
+                <td class="col s3">
+                    <ban-button
+                        text_ban="<fmt:message key="ban"/>"
+                        text_unban="<fmt:message key="unban"/>"
+                        banned="${subscriber.user.banned}"
+                        user_id="${subscriber.user.id}"
+                    ></ban-button>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<%@ include file="/WEB-INF/jspf/pagination.jspf" %>
+
+<%@ include file="/jsp/vue/vue-ban-button.jspf" %>
