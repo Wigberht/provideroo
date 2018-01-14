@@ -22,9 +22,7 @@ public interface UserDAO {
     
     public User update(User user) throws DAOException;
     
-    public boolean ban(int userId) throws DAOException;
-    
-    public boolean unban(int userId) throws DAOException;
+    public boolean setBanned(long userId, boolean banned) throws DAOException;
     
     public User create(User user) throws DAOException;
 }

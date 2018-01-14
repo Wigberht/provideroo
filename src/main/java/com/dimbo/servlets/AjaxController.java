@@ -38,7 +38,7 @@ public class AjaxController extends HttpServlet {
         LOGGER.info("Method: " + method);
         
         Gson jsonResponse = new Gson();
-        String resultString="";
+        String resultString = "";
         Pair<String, String> result;
         
         
@@ -56,14 +56,15 @@ public class AjaxController extends HttpServlet {
     }
     
     private boolean banUser(int userId) {
-        Connection connection = ConnectionPool.conn();
-        
-        boolean success = FactoryGenerator.getFactory()
-                                          .makeUserDAO(connection)
-                                          .ban(userId);
-        ConnectionPool.returnConn(connection);
-        
-        return success;
+//        Connection connection = ConnectionPool.conn();
+//
+//        boolean success = FactoryGenerator.getFactory()
+//                                          .makeUserDAO(connection)
+//                                          .setBanned(userId);
+//        ConnectionPool.returnConn(connection);
+
+//        return success;
+        return true;
     }
     
     private boolean unbanUser(int userId) {

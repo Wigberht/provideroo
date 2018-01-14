@@ -25,7 +25,7 @@
                     <ban-button
                         text_ban="<fmt:message key="ban"/>"
                         text_unban="<fmt:message key="unban"/>"
-                        banned="${subscriber.user.banned}"
+                        banned_state="${subscriber.user.banned}"
                         user_id="${subscriber.user.id}"
                     ></ban-button>
                 </td>

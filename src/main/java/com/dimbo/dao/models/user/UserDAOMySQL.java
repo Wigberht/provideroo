@@ -76,25 +76,23 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     }
     
     @Override
-    public boolean ban(int userId) throws DAOException {
-        try {
-            setBanned(userId, true);
-            return true;
+    public boolean setBanned(long userId, boolean banned) throws DAOException {
+        LOGGER.info("banned: " + banned);
+        boolean success;
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, SET_BANNED_WHERE_ID, true,
+                banned, userId)
+        ) {
+            int updatedRows = statement.executeUpdate();
+            success = updatedRows != 0;
+            
         } catch (SQLException e) {
-            LOGGER.error("Unable to ban user " + userId);
-            return false;
+            LOGGER.error("UserDAOMySQL#setBanned was unsuccessful");
+            throw new DAOException(e);
         }
-    }
-    
-    @Override
-    public boolean unban(int userId) throws DAOException {
-        try {
-            setBanned(userId, false);
-            return true;
-        } catch (SQLException e) {
-            LOGGER.error("Unable to unban user " + userId);
-            return false;
-        }
+        
+        return success;
     }
     
     @Override
@@ -160,23 +158,5 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             resultset.getBoolean("banned"),
             resultset.getLong("role_id")
         );
-    }
-    
-    private void setBanned(int userId, boolean banned) throws SQLException {
-        
-        try (
-            PreparedStatement statement = prepareStatement(
-                connection, SET_BANNED_WHERE_ID, true,
-                banned, userId)
-        ) {
-            int updatedRows = statement.executeUpdate();
-            LOGGER.info("Updated rows: " + updatedRows);
-//            if (updatedRows == 0) {
-//                throw new DAOException("UserDAOMySQL#setBanned was unsuccessful");
-//            }
-        } catch (SQLException e) {
-            throw new DAOException(e);
-        }
-        
     }
 }

@@ -31,9 +31,6 @@ public class SubscriberService {
         int page = (this.page == 0) ? 0 : this.page - 1;
         int offset = page * limit;
         
-        LOGGER.info("Page: " + page);
-        LOGGER.info("Limit: " + limit);
-        LOGGER.info("Offset: " + offset);
         return FactoryGenerator.getFactory()
                                .makeSubscriberDAO(connection)
                                .all(limit, offset);
