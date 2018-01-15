@@ -77,7 +77,6 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     
     @Override
     public boolean setBanned(long userId, boolean banned) throws DAOException {
-        LOGGER.info("banned: " + banned);
         boolean success;
         try (
             PreparedStatement statement = prepareStatement(

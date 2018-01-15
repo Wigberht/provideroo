@@ -61,8 +61,6 @@ public class UserREST extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        LOGGER.info("User id: " + userId);
-        LOGGER.info("Requested banned state: " + banned);
         
         Connection connection = ConnectionPool.conn();
         boolean success = FactoryGenerator.getFactory()
