@@ -1,4 +1,4 @@
-package com.dimbo.helpers.auth;
+package com.dimbo.helper.auth;
 
 import com.dimbo.ConnectionPool;
 import com.dimbo.dao.DAOException;
@@ -6,7 +6,7 @@ import com.dimbo.dao.factory.FactoryGenerator;
 import com.dimbo.dao.models.account.AccountDAO;
 import com.dimbo.dao.models.subscriber.SubscriberDAO;
 import com.dimbo.dao.models.user.UserDAO;
-import com.dimbo.helpers.Passwords;
+import com.dimbo.helper.Passwords;
 import com.dimbo.model.Account;
 import com.dimbo.model.Roles;
 import com.dimbo.model.Subscriber;

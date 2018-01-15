@@ -14,7 +14,7 @@
         <h2><fmt:message key="list_of_chats"/></h2>
         <div class="row">
 
-            <a href="/jsp/admin/register_user.jsp"
+            <a href="/jsp/admin/pages/register_user.jsp"
                class="btn waves-effect waves-light">
                 <fmt:message key="register_new_user"/>
             </a>

@@ -1,7 +1,7 @@
 package com.dimbo.command.admin;
 
 import com.dimbo.command.Command;
-import com.dimbo.helpers.SubscriberService;
+import com.dimbo.helper.SubscriberService;
 import com.dimbo.managers.PagesResourceManager;
 import com.dimbo.model.Subscriber;
 

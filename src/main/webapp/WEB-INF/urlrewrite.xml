@@ -10,25 +10,25 @@
 -->
 <urlrewrite>
 
-    <rule>
-        <from>^/admin/(.*)$</from>
-        <to>/MainController?command=$1</to>
-    </rule>
+    <!--<rule>-->
+        <!--<from>^/admin/command/(.*)$</from>-->
+        <!--<to>/MainController?command=$1</to>-->
+    <!--</rule>-->
 
-    <outbound-rule>
-        <from>^/MainController?command=(.*)$</from>
-        <to>/admin/$1</to>
-    </outbound-rule>
+    <!--<outbound-rule>-->
+        <!--<from>^/MainController?command=(.*)$</from>-->
+        <!--<to>/admin/command/$1</to>-->
+    <!--</outbound-rule>-->
 
-    <rule>
-        <from>^/admin/(.*)$</from>
-        <to>/jsp/admin/$1</to>
-    </rule>
+    <!--<rule>-->
+        <!--<from>^/admin/(.*)$</from>-->
+        <!--<to>/jsp/admin/page/$1</to>-->
+    <!--</rule>-->
 
-    <outbound-rule>
-        <from>^/jsp/admin/(.*)$</from>
-        <to>/admin/$1</to>
-    </outbound-rule>
+    <!--<outbound-rule>-->
+        <!--<from>^/jsp/admin/page/(.*)$</from>-->
+        <!--<to>/admin/page/$1</to>-->
+    <!--</outbound-rule>-->
 
 
     <!--

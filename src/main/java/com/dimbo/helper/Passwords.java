@@ -1,4 +1,4 @@
-package com.dimbo.helpers;
+package com.dimbo.helper;
 
 
 import org.mindrot.jbcrypt.BCrypt;

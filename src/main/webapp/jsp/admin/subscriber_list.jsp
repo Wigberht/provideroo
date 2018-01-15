@@ -16,7 +16,7 @@
         <%@ include file="/WEB-INF/jspf/subscriber_table.jspf" %>
 
         <div class="row">
-            <a href="${root}/jsp/admin/register_user.jsp"
+            <a href="${root}/admin/register_user"
                class="btn waves-effect waves-light">
                 <fmt:message key="register_new_user"/>
             </a>

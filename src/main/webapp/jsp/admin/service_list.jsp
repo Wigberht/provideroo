@@ -43,9 +43,18 @@
         </c:forEach>
 
         <div class="row">
-            <a href="/jsp/admin/register_user.jsp" class="btn waves-effect waves-light">
-                <fmt:message key="register_new_user"/>
-            </a>
+            <div class="col s3">
+                <a href="/admin/new_service"
+                   class="btn waves-effect waves-light">
+                    <fmt:message key="new_service"/>
+                </a>
+            </div>
+            <div class="col s3">
+                <a href="/admin/new_tariff"
+                   class="btn waves-effect waves-light">
+                    <fmt:message key="new_tariff"/>
+                </a>
+            </div>
         </div>
     </div>
 </div>

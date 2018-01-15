@@ -21,7 +21,7 @@
 
                         <page-link
                             active="${pagekey.equals("chats")}"
-                            link="${root}/jsp/admin/chat_list.jsp"
+                            link="${root}/admin/chat_list"
                             icon="message"
                             message="<fmt:message key="chats"/>"
                         ></page-link>

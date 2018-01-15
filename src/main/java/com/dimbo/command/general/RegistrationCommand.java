@@ -1,7 +1,7 @@
 package com.dimbo.command.general;
 
 import com.dimbo.command.Command;
-import com.dimbo.helpers.auth.Registration;
+import com.dimbo.helper.auth.Registration;
 import com.dimbo.managers.PagesResourceManager;
 import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;

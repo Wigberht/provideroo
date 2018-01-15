@@ -1,7 +1,7 @@
 package com.dimbo.command.general;
 
 import com.dimbo.command.Command;
-import com.dimbo.helpers.auth.Auth;
+import com.dimbo.helper.auth.Auth;
 import com.dimbo.managers.PagesResourceManager;
 import com.dimbo.model.User;
 import org.slf4j.Logger;

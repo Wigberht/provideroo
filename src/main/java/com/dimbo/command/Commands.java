@@ -1,5 +1,6 @@
 package com.dimbo.command;
 
+import com.dimbo.command.admin.AddServiceCommand;
 import com.dimbo.command.admin.ServiceListCommand;
 import com.dimbo.command.admin.SubscriberListCommand;
 import com.dimbo.command.general.LoginCommand;
@@ -17,14 +18,15 @@ public enum Commands {
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),
     SUBSCRIBER_LIST(new SubscriberListCommand()),
-    SERVICE_LIST(new ServiceListCommand());
-
+    SERVICE_LIST(new ServiceListCommand()),
+    ADD_SERVICE(new AddServiceCommand());
+    
     private Command command;
-
+    
     Commands(Command command) {
         this.command = command;
     }
-
+    
     /**
      * Return instance
      *

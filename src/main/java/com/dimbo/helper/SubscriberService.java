@@ -1,7 +1,9 @@
-package com.dimbo.helpers;
+package com.dimbo.helper;
 
 import com.dimbo.ConnectionPool;
 import com.dimbo.dao.factory.FactoryGenerator;
+import com.dimbo.dao.models.service.ServiceDAO;
+import com.dimbo.model.Service;
 import com.dimbo.model.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +19,14 @@ public class SubscriberService {
     
     Connection connection;
     
+    public SubscriberService() {
+        connection = ConnectionPool.conn();
+    }
+    
     public SubscriberService(int page, int limit) {
+        this();
         this.limit = limit;
         this.page = page;
-        connection = ConnectionPool.conn();
     }
     
     public void returnConnection() {

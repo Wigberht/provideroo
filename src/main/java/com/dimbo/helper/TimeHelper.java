@@ -1,4 +1,4 @@
-package com.dimbo.helpers;
+package com.dimbo.helper;
 
 import java.util.Calendar;
 import java.util.Locale;

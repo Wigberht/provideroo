@@ -46,6 +46,7 @@ public class UserREST extends HttpServlet {
     @Path("/ban")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response ban(String data) {
+        LOGGER.info("In ban REST");
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         
