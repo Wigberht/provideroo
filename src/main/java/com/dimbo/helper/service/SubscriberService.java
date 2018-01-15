@@ -1,36 +1,26 @@
-package com.dimbo.helper;
+package com.dimbo.helper.service;
 
-import com.dimbo.ConnectionPool;
 import com.dimbo.dao.factory.FactoryGenerator;
-import com.dimbo.dao.models.service.ServiceDAO;
-import com.dimbo.model.Service;
 import com.dimbo.model.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class SubscriberService {
+public class SubscriberService extends ServiceHelper {
     Logger LOGGER = LoggerFactory.getLogger(SubscriberService.class);
     
     private int limit;
     private int page;
     
-    Connection connection;
-    
     public SubscriberService() {
-        connection = ConnectionPool.conn();
+        super();
     }
     
     public SubscriberService(int page, int limit) {
         this();
         this.limit = limit;
         this.page = page;
-    }
-    
-    public void returnConnection() {
-        ConnectionPool.returnConn(connection);
     }
     
     public List<Subscriber> getSubscribers() {

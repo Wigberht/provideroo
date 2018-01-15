@@ -16,7 +16,7 @@
 
             <a href="/jsp/admin/pages/register_user.jsp"
                class="btn waves-effect waves-light">
-                <fmt:message key="register_new_user"/>
+                <fmt:message key="start_new_chat"/>
             </a>
         </div>
     </div>

@@ -11,25 +11,27 @@ import com.dimbo.model.Account;
 import com.dimbo.model.Roles;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.User;
+
 import java.sql.Connection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Registration {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(Registration.class);
-
+    
     private Connection connection;
-
+    
     public Registration() {
         this.connection = ConnectionPool.getInstance()
                                         .getConnection();
     }
-
+    
     public void closeConnection() {
         ConnectionPool.returnConn(this.connection);
     }
-
+    
     public Subscriber registerSubscriber(Subscriber subscriber) {
         Subscriber resultingSubscriber = null;
         SubscriberDAO subscriberDAO = FactoryGenerator.getFactory()
@@ -38,12 +40,12 @@ public class Registration {
             resultingSubscriber = subscriberDAO.create(subscriber);
             LOGGER.info("Subscriber created");
         } catch (DAOException e) {
-            LOGGER.error("Subscriber failed to be created");
+            LOGGER.error("Subscriber not created");
         }
-
+        
         return resultingSubscriber;
     }
-
+    
     public Account registerAccount() {
         Account resultingAccount = null;
         AccountDAO accountDAO = FactoryGenerator.getFactory()
@@ -54,26 +56,26 @@ public class Registration {
         } catch (DAOException e) {
             LOGGER.error("Failure at creating user account", e);
         }
-
+        
         return resultingAccount;
     }
-
+    
     public User registerUser(User user) {
         UserDAO userDAO = FactoryGenerator.getFactory()
                                           .makeUserDAO(connection);
-
+        
         user.setPassword(Passwords.getPasswordHash(user.getPassword()));
         user.setBanned(false);
         user.setRoleId(Roles.SUBSCRIBER.getId());
-
+        
         try {
             user = userDAO.create(user);
             LOGGER.info("User '" + user.getLogin() + "' created successfully");
         } catch (DAOException e) {
             LOGGER.error("Unable to register user");
         }
-
+        
         return user;
     }
-
+    
 }

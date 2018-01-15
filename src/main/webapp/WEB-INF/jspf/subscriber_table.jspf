@@ -6,9 +6,9 @@
             <td><fmt:message key="first_name"/></td>
             <td><fmt:message key="last_name"/></td>
             <td><fmt:message key="login"/></td>
-            <td><fmt:message key="banned"/></td>
             <td><fmt:message key="balance"/></td>
             <td><fmt:message key="birth_date"/></td>
+            <td><fmt:message key="banned"/></td>
         </tr>
         </thead>
         <tbody>
@@ -17,10 +17,11 @@
                 <td class="col s2">${subscriber.firstName}</td>
                 <td class="col s2">${subscriber.lastName}</td>
                 <td class="col s2">${subscriber.user.login}</td>
-                <td class="col s1"><fmt:message
-                    key='${subscriber.user.banned?"yes":"no"}'/></td>
                 <td class="col s2">${subscriber.account.balance} ${subscriber.account.currencyShortname}</td>
                 <td class="col s2">${subscriber.birthDate}</td>
+                <td class="col s1">
+                    <fmt:message key='${subscriber.user.banned?"yes":"no"}'/>
+                </td>
                 <td class="col s3">
                     <ban-button
                         text_ban="<fmt:message key="ban"/>"

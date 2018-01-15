@@ -1,11 +1,9 @@
 package com.dimbo.command.admin;
 
 import com.dimbo.command.Command;
-import com.dimbo.helper.SubscriberService;
+import com.dimbo.helper.service.SubscriberService;
 import com.dimbo.managers.PagesResourceManager;
-import com.dimbo.model.Subscriber;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -47,6 +45,6 @@ public class SubscriberListCommand implements Command {
         request.setAttribute("subscribers", ss.getSubscribers());
         ss.returnConnection();
         
-        return PagesResourceManager.getPage("subscriber_list");
+        return PagesResourceManager.getPage("subscriber_list_jsp");
     }
 }

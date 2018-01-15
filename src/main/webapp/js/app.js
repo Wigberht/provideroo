@@ -29,6 +29,7 @@ function unbanUser(userId) {
 // start jQuery
 $(function () {
 
+    // init datepicker
     $('#birth_datepicker').pickadate({
         format: "yyyy-mm-dd",
         max: new Date(),
@@ -39,6 +40,11 @@ $(function () {
         clear: 'Clear',
         close: 'Ok',
         closeOnSelect: false // Close upon selecting a date,
+    });
+
+    // init materialize select
+    $(document).ready(function () {
+        $('select').material_select();
     });
 
 });

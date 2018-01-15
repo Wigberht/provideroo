@@ -28,7 +28,7 @@ public class ServiceListCommand implements Command {
 
         ConnectionPool.returnConn(connection);
 
-        return PagesResourceManager.getPage("service_list");
+        return PagesResourceManager.getPage("service_list_jsp");
     }
 }
 

@@ -1,8 +1,10 @@
 package com.dimbo.filter;
 
 import com.dimbo.command.Commands;
+import com.dimbo.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,7 +17,7 @@ import java.util.regex.Pattern;
 public class UrlRewriteFilter implements Filter {
     Logger LOGGER = LoggerFactory.getLogger(UrlRewriteFilter.class);
     
-    String regex = ".*?admin/(.*)";
+    String regex = "(.*)/(.*)";
     Pattern pattern = Pattern.compile(regex);
     
     @Override
@@ -37,39 +39,56 @@ public class UrlRewriteFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
         LOGGER.info("In url filter");
         HttpServletRequest request = (HttpServletRequest) req;
-        
-        if (request.getRequestURI().contains("admin/")) {
-            Matcher matcher = pattern.matcher(request.getRequestURI());
-            if (matcher.find()) {
-                String adminPage = getAdminPage(matcher.group(1));
-                LOGGER.info("page: " + adminPage);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(adminPage);
+        LOGGER.info("accessing " + request.getRequestURI());
+//        if (request.getRequestURI().contains("admin/")) {
+        Matcher matcher = pattern.matcher(request.getRequestURI());
+        boolean find = matcher.find();
+        if (find) {
+            boolean isUser = false;
+            for (Roles role : Roles.values()) {
+                if (matcher.group(1).contains(role.name().toLowerCase())) isUser = true;
+            }
+            
+            if (isUser) {
+                String resultPage = getResultPage(matcher);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
                 requestDispatcher.forward(req, res);
             } else {
                 chain.doFilter(req, res);
             }
         } else {
             chain.doFilter(req, res);
+            
         }
-        
     }
     
-    private String getAdminPage(String matchString) {
+    private String getResultPage(Matcher matcher) {
         String page;
         boolean isCommand = false;
+        String user = matcher.group(1);
+        String matchPage = matcher.group(2);
         
         for (Commands command : Commands.values()) {
-            if (command.name().equalsIgnoreCase(matchString)) {
+            if (command.name().equalsIgnoreCase(matchPage)) {
                 isCommand = true;
                 break;
             }
         }
         
+        StringBuilder sb = new StringBuilder();
         if (isCommand) {
-            page = "/MainController?command=" + matchString;
+            page = "/MainController?command=" + matchPage;
         } else {
-            page = "/jsp/admin/" + matchString + ".jsp";
+            sb.append("/jsp")
+              .append(user)
+              .append("/")
+              .append(matchPage)
+              .append(".jsp");
+            page = sb.toString();
+//            page = "/jsp/admin/" + matchPage + ".jsp";
         }
+        
+        LOGGER.info("Accessing page: " + page);
         
         return page;
     }

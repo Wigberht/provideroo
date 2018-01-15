@@ -1,6 +1,7 @@
 package com.dimbo.command;
 
 import com.dimbo.command.admin.AddServiceCommand;
+import com.dimbo.command.admin.AddTariffCommand;
 import com.dimbo.command.admin.ServiceListCommand;
 import com.dimbo.command.admin.SubscriberListCommand;
 import com.dimbo.command.general.LoginCommand;
@@ -19,7 +20,8 @@ public enum Commands {
     LOGOUT(new LogoutCommand()),
     SUBSCRIBER_LIST(new SubscriberListCommand()),
     SERVICE_LIST(new ServiceListCommand()),
-    ADD_SERVICE(new AddServiceCommand());
+    ADD_SERVICE(new AddServiceCommand()),
+    ADD_TARIFF(new AddTariffCommand());
     
     private Command command;
     
