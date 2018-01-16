@@ -4,6 +4,7 @@
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 
+<jsp:invoke fragment="pre_html"/>
 <html>
 <head>
     <jsp:invoke fragment="head"/>
@@ -15,7 +16,6 @@
 </div>
 
 <div id="body">
-
     <jsp:doBody/>
 </div>
 

@@ -1,5 +1,11 @@
+<%@tag description="Admin Page template" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
+
+<%@attribute name="subscribers"
+             type="java.util.List<com.dimbo.model.Subscriber>" %>
+
 <div id="subscriber-list">
-    <%@ include file="/WEB-INF/jspf/pagination.jspf" %>
+    <t:pagination />
     <table class="striped responsive-table highlight bordered">
         <thead>
         <tr>
@@ -17,7 +23,10 @@
                 <td class="col s2">${subscriber.firstName}</td>
                 <td class="col s2">${subscriber.lastName}</td>
                 <td class="col s2">${subscriber.user.login}</td>
-                <td class="col s2">${subscriber.account.balance} ${subscriber.account.currencyShortname}</td>
+                <td class="col s2">
+                        ${subscriber.account.balance}
+                        ${subscriber.account.currencyShortname}
+                </td>
                 <td class="col s2">${subscriber.birthDate}</td>
                 <td class="col s1">
                     <fmt:message key='${subscriber.user.banned?"yes":"no"}'/>
@@ -34,7 +43,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <t:pagination />
 </div>
-<%@ include file="/WEB-INF/jspf/pagination.jspf" %>
 
 <%@ include file="/jsp/vue/vue-ban-button.jspf" %>

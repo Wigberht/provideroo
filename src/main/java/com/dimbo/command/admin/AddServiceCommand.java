@@ -25,6 +25,10 @@ public class AddServiceCommand implements Command {
             request.getSession().setAttribute("serviceSuccess", false);
         }
         
+        request.getSession()
+               .getServletContext()
+               .setAttribute("services", ss.getAllServices());
+        
         ss.returnConnection();
         
         return PagesResourceManager.getPage("add_service");

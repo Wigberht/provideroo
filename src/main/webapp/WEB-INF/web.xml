@@ -46,4 +46,10 @@
         <param-name>db_type</param-name>
         <param-value>MYSQL</param-value>
     </context-param>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+        <param-value>en_US</param-value>
+    </context-param>
+
 </web-app>

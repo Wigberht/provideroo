@@ -1,3 +1,9 @@
+<%@tag description="Admin Page template" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
+
+<%@attribute name="services"
+             type="java.util.List<com.dimbo.model.Service>" %>
+
 <ul class="collapsible" data-collapsible="expandable">
     <c:forEach items="${services}" var="service">
         <li>

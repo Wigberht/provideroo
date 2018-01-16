@@ -1,19 +1,13 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title><fmt:message key="admin_control_panel"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
-</head>
-<body>
-<div id="app">
-    <c:set var="pagekey" value="subscribers"/>
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+
+<t:admin_layout pageName="subscribers"
+                titleKey="list_of_chats">
 
     <div class="container">
         <h2><fmt:message key="list_of_subscribers"/></h2>
 
-        <%@ include file="/WEB-INF/jspf/subscriber_table.jspf" %>
+        <t:subscriber_table subscribers="${subscribers}"/>
 
         <div class="row">
             <a href="${root}/admin/register_user"
@@ -22,6 +16,5 @@
             </a>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+</t:admin_layout>

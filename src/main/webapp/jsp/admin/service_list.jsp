@@ -1,19 +1,13 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title><fmt:message key="admin_control_panel"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
-</head>
-<body>
-<div id="app">
-    <c:set var="pagekey" value="services"/>
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+
+<t:admin_layout pageName="services"
+                titleKey="list_of_services">
 
     <div class="container">
         <h2><fmt:message key="list_of_services"/></h2>
 
-        <%@ include file="/WEB-INF/jspf/service_table.jspf" %>
+        <t:service_table services="${services}"/>
 
         <div class="row">
             <div class="col s3">
@@ -30,6 +24,5 @@
             </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+</t:admin_layout>

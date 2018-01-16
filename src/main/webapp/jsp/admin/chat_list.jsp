@@ -1,25 +1,18 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title><fmt:message key="admin_control_panel"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
-</head>
-<body>
-<div id="app">
-    <c:set var="pagekey" value="chats"/>
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+
+<t:admin_layout pageName="chats"
+                titleKey="chats">
 
     <div class="container">
         <h2><fmt:message key="list_of_chats"/></h2>
-        <div class="row">
 
-            <a href="/jsp/admin/pages/register_user.jsp"
+        <div class="row">
+            <a href="/admin/register_user"
                class="btn waves-effect waves-light">
-                <fmt:message key="start_new_chat"/>
+                <fmt:message key="register_new_user"/>
             </a>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+</t:admin_layout>

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TariffDAOMySQL extends DAOModel implements TariffDAO {
-
+    
     private static final String FIND_BY_ID = "SELECT * FROM tariff WHERE id = ?";
     private static final String FIND_BY_SERVICE_ID = "SELECT * FROM tariff WHERE service_id = ?";
     private static final String CREATE_TARIFF = "INSERT INTO tariff VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";

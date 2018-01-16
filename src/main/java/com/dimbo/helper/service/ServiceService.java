@@ -5,6 +5,8 @@ import com.dimbo.dao.factory.FactoryGenerator;
 import com.dimbo.dao.models.service.ServiceDAO;
 import com.dimbo.model.Service;
 
+import java.util.List;
+
 public class ServiceService extends ServiceHelper {
     
     public Service createService(Service service) {
@@ -15,5 +17,11 @@ public class ServiceService extends ServiceHelper {
         } catch (DAOException ex) {
             return null;
         }
+    }
+    
+    public List<Service> getAllServices() {
+        ServiceDAO serviceDAO = FactoryGenerator.getFactory()
+                                                .makeServiceDAO(connection);
+        return serviceDAO.all();
     }
 }
