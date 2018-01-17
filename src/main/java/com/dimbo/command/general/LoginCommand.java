@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
  * The Class LoginCommand.
  */
 public class LoginCommand implements Command {
-
+    
     /**
      * The Constant LOGGER.
      */
     static final Logger LOGGER = LoggerFactory.getLogger(LoginCommand.class);
-
+    
     /**
      * {@inheritDoc}
      */
@@ -27,19 +27,19 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-
+        
         User user = Auth.login(login, password);
-
+        
         if (user == null) {
             return PagesResourceManager.getPage("login");
         }
-
+        
         request.getSession().setAttribute("user", user);
-
+        
         if (user.isAdmin()) {
-            return PagesResourceManager.getPage("admin_control_panel");
+            return PagesResourceManager.getPage("admin.control_panel");
         } else {
-            return PagesResourceManager.getPage("subscriber_control_panel");
+            return PagesResourceManager.getPage("subscriber.control_panel");
         }
     }
 }

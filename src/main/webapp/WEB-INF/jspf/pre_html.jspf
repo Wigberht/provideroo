@@ -1,9 +1,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="mt" uri="http://taglib.com/my_tags" %>
+
 
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
+
+<c:set var="isAdmin"
+       value='${sessionScope.user.roleId==applicationScope.get("admin_role_id")}'/>
+<c:set var="isSubscriber"
+       value='${sessionScope.user.roleId==applicationScope.get("subscriber_role_id")}'/>
 
 <c:set var="root" value="${pageContext.request.contextPath}"/>

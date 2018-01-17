@@ -4,7 +4,7 @@
 <%@attribute name="services"
              type="java.util.List<com.dimbo.model.Service>" %>
 
-<ul class="collapsible" data-collapsible="expandable">
+<ul class="collapsible" data-collapsible="expandable" id="service-table">
     <c:forEach items="${services}" var="service">
         <li>
             <div class="collapsible-header">
@@ -27,21 +27,16 @@
                         </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody class="table-body">
                         <c:forEach items="${service.tariffs}" var="tariff">
-                            <tr>
-                                <td>${tariff.title}</td>
-                                <td>${tariff.description}</td>
-                                <td>${tariff.numberOfDays}</td>
-                                <td>${tariff.cost}</td>
-                                <td>${tariff.currencyShortname}</td>
-                            </tr>
+                            <mt:tariff_row tariff="${tariff}"/>
                         </c:forEach>
                         </tbody>
+
                     </table>
                 </c:if>
-
             </div>
         </li>
     </c:forEach>
 </ul>
+<%@ include file="/jsp/vue/vue-tariff-row.jspf" %>

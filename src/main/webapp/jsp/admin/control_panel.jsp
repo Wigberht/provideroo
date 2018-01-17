@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
-<t:admin_layout pageName="control_panel"
+<mt:admin_layout pageName="control_panel"
                 titleKey="admin_control_panel">
 
     <div class="container">
@@ -13,4 +13,4 @@
         </div>
     </div>
 
-</t:admin_layout>
+</mt:admin_layout>

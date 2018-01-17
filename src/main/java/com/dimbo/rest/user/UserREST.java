@@ -29,18 +29,6 @@ public class UserREST extends HttpServlet {
         return "test";
     }
     
-    @POST
-    @Path("/bane")
-    public Response postText(@Context UriInfo uriInfo, String content) {
-        MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters();
-        String nameParam = queryParams.getFirst("name");
-        for (Map.Entry<String, List<String>> entry : queryParams.entrySet()) {
-            LOGGER.info(entry.getKey() + " : " + entry.getValue());
-        }
-        return Response.status(200)
-                       .entity("YOLO")
-                       .build();
-    }
     
     @POST
     @Path("/ban")
@@ -53,12 +41,8 @@ public class UserREST extends HttpServlet {
         long userId = -1;
         boolean banned = false;
         try {
-            userId = objectMapper.readTree(data)
-                                 .get("userId")
-                                 .asLong();
-            banned = objectMapper.readTree(data)
-                                 .get("banned")
-                                 .asBoolean();
+            userId = objectMapper.readTree(data).get("userId").asLong();
+            banned = objectMapper.readTree(data).get("banned").asBoolean();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +56,8 @@ public class UserREST extends HttpServlet {
         String responseString = "";
         
         try {
-            responseString = objectMapper.writeValueAsString(new SimpleResponse(success));
+            responseString = objectMapper
+                .writeValueAsString(new SimpleResponse(success));
         } catch (JsonProcessingException jpe) {
             LOGGER.error("json exception");
         }

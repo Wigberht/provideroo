@@ -1,14 +1,9 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title><fmt:message key="registration"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
-</head>
-<body>
 
-<div id="app">
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+<mt:admin_layout pageName="new_service"
+                titleKey="new_service">
+
     <div class="container">
         <div class="row">
             <form class="col s8 offset-s2" action="/MainController"
@@ -18,7 +13,7 @@
                 </div>
                 <input type="hidden" name="command" value="add_tariff">
 
-                <%--title--%>
+                    <%--title--%>
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="text"
@@ -30,7 +25,7 @@
                     </div>
                 </div>
 
-                <%--description--%>
+                    <%--description--%>
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea
@@ -42,7 +37,7 @@
                     </div>
                 </div>
 
-                <%--number of days--%>
+                    <%--number of days--%>
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="number"
@@ -56,7 +51,7 @@
                     </div>
                 </div>
 
-                <%--cost--%>
+                    <%--cost--%>
                 <div class="row">
                     <div class="input-field col s4">
                         <input type="number"
@@ -68,7 +63,7 @@
                         <label for="cost"><fmt:message key="cost"/> </label>
                     </div>
 
-                    <%--currency--%>
+                        <%--currency--%>
                     <div class="input-field col s4">
                         <input type="text"
                                id="currency"
@@ -79,7 +74,7 @@
                             key="currency"/> </label>
                     </div>
 
-                    <%--service--%>
+                        <%--service--%>
                     <div class="input-field col s4">
                         <select id="service-select" name="service_id">
                             <c:forEach items="${applicationScope['services']}"
@@ -93,7 +88,7 @@
                 </div>
 
 
-                <%--submit--%>
+                    <%--submit--%>
                 <div class="center-align">
                     <div class="row">
                         <input type="submit"
@@ -104,7 +99,5 @@
             </form>
         </div>
     </div>
-</div>
 
-</body>
-</html>
+</mt:admin_layout>

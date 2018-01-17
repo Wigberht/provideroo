@@ -1,17 +1,13 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title><fmt:message key="registration"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
-</head>
-<body>
 
-<div id="app">
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+<mt:admin_layout pageName="new_service"
+                titleKey="new_service">
+
     <div class="container">
         <div class="row">
-            <form class="col s8 offset-s2" action="/MainController" method="post">
+            <form class="col s8 offset-s2" action="/MainController"
+                  method="post">
                 <div class="center-align">
                     <h2><fmt:message key="new_user_credentials"/></h2>
                 </div>
@@ -35,7 +31,8 @@
                                class="validate"
                                name="password"
                                placeholder="<fmt:message key="password"/>">
-                        <label for="password"><fmt:message key="password"/> </label>
+                        <label for="password"><fmt:message
+                            key="password"/> </label>
                     </div>
                 </div>
                 <div>
@@ -52,7 +49,8 @@
                                class="validate"
                                name="first_name"
                                placeholder="<fmt:message key="first_name"/>">
-                        <label for="first_name"><fmt:message key="first_name"/> </label>
+                        <label for="first_name"><fmt:message
+                            key="first_name"/> </label>
                     </div>
                 </div>
 
@@ -63,7 +61,8 @@
                                class="validate"
                                name="last_name"
                                placeholder="<fmt:message key="last_name"/>">
-                        <label for="last_name"><fmt:message key="last_name"/> </label>
+                        <label for="last_name"><fmt:message
+                            key="last_name"/> </label>
                     </div>
                 </div>
 
@@ -73,7 +72,8 @@
                                class="datepicker"
                                name="birth_date"
                                id="birth_datepicker">
-                        <label for="birth_datepicker"><fmt:message key="birth_date"/> </label>
+                        <label for="birth_datepicker"><fmt:message
+                            key="birth_date"/> </label>
                     </div>
                 </div>
 
@@ -97,6 +97,5 @@
             </form>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+</mt:admin_layout>

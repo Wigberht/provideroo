@@ -1,0 +1,5 @@
+<jsp:include page="/jsp/vue/components/tariff-row.jsp"/>
+
+<script>
+    new Vue().$mount("#service-table");
+</script>

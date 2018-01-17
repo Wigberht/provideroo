@@ -3,10 +3,9 @@
 <html>
 <head>
     <title><fmt:message key="enter_to_system"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
+    <mt:head/>
 </head>
 <body>
-
 <div class="container">
 
     <div class="row">
@@ -26,7 +25,8 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input placeholder="<fmt:message key="password"/>" id="password"
+                    <input placeholder="<fmt:message key="password"/>"
+                           id="password"
                            name="password"
                            type="password" class="validate">
                     <label for="password"><fmt:message key="password"/> </label>

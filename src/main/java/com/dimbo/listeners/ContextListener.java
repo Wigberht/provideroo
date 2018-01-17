@@ -2,7 +2,9 @@ package com.dimbo.listeners;
 
 import com.dimbo.ConnectionPool;
 import com.dimbo.dao.factory.FactoryGenerator;
+import com.dimbo.dao.models.role.RoleDAO;
 import com.dimbo.dao.models.service.ServiceDAO;
+import com.dimbo.model.Role;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -25,6 +27,19 @@ public class ContextListener implements ServletContextListener {
                                                 .makeServiceDAO(connection);
         servletContextEvent.getServletContext()
                            .setAttribute("services", serviceDAO.all());
+        
+        // fetch role ids from db
+        RoleDAO roleDAO = FactoryGenerator.getFactory().makeRoleDAO(connection);
+        Role admin = roleDAO.find("admin");
+        Role subscriber = roleDAO.find("subscriber");
+        
+        servletContextEvent.getServletContext()
+                           .setAttribute("admin_role_id", admin.getId());
+        servletContextEvent.getServletContext()
+                           .setAttribute("subscriber_role_id",
+                               subscriber.getId());
+        
+        ConnectionPool.returnConn(connection);
     }
     
     /**

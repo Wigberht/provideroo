@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+
+    <display-name>My custom tags</display-name>
+    <tlib-version>2.1</tlib-version>
+    <short-name>mt</short-name>
+    <uri>http://taglib.com/my_tags</uri>
+
+    <!--admin-->
+    <tag-file>
+        <name>admin_header</name>
+        <path>/WEB-INF/tags/admin/admin_header.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>admin_layout</name>
+        <path>/WEB-INF/tags/admin/admin_layout.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>subscriber_table</name>
+        <path>/WEB-INF/tags/admin/subscriber_table.tag</path>
+    </tag-file>
+
+    <!--subscriber-->
+    <tag-file>
+        <name>subscriber_header</name>
+        <path>/WEB-INF/tags/subscriber/subscriber_header.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>subscriber_layout</name>
+        <path>/WEB-INF/tags/subscriber/subscriber_layout.tag</path>
+    </tag-file>
+
+    <!--general-->
+    <tag-file>
+        <name>general</name>
+        <path>/WEB-INF/tags/general/general.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>head</name>
+        <path>/WEB-INF/tags/general/head.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>header</name>
+        <path>/WEB-INF/tags/general/header.tag</path>
+    </tag-file>
+
+
+    <tag-file>
+        <name>pagination</name>
+        <path>/WEB-INF/tags/general/pagination.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>service_table</name>
+        <path>/WEB-INF/tags/general/service_table.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>tariff_row</name>
+        <path>/WEB-INF/tags/general/tariff_row.tag</path>
+    </tag-file>
+
+</taglib>

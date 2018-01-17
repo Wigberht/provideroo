@@ -49,7 +49,11 @@
 
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-        <param-value>en_US</param-value>
+        <param-value>ru_RU</param-value>
     </context-param>
+
+    <session-config>
+        <session-timeout>600</session-timeout>
+    </session-config>
 
 </web-app>

@@ -1,14 +1,9 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title><fmt:message key="new_service"/></title>
-    <jsp:include page="/WEB-INF/jspf/head.jspf"/>
-</head>
-<body>
 
-<div id="app">
-    <%@ include file="/WEB-INF/jspf/header.jspf" %>
+<mt:admin_layout pageName="new_service"
+                titleKey="new_service">
+
     <div class="container">
         <div class="row">
             <form class="col s8 offset-s2" action="/MainController"
@@ -39,6 +34,5 @@
             </form>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+</mt:admin_layout>

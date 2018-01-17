@@ -1,18 +1,17 @@
 <%@tag description="Admin Page template" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
+<%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 <%@attribute name="pageName" %>
 <%@attribute name="titleKey" %>
 
-<t:general>
+<mt:general>
     <jsp:attribute name="head">
         <title><fmt:message key="${titleKey}"/></title>
-      <t:head/>
+      <mt:head/>
     </jsp:attribute>
 
     <jsp:attribute name="header">
-
-      <t:header pageName="${pageName}"/>
+      <mt:header pageName="${pageName}"/>
     </jsp:attribute>
 
     <jsp:attribute name="footer">
@@ -22,4 +21,4 @@
     <jsp:body>
         <jsp:doBody/>
     </jsp:body>
-</t:general>
+</mt:general>

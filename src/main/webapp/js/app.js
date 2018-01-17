@@ -16,15 +16,7 @@ function runCommand(command, method, action) {
     form.submit();
 }
 
-function banUser(userId) {
-    $.get("someservlet", function (responseJson) {
-        console.log("Response", responseJson);
-    });
-}
 
-function unbanUser(userId) {
-
-}
 
 // start jQuery
 $(function () {
@@ -43,8 +35,12 @@ $(function () {
     });
 
     // init materialize select
-    $(document).ready(function () {
-        $('select').material_select();
-    });
+    $('select').material_select();
 
+
+
+});
+
+$(document).ready(function(){
+    $('.collapsible').collapsible();
 });

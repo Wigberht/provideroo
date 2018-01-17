@@ -3,6 +3,7 @@ package com.dimbo.dao.factory;
 import com.dimbo.dao.models.account.AccountDAO;
 import com.dimbo.dao.models.chat.ChatDAO;
 import com.dimbo.dao.models.message.MessageDAO;
+import com.dimbo.dao.models.role.RoleDAO;
 import com.dimbo.dao.models.service.ServiceDAO;
 import com.dimbo.dao.models.subscriber.SubscriberDAO;
 import com.dimbo.dao.models.tariff.TariffDAO;
@@ -26,5 +27,7 @@ public interface DAOAbstractFactory {
     TariffDAO makeTariffDAO(Connection connection);
 
     ServiceDAO makeServiceDAO(Connection connection);
+    
+    RoleDAO makeRoleDAO(Connection connection);
 
 }

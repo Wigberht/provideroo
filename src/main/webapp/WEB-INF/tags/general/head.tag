@@ -1,3 +1,7 @@
+<%@tag description="Head of page tag" pageEncoding="UTF-8" %>
+<%@ attribute name="title" %>
+<%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <!--materialize css-->
@@ -24,6 +28,7 @@
 
 <!--custom js scripts-->
 <script src="/js/app.js"></script>
+<script src="/js/tariff.js"></script>
 
 <!-- custom css -->
 <link href="/css/style.css" rel="stylesheet">
