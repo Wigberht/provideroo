@@ -12,6 +12,8 @@ import com.dimbo.dao.models.service.ServiceDAO;
 import com.dimbo.dao.models.service.ServiceDAOMySQL;
 import com.dimbo.dao.models.subscriber.SubscriberDAO;
 import com.dimbo.dao.models.subscriber.SubscriberDAOMySQL;
+import com.dimbo.dao.models.subscription.SubscriptionDAO;
+import com.dimbo.dao.models.subscription.SubscriptionDAOMySQL;
 import com.dimbo.dao.models.tariff.TariffDAO;
 import com.dimbo.dao.models.tariff.TariffDAOMySQL;
 import com.dimbo.dao.models.user.UserDAO;
@@ -61,5 +63,10 @@ public class MySQLDAOFactory implements DAOAbstractFactory {
     @Override
     public RoleDAO makeRoleDAO(Connection connection) {
         return new RoleDAOMySQL(connection);
+    }
+    
+    @Override
+    public SubscriptionDAO makeSubscriptionDAO(Connection connection) {
+        return new SubscriptionDAOMySQL(connection);
     }
 }

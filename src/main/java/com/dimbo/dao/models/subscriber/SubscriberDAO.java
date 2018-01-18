@@ -13,6 +13,8 @@ public interface SubscriberDAO {
     public List<Subscriber> all(int limit) throws DAOException;
 
     public List<Subscriber> all(int limit, int offset) throws DAOException;
+    
+    public Subscriber findByUserId(Long id) throws DAOException;
 
     public Subscriber find(Long id) throws DAOException;
 

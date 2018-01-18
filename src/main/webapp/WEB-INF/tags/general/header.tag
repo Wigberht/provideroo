@@ -3,7 +3,7 @@
 
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
-<div id="app"> </div>
+<div id="app"></div>
 <div class="navbar-fixed">
     <nav>
         <div id="navbar_header">
@@ -25,4 +25,4 @@
     </nav>
 </div>
 
-<%@ include file="/jsp/vue/vue-integration.jspf" %>
+<%--<%@ include file="/jsp/vue/vue-integration.jspf" %>--%>

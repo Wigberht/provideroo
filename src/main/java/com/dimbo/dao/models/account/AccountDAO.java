@@ -5,12 +5,12 @@ import com.dimbo.model.Account;
 
 public interface AccountDAO {
 
-    public Account find(Long id) throws DAOException;
+    Account find(Long id) throws DAOException;
 
-    public boolean delete(Long id) throws DAOException;
+    boolean delete(Long id) throws DAOException;
 
-    public Account update(Account account) throws DAOException;
+    boolean update(Account account) throws DAOException;
 
-    public Account create(Account account) throws DAOException;
+    Account create(Account account) throws DAOException;
 
 }

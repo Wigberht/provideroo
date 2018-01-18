@@ -11,6 +11,10 @@ public class ServiceHelper {
         connection = ConnectionPool.conn();
     }
     
+    ServiceHelper(Connection connection) {
+        this.connection = connection;
+    }
+    
     public void returnConnection() {
         ConnectionPool.returnConn(connection);
     }

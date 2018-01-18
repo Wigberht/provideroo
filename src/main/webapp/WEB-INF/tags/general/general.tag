@@ -20,5 +20,6 @@
 </main>
 <jsp:invoke fragment="footer"/>
 
+<%@ include file="/jsp/vue/vue-global.jspf" %>
 </body>
 </html>

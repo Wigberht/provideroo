@@ -1,7 +1,6 @@
 <script type="text/x-template" id="ban-button-template">
     <a @click="banToggle"
        class="waves-effect waves-light btn">{{buttonText}}</a>
-
 </script>
 
 <script>
@@ -13,52 +12,16 @@
                 banned: false,
                 toast: {
                     time: 1000,
-                    text: {
-                        ban: {
-                            success: "Successful ban",
-                            error: "Unsuccessful ban"
-                        },
-                        unban: {
-                            success: "Successful unban",
-                            error: "Unsuccessful unban"
-                        }
-                    }
                 }
             }
         },
         methods: {
-            banUser() {
-                console.log(this.user_id);
-
-                axios.post("/rest/user/ban", {
-                    'userId': this.user_id,
-                    'banned': !this.banned
-                }).then((response) => {
-                    console.log(response);
-                    console.log(response.data);
-                    if (response.data.success) {
-                        Materialize.toast(this.toast.text, 1000)
-                    } else {
-                        Materialize.toast("Ban was unsuccessful", 1000)
-                    }
-
-                }).catch((error) => {
-                    console.log(error);
-                    Materialize.toast("Ban was unsuccessful", 1000)
-                })
-            },
-
             banToggle() {
-                console.log(this.user_id);
-
-                console.log("Banned now  : " + this.banned);
-                console.log("Banned after: " + !this.banned);
                 axios.post("/rest/user/ban", {
                     'userId': this.user_id,
                     'banned': !this.banned
                 }).then((response) => {
                     console.log(response);
-                    console.log(response.data);
 
                     if (response.data.success) {
                         this.banned = !this.banned;

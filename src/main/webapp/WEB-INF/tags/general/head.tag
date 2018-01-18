@@ -32,3 +32,16 @@
 
 <!-- custom css -->
 <link href="/css/style.css" rel="stylesheet">
+
+<script type="text/javascript">
+    console.log(${messages.getString('logout')});
+    window.msg = {};
+    <c:forEach items="${messages.keySet()}" var="key">
+    try {
+        msg['${key}'] = "${messages[key]}";
+    } catch (e) {
+        console.log("error fullfilling the msgForms resource from bundle " + e);
+    }
+    </c:forEach>
+    console.log(msg);
+</script>

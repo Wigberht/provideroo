@@ -6,6 +6,7 @@ import com.dimbo.dao.models.message.MessageDAO;
 import com.dimbo.dao.models.role.RoleDAO;
 import com.dimbo.dao.models.service.ServiceDAO;
 import com.dimbo.dao.models.subscriber.SubscriberDAO;
+import com.dimbo.dao.models.subscription.SubscriptionDAO;
 import com.dimbo.dao.models.tariff.TariffDAO;
 import com.dimbo.dao.models.user.UserDAO;
 import java.sql.Connection;
@@ -48,6 +49,11 @@ public class OracleDAOFactory implements DAOAbstractFactory {
     
     @Override
     public RoleDAO makeRoleDAO(Connection connection) {
+        return null;
+    }
+    
+    @Override
+    public SubscriptionDAO makeSubscriptionDAO(Connection connection) {
         return null;
     }
 }

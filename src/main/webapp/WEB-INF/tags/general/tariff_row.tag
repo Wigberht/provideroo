@@ -4,26 +4,38 @@
 <%@attribute name="tariff"
              type="com.dimbo.model.Tariff" %>
 
-<tr class="tariff-row" data-tid="${tariff.id}">
-    <%--<td data-tfield="title">--%>
-        <%--${tariff.title}--%>
-    <%--</td>--%>
-    <%--<td>${tariff.description}</td>--%>
-    <%--<td>${tariff.numberOfDays}</td>--%>
-    <%--<td>${tariff.cost}</td>--%>
-    <%--<td>${tariff.currencyShortname}</td>--%>
-    <%--<td class="button-data">--%>
-        <%--<c:if test="${isAdmin}">--%>
-            <%--<a href="#" onclick="makeEditable(${tariff.id})">click ples</a>--%>
-        <%--</c:if>--%>
-    <%--</td>--%>
-    <%--<td>--%>
-    <%--</td>--%>
-    <tariff-row
+
+<c:if test="${isAdmin}">
+    <tariff-row-admin
+        id="${tariff.id}"
         title="${tariff.title}"
         description="${tariff.description}"
         number_of_days="${tariff.numberOfDays}"
         cost="${tariff.cost}"
         currency="${tariff.currencyShortname}"
-    ></tariff-row>
-</tr>
+        edit_text='<fmt:message key="edit"/>'
+        save_text='<fmt:message key="save"/>'
+    ></tariff-row-admin>
+</c:if>
+
+<c:if test="${isSubscriber}">
+    <tariff-row-subscriber
+        id="${tariff.id}"
+        title="${tariff.title}"
+        description="${tariff.description}"
+        number_of_days="${tariff.numberOfDays}"
+        cost="${tariff.cost}"
+        currency="${tariff.currencyShortname}"
+        subscribe_text='<fmt:message key="subscribe"/>'
+        unsubscribe_text='<fmt:message key="unsubscribe"/>'
+        subscriptions='${subscriptions}'
+        subscribed='${subscribed}'
+        user_id='${sessionScope.user.id}'
+        subscription_fail_text='<fmt:message key="subscription.fail" />'
+        subscription_success_text='<fmt:message key="subscription.success" />'
+        subscription_prolong_success_text='
+            <fmt:message key="subscription.prolong.success" />'
+        subscription_prolong_fail_text='
+            <fmt:message key="subscription.prolong.fail" />'
+    ></tariff-row-subscriber>
+</c:if>

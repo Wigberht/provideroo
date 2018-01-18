@@ -5,7 +5,7 @@
              type="java.util.List<com.dimbo.model.Subscriber>" %>
 
 <div id="subscriber-list">
-    <mt:pagination />
+    <mt:pagination/>
     <table class="striped responsive-table highlight bordered">
         <thead>
         <tr>
@@ -43,7 +43,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <mt:pagination />
+    <mt:pagination/>
 </div>
 
-<%@ include file="/jsp/vue/vue-ban-button.jspf" %>
+<%--<%@ include file="/jsp/vue/vue-ban-button.jspf" %>--%>

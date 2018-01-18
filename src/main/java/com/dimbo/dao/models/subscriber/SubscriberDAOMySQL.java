@@ -18,7 +18,15 @@ import java.util.List;
 
 public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
-    private static final String FIND_BY_ID = "SELECT * FROM subscriber WHERE id = ?";
+    private static final String FIND_BY_ID =
+        "SELECT * " +
+            "FROM subscriber " +
+            "WHERE id = ?";
+    private static final String FIND_BY_USER_ID =
+        "SELECT * " +
+            "FROM subscriber " +
+            "WHERE user_id = ?";
+    
     private static final String FIND_ALL = "SELECT\n"
         + "  subscriber.id as subscriber_id,\n"
         + "  subscriber.first_name,\n"
@@ -55,11 +63,17 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         + "  INNER JOIN user ON subscriber.user_id = user.id\n"
         + "LIMIT ? OFFSET ?";
     
-    private static final String CREATE_SUBSCRIBER = "INSERT INTO subscriber VALUES(DEFAULT, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_SUBSCRIBER_BY_ID = "UPDATE subscriber "
-        + "SET first_name = ?, last_name = ?, birth_date = ? "
-        + "WHERE id = ?";
-    private static final String DELETE_SUBSCRIBER_BY_ID = "DELETE FROM subscriber WHERE id = ?";
+    private static final String CREATE_SUBSCRIBER =
+        "INSERT INTO subscriber " +
+            "VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_SUBSCRIBER_BY_ID =
+        "UPDATE subscriber "
+            + "SET first_name = ?, last_name = ?, birth_date = ? "
+            + "WHERE id = ?";
+    private static final String DELETE_SUBSCRIBER_BY_ID =
+        "DELETE " +
+            "FROM subscriber " +
+            "WHERE id = ?";
     
     
     Connection connection;
@@ -129,10 +143,38 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
     @Override
     public Subscriber find(Long id) throws DAOException {
+//        Subscriber subscriber = null;
+//
+//        try (
+//            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false, id);
+//            ResultSet resultSet = statement.executeQuery()
+//        ) {
+//            if (resultSet.next()) {
+//                subscriber = map(resultSet);
+//                subscriber.setUser(findUser(subscriber.getUserId()));
+//                subscriber.setAccount(findAccount(subscriber.getAccountId()));
+//            }
+//        } catch (SQLException e) {
+//            throw new DAOException(e);
+//        }
+
+//        return subscriber;
+        return findSubscriber(FIND_BY_ID, id);
+    }
+    
+    @Override
+    public Subscriber findByUserId(Long id) throws DAOException {
+        return findSubscriber(FIND_BY_USER_ID, id);
+    }
+    
+    private Subscriber findSubscriber(String sql, Object... objects)
+        throws DAOException {
+        
         Subscriber subscriber = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false, id);
+            PreparedStatement statement = prepareStatement(
+                connection, sql, false, objects);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
@@ -145,6 +187,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         }
         
         return subscriber;
+        
     }
     
     private User findUser(long userId) {

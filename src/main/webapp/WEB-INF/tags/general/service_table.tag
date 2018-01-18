@@ -16,27 +16,38 @@
                     <h4><fmt:message key="no_tariffs"/></h4>
                 </c:if>
                 <c:if test="${fn:length(service.tariffs)>0}">
-                    <table class="responsive-table striped bordered">
-                        <thead>
-                        <tr>
-                            <th><fmt:message key="title"/></th>
-                            <th><fmt:message key="description"/></th>
-                            <th><fmt:message key="number_of_days"/></th>
-                            <th><fmt:message key="cost"/></th>
-                            <th><fmt:message key="currency"/></th>
-                        </tr>
-                        </thead>
 
-                        <tbody class="table-body">
-                        <c:forEach items="${service.tariffs}" var="tariff">
+                    <div class="row center-align">
+                        <div class="col s2">
+                            <p><b><fmt:message key="title"/></b></p>
+                        </div>
+                        <div class="col s2">
+                            <p><b><fmt:message key="description"/></b></p>
+                        </div>
+                        <div class="col s2">
+                            <p><b><fmt:message key="number_of_days"/></b></p>
+                        </div>
+                        <div class="col s1">
+                            <p><b><fmt:message key="cost"/></b></p>
+                        </div>
+                        <div class="col s2">
+                            <p><b><fmt:message key="currency"/></b></p>
+                        </div>
+                    </div>
+
+
+                    <c:forEach items="${service.tariffs}"
+                               var="tariff"
+                               varStatus="status">
+                        <div class="card-panel teal lighten-5 ">
                             <mt:tariff_row tariff="${tariff}"/>
-                        </c:forEach>
-                        </tbody>
+                        </div>
+                    </c:forEach>
 
-                    </table>
+
                 </c:if>
             </div>
         </li>
     </c:forEach>
 </ul>
-<%@ include file="/jsp/vue/vue-tariff-row.jspf" %>
+

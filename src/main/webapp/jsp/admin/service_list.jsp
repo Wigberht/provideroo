@@ -9,8 +9,7 @@
 
         <mt:service_table services="${services}"/>
 
-        <c:if
-            test='${sessionScope.user.roleId==applicationScope.get("admin_role_id")}'>
+        <c:if test='${isAdmin}'>
             <div class="row">
                 <div class="col s3">
                     <a href="/admin/new_service"

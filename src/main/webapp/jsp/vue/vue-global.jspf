@@ -1,0 +1,9 @@
+<jsp:include page="/jsp/vue/components/tariff-row.jsp"/>
+<jsp:include page="/jsp/vue/components/tariff-row-admin.jsp"/>
+<jsp:include page="/jsp/vue/components/tariff-row-subscriber.jsp"/>
+<jsp:include page="/jsp/vue/components/ban-button.jsp"/>
+<jsp:include page="/jsp/vue/components/page-link.jsp"/>
+
+<script>
+    new Vue().$mount("#app");
+</script>

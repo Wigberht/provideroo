@@ -7,6 +7,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 
+
 <c:set var="isAdmin"
        value='${sessionScope.user.roleId==applicationScope.get("admin_role_id")}'/>
 <c:set var="isSubscriber"

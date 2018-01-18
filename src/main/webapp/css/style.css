@@ -7,6 +7,10 @@
     user-select: none;
 }
 
+.zero-margin {
+    margin: 0;
+}
+
 body {
     display: flex;
     min-height: 100vh;
