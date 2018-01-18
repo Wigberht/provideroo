@@ -1,14 +1,10 @@
 package com.dimbo.rest.user;
 
-import com.dimbo.helper.TimeHelper;
 import com.dimbo.helper.service.SubscriberService;
 import com.dimbo.helper.service.SubscriptionService;
-import com.dimbo.helper.service.TariffService;
 import com.dimbo.helper.service.UserService;
-import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.Subscription;
-import com.dimbo.model.Tariff;
 import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
 import org.slf4j.Logger;
@@ -18,9 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 @Path("/user")
 public class UserREST extends HttpServlet {
@@ -46,10 +39,23 @@ public class UserREST extends HttpServlet {
         long tariffId = jsonService.get(data, "tariffId").asLong();
         
         SubscriptionService subscriptionService = new SubscriptionService();
+        SubscriberService subscriberService = new SubscriberService();
         
-        success = subscriptionService.createSubscription(userId, tariffId);
+        Subscriber subscriber = subscriberService
+            .findSubscriberByUserId(userId);
+        Subscription activeSubscription = subscriptionService
+            .findSubscription(tariffId, subscriber.getId());
+        
+        /*if there is such subscription - prolong it, create new otherwise*/
+        if (activeSubscription != null) {
+            success = subscriptionService
+                .setSubscriptionProlong(activeSubscription, true);
+        } else {
+            success = subscriptionService.createSubscription(userId, tariffId);
+        }
         
         subscriptionService.returnConnection();
+        subscriberService.returnConnection();
         
         String response = jsonService.toJSON(new SimpleResponse(success));
         

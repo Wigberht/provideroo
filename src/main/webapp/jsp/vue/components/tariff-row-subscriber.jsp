@@ -2,23 +2,24 @@
 
     <div class="row zero-margin center-align">
         <div class="col s2">{{title}}</div>
-        <div class="col s2">{{description}}</div>
-        <div class="col s2">{{number_of_days}}</div>
+        <div class="col s3">{{description}}</div>
+        <div class="col s1">{{number_of_days}}</div>
         <div class="col s1">{{cost}}</div>
-        <div class="col s2">{{currency}}</div>
-        <div class="col s2"></div>
+        <div class="col s1">{{currency}}</div>
+        <div class="col s2">{{dueDate}}</div>
+
         <div class="col s2">
             <a v-if="!isSubscribed"
                @click="subscribe"
-               class="waves-effect waves-light btn">
+               class="waves-effect waves-light btn btn-small">
                 {{buttonText}}
             </a>
             <a v-if="isSubscribed"
                @click="unsubscribe"
-               class="waves-effect waves-light btn">
+               class="waves-effect waves-light btn btn-small">
                 {{buttonText}}
             </a>
-            <p v-if=""
+            <%--<p v-if=""--%>
         </div>
 
     </div>
@@ -38,6 +39,8 @@
         data: function () {
             return {
                 isSubscribed: false,
+                isProlong: false,
+                dueDate: "-------------"
             }
         },
         template: "#tariff-row-subscriber-template",
@@ -51,6 +54,7 @@
                     if (response.data.success) {
                         Materialize.toast(this.subscription_success_text, 1500);
                         this.isSubscribed = true;
+                        this.dueDate = this.getDueDate();
                     } else {
                         Materialize.toast(this.subscription_fail_text, 1500)
                     }
@@ -79,6 +83,11 @@
                 })
             },
 
+            getDueDate() {
+                return moment().add(this.number_of_days, 'days')
+                               .format("YYYY-MM-DD");
+            }
+
         },
 
         beforeMount() {
@@ -86,9 +95,10 @@
 
             subscriptions.forEach((elem) => {
                 if (elem.tariffId == this.id) {
-                    this.endDate = elem.end;
-                    this.isProlong = elem.prolong == true;
-                    this.isSubscribed = Date.parse(elem.end) > Date.now();
+                    this.isSubscribed = elem.prolong == true;
+                    if (Date.parse(elem.end) > Date.now()) {
+                        this.dueDate = elem.end;
+                    }
                     console.log("subscribed " + this.isSubscribed);
                 }
             });

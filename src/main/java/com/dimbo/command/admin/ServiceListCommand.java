@@ -33,8 +33,12 @@ public class ServiceListCommand implements Command {
         
         request.setAttribute("services", serviceService.getAllServices());
         
-        User user = (User) request.getSession().getAttribute("user");
-        if (!user.isAdmin()) {
+        Object userObj = request.getSession().getAttribute("user");
+        
+        
+        if (userObj != null && !((User) userObj).isAdmin()) {
+            User user = (User) userObj;
+            
             Subscriber subscriber = subscriberService
                 .findSubscriberByUserId(user.getId());
             

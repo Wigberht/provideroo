@@ -21,18 +21,28 @@
                         <div class="col s2">
                             <p><b><fmt:message key="title"/></b></p>
                         </div>
-                        <div class="col s2">
+                        <div class="col s3">
                             <p><b><fmt:message key="description"/></b></p>
                         </div>
-                        <div class="col s2">
+                        <div class="col s1">
                             <p><b><fmt:message key="number_of_days"/></b></p>
                         </div>
-                        <div class="col s1">
+                        <div class='col s1'>
                             <p><b><fmt:message key="cost"/></b></p>
                         </div>
-                        <div class="col s2">
+                        <div class="col s1">
                             <p><b><fmt:message key="currency"/></b></p>
                         </div>
+                        <c:if test="${isSubscriber}">
+                            <div class="col s2">
+                                <p><b><fmt:message key="due_date"/></b></p>
+                            </div>
+                        </c:if>
+                        <c:if test="${isAdmin}">
+                            <div class="col s2">
+                                <p><b><fmt:message key="subscribers_amount"/></b></p>
+                            </div>
+                        </c:if>
                     </div>
 
 

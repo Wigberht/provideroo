@@ -26,6 +26,10 @@
 <!-- axios -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<!-- moment -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment-with-locales.min.js"></script>
+
 <!--custom js scripts-->
 <script src="/js/app.js"></script>
 <script src="/js/tariff.js"></script>

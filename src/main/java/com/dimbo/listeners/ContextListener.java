@@ -28,7 +28,7 @@ public class ContextListener implements ServletContextListener {
         servletContextEvent.getServletContext()
                            .setAttribute("services", serviceDAO.all());
         
-        // fetch role ids from db
+        /* fetch role ids from DB */
         RoleDAO roleDAO = FactoryGenerator.getFactory().makeRoleDAO(connection);
         Role admin = roleDAO.find("admin");
         Role subscriber = roleDAO.find("subscriber");
