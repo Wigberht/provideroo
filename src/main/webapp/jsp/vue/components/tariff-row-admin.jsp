@@ -1,12 +1,33 @@
 <script type="text/x-template" id="tariff-row-admin-template">
 
     <div class="row zero-margin center-align">
-        <div class="col s2">{{title}}</div>
-        <div class="col s2">{{description}}</div>
-        <div class="col s2">{{number_of_days}}</div>
-        <div class="col s1">{{cost}}</div>
-        <div class="col s2">{{currency}}</div>
-        <div class="col s2"></div>
+        <template v-if="edit">
+            <div class="col s2">
+                <input type="text" v-model="d_title">
+            </div>
+            <div class="col s3">
+                <textarea v-model="d_description"></textarea>
+            </div>
+            <div class="col s1">
+                <input type="number" v-model="d_days">
+            </div>
+            <div class="col s1">
+                <input type="number" v-model="d_cost">
+            </div>
+            <div class="col s1">
+                <input type="text" v-model="d_currency">
+            </div>
+        </template>
+
+        <template v-else>
+            <div class="col s2">{{d_title}}</div>
+            <div class="col s3">{{d_description}}</div>
+            <div class="col s1">{{d_days}}</div>
+            <div class="col s1">{{d_cost}}</div>
+            <div class="col s1">{{d_currency}}</div>
+        </template>
+
+        <div class="col s2">{{subscribers_amount}}</div>
         <div class="col s2">
             <a v-if="!edit"
                @click="startEdit"
@@ -32,17 +53,44 @@
         ],
         data: function () {
             return {
+                defaultValue: {
+                    d_title: this.title,
+                    d_description: this.description,
+                    d_days: this.number_of_days,
+                    d_cost: this.cost,
+                    d_currency: this.currency,
+                },
+
+                d_title: this.title,
+                d_description: this.description,
+                d_days: this.number_of_days,
+                d_cost: this.cost,
+                d_currency: this.currency,
+
                 edit: false,
+                subscribers_amount: 0
             }
         },
         template: "#tariff-row-admin-template",
         methods: {
             startEdit() {
-                console.log("Start edit");
                 this.edit = true;
             },
             finishEdit() {
-                console.log("finish edit");
+                axios.post("/rest/tariff/update", {
+                    'id': this.id,
+                    'title': this.d_title,
+                    'description': this.d_description,
+                    'numberOfDays': this.d_days,
+                    'cost': this.d_cost,
+                    'currencyShortname': this.d_currency,
+                }).then((response) => {
+                    console.log(response);
+                    Materialize.toast("SUCCESS", 1500)
+                }).catch((error) => {
+                    Materialize.toast(this.tariff_update_fail, 1500)
+                    console.log(error);
+                });
                 this.edit = false;
             },
         },
@@ -51,7 +99,6 @@
 
         },
         mounted: function () {
-
         },
 
         computed: {

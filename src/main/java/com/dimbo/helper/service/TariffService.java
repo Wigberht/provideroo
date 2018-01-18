@@ -40,4 +40,10 @@ public class TariffService extends ServiceHelper {
                                .makeTariffDAO(connection)
                                .find(id);
     }
+    
+    public boolean updateTariff(Tariff tariff) {
+        return FactoryGenerator.getFactory()
+                               .makeTariffDAO(connection)
+                               .update(tariff);
+    }
 }

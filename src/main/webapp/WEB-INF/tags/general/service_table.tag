@@ -40,7 +40,8 @@
                         </c:if>
                         <c:if test="${isAdmin}">
                             <div class="col s2">
-                                <p><b><fmt:message key="subscribers_amount"/></b></p>
+                                <p><b><fmt:message
+                                    key="subscribers_amount"/></b></p>
                             </div>
                         </c:if>
                     </div>
@@ -49,7 +50,8 @@
                     <c:forEach items="${service.tariffs}"
                                var="tariff"
                                varStatus="status">
-                        <div class="card-panel teal lighten-5 ">
+                        <div
+                            class="tariff-row-card teal lighten-5">
                             <mt:tariff_row tariff="${tariff}"/>
                         </div>
                     </c:forEach>

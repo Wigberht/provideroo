@@ -1,6 +1,5 @@
 package com.dimbo.rest;
 
-import com.dimbo.rest.response.SimpleResponse;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,6 +26,15 @@ public class JSONService {
             e.printStackTrace();
         }
         
+        return null;
+    }
+    
+    public Object toObject(String json, Class<?> clasz) {
+        try {
+            return objectMapper.readValue(json, clasz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
     
