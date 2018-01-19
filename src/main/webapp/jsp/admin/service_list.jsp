@@ -7,6 +7,10 @@
     <div class="container">
         <h2><fmt:message key="list_of_services"/></h2>
 
+        <a href="/ServicesPDF" class="btn">
+            <fmt:message key="get_pdf"/>
+        </a>
+
         <mt:service_table services="${services}"/>
 
         <c:if test='${isAdmin}'>
