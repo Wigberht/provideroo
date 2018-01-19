@@ -16,7 +16,7 @@ public class EncodingFilter implements Filter {
     }
     
     /**
-     * Encoding filter. Changes encoding of every request and responce
+     * Encoding filter. Changes encoding of every request and response
      *
      * @param req
      * @param res
@@ -26,8 +26,9 @@ public class EncodingFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        res.setCharacterEncoding("UTF-8");
+        LOGGER.info("IN ENCODING FILTER");
+        req.setCharacterEncoding("UTF8");
+        res.setCharacterEncoding("UTF8");
         chain.doFilter(req, res);
     }
     

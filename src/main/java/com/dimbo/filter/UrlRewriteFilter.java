@@ -37,7 +37,8 @@ public class UrlRewriteFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
-        LOGGER.info("In url filter");
+        
+        LOGGER.info("IN URL FILTER");
         HttpServletRequest request = (HttpServletRequest) req;
         LOGGER.info("accessing " + request.getRequestURI());
 //        if (request.getRequestURI().contains("admin/")) {
@@ -46,12 +47,14 @@ public class UrlRewriteFilter implements Filter {
         if (find) {
             boolean isUser = false;
             for (Roles role : Roles.values()) {
-                if (matcher.group(1).contains(role.name().toLowerCase())) isUser = true;
+                if (matcher.group(1).contains(role.name().toLowerCase()))
+                    isUser = true;
             }
             
             if (isUser) {
                 String resultPage = getResultPage(matcher);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher(resultPage);
+                RequestDispatcher requestDispatcher = request
+                    .getRequestDispatcher(resultPage);
                 requestDispatcher.forward(req, res);
             } else {
                 chain.doFilter(req, res);

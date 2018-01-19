@@ -20,8 +20,18 @@
         </template>
 
         <template v-else>
-            <div class="col s2">{{d_title}}</div>
-            <div class="col s3">{{d_description}}</div>
+            <div @mouseover="showTruncated"
+                 @mouseleave="hideTruncated"
+                 v-bind:class="{truncate:isTruncated}"
+                 class="col s2">
+                {{d_title}}
+            </div>
+            <div @mouseover="showTruncated"
+                 @mouseleave="hideTruncated"
+                 v-bind:class="{truncate:isTruncated}"
+                 class="col s3">
+                {{d_description}}
+            </div>
             <div class="col s1">{{d_days}}</div>
             <div class="col s1">{{d_cost}}</div>
             <div class="col s1">{{d_currency}}</div>
@@ -67,6 +77,8 @@
                 d_cost: this.cost,
                 d_currency: this.currency,
 
+                isTruncated: true,
+
                 edit: false,
                 subscribers_amount: 0
             }
@@ -88,10 +100,16 @@
                     console.log(response);
                     Materialize.toast("SUCCESS", 1500)
                 }).catch((error) => {
-                    Materialize.toast(this.tariff_update_fail, 1500)
+                    Materialize.toast(this.tariff_update_fail, 1500);
                     console.log(error);
                 });
                 this.edit = false;
+            },
+            showTruncated() {
+                this.isTruncated = false;
+            },
+            hideTruncated() {
+                this.isTruncated = true;
             },
         },
 

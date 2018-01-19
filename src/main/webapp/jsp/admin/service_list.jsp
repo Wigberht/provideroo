@@ -7,7 +7,7 @@
     <div class="container">
         <h2><fmt:message key="list_of_services"/></h2>
 
-        <a href="/ServicesPDF" class="btn">
+        <a href="/ServicesPDF" class="btn" target="_blank">
             <fmt:message key="get_pdf"/>
         </a>
 

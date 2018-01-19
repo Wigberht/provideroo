@@ -33,27 +33,12 @@ public class TariffREST extends HttpServlet {
     public Response update(String data) {
         boolean success;
         JSONService jsonService = new JSONService();
-        
         TariffService tariffService = new TariffService();
-        ObjectMapper objectMapper = new ObjectMapper();
-//        Tariff tariff = null;
-//        try {
-//            tariff = objectMapper.readValue(data, Tariff.class);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         
-        Object tariffObj = jsonService.toObject(data, Tariff.class);
-
-//        Tariff tariff1 = (Tariff) tariffObj;
-//        LOGGER.info("Obj is null: " + (tariffObj == null));
-//        LOGGER.info("Tariff is null: " + (tariff1 == null));
+        LOGGER.info("Description: " + jsonService.get(data, "description"));
+        
         Tariff tariff = (Tariff) jsonService.toObject(data, Tariff.class);
-
-//        LOGGER.info("Json: " + data);
-//        LOGGER.info("Cost: " + tariff1.getCost());
-
-//        success = true;
+        
         success = tariffService.updateTariff(tariff);
         
         tariffService.returnConnection();
