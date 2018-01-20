@@ -10,13 +10,14 @@
 
         <div class="col s2">
             <a v-if="!isSubscribed"
+               :disabled="isBanned"
                @click="subscribe"
-               class="waves-effect waves-light btn btn-small">
+               class="waves-effect waves-light btn btn-small noselect">
                 {{buttonText}}
             </a>
             <a v-if="isSubscribed"
                @click="unsubscribe"
-               class="waves-effect waves-light btn btn-small">
+               class="waves-effect waves-light btn btn-small noselect">
                 {{buttonText}}
             </a>
             <%--<p v-if=""--%>
@@ -28,7 +29,7 @@
 
 <script>
     Vue.component('tariff-row-subscriber', {
-        props: [
+        props: ['banned',
             'id', 'title', 'description',
             'number_of_days', 'cost', 'currency',
             'subscribe_text', 'unsubscribe_text', 'subscribed',
@@ -40,7 +41,8 @@
             return {
                 isSubscribed: false,
                 isProlong: false,
-                dueDate: "-------------"
+                dueDate: "-------------",
+                isBanned: this.banned == "true"
             }
         },
         template: "#tariff-row-subscriber-template",
@@ -105,6 +107,8 @@
         },
         mounted: function () {
 
+            console.log("Banned: " + Boolean(this.banned));
+            console.log("Is banned: ", Boolean(this.banned));
         },
 
         computed: {

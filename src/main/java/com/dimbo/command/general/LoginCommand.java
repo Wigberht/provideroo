@@ -35,6 +35,7 @@ public class LoginCommand implements Command {
         }
         
         request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute("banned", user.isBanned());
         
         if (user.isAdmin()) {
             return PagesResourceManager.getPage("admin.control_panel");

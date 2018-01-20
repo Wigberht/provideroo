@@ -10,6 +10,13 @@
 </span>
 <ul id="nav-mobile" class="right">
     <page-link
+        active="${pageName.equals("subscriber_profile")}"
+        link="${root}/subscriber/profile"
+        icon="person"
+        message="<fmt:message key="subscriber_profile"/>"
+    ></page-link>
+
+    <page-link
         active="${pageName.equals("services")}"
         link="${root}/subscriber/service_list"
         icon="attach_money"

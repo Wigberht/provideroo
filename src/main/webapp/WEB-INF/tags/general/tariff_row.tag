@@ -20,6 +20,7 @@
 
 <c:if test="${isSubscriber}">
     <tariff-row-subscriber
+        banned="${sessionScope.get("user").isBanned()}"
         id="${tariff.id}"
         title="${tariff.title}"
         description="${tariff.description}"

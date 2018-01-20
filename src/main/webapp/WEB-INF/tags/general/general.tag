@@ -3,6 +3,8 @@
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 
+<%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -16,6 +18,10 @@
     <%--necessary for Vue.js integration--%>
     <div id="app">
         <jsp:invoke fragment="header"/>
+        <div class="container">
+
+        <mt:banned_notification/>
+    </div>
         <jsp:doBody/>
     </div>
 </main>

@@ -8,17 +8,11 @@
     <nav>
         <div id="navbar_header">
             <div class="nav-wrapper">
-                <c:if
-                    test='${sessionScope.user.roleId==applicationScope.get("admin_role_id")}'>
-
+                <c:if test='${isAdmin}'>
                     <mt:admin_header/>
-
                 </c:if>
-                <c:if
-                    test='${sessionScope.user.roleId==applicationScope.get("subscriber_role_id")}'>
-
+                <c:if test='${isSubscriber}'>
                     <mt:subscriber_header/>
-
                 </c:if>
             </div>
         </div>

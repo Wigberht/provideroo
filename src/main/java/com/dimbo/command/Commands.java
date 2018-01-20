@@ -4,6 +4,7 @@ import com.dimbo.command.admin.*;
 import com.dimbo.command.general.LoginCommand;
 import com.dimbo.command.general.LogoutCommand;
 import com.dimbo.command.general.RegistrationCommand;
+import com.dimbo.command.subscriber.ShowSubscriberProfileCommand;
 
 /**
  * The Enum Commands.
@@ -19,7 +20,8 @@ public enum Commands {
     SERVICE_LIST(new ServiceListCommand()),
     ADD_SERVICE(new AddServiceCommand()),
     ADD_TARIFF(new AddTariffCommand()),
-    NEW_TARIFF(new NewTariffCommand());
+    NEW_TARIFF(new NewTariffCommand()),
+    SHOW_SUBSCRIBER_PROFILE(new ShowSubscriberProfileCommand());
     
     private Command command;
     

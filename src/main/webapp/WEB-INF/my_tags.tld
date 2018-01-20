@@ -33,6 +33,11 @@
     </tag-file>
 
     <tag-file>
+        <name>banned_notification</name>
+        <path>/WEB-INF/tags/subscriber/banned_notification.tag</path>
+    </tag-file>
+
+    <tag-file>
         <name>subscriber_layout</name>
         <path>/WEB-INF/tags/subscriber/subscriber_layout.tag</path>
     </tag-file>
