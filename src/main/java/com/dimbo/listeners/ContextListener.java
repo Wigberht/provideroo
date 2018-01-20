@@ -4,14 +4,21 @@ import com.dimbo.ConnectionPool;
 import com.dimbo.dao.factory.FactoryGenerator;
 import com.dimbo.dao.models.role.RoleDAO;
 import com.dimbo.dao.models.service.ServiceDAO;
+import com.dimbo.helper.schedule.UpdateSubscriptionsJob;
 import com.dimbo.model.Role;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.sql.Connection;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ContextListener implements ServletContextListener {
+    
+    private ScheduledExecutorService scheduler;
     
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -21,25 +28,24 @@ public class ContextListener implements ServletContextListener {
                                            .getInitParameter("db_type");
         FactoryGenerator.setDbType(dbType);
         
-        // fill service list
-        Connection connection = ConnectionPool.conn();
-        ServiceDAO serviceDAO = FactoryGenerator.getFactory()
-                                                .makeServiceDAO(connection);
-        servletContextEvent.getServletContext()
-                           .setAttribute("services", serviceDAO.all());
-        
         /* fetch role ids from DB */
+        Connection connection = ConnectionPool.conn();
         RoleDAO roleDAO = FactoryGenerator.getFactory().makeRoleDAO(connection);
-        Role admin = roleDAO.find("admin");
-        Role subscriber = roleDAO.find("subscriber");
+        long adminId = roleDAO.find("admin").getId();
+        long subscriberId = roleDAO.find("subscriber").getId();
         
         servletContextEvent.getServletContext()
-                           .setAttribute("admin_role_id", admin.getId());
+                           .setAttribute("admin_role_id", adminId);
         servletContextEvent.getServletContext()
-                           .setAttribute("subscriber_role_id",
-                               subscriber.getId());
+                           .setAttribute("subscriber_role_id", subscriberId);
         
         ConnectionPool.returnConn(connection);
+        
+        /* start scheduled tasks */
+//        scheduler = Executors.newSingleThreadScheduledExecutor();
+//        scheduler.scheduleAtFixedRate(
+//            new UpdateSubscriptionsJob(), 0, 2, TimeUnit.SECONDS);
+        
     }
     
     /**
@@ -49,6 +55,8 @@ public class ContextListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent arg0) {
         ConnectionPool.getInstance()
                       .returnAllConnections();
+
+//        scheduler.shutdownNow();
     }
 }
 

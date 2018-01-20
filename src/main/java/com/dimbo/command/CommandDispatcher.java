@@ -14,7 +14,8 @@ public class CommandDispatcher {
     /**
      * The Constant LOGGER.
      */
-    static final Logger LOGGER = LoggerFactory.getLogger(CommandDispatcher.class);
+    static final Logger LOGGER = LoggerFactory
+        .getLogger(CommandDispatcher.class);
     
     /**
      * Gets the command by name.
@@ -48,8 +49,12 @@ public class CommandDispatcher {
             
             case ADD_SERVICE:
                 return Commands.ADD_SERVICE.getCommand();
+            
             case ADD_TARIFF:
                 return Commands.ADD_TARIFF.getCommand();
+            
+            case NEW_TARIFF:
+                return Commands.NEW_TARIFF.getCommand();
 
 //		default:
 //			LOGGER.warn("Unknown operation.");

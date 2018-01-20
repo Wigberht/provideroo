@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <mt:admin_layout pageName="new_service"
-                titleKey="new_service">
+                 titleKey="new_service">
 
     <div class="container">
         <div class="row">
@@ -33,7 +33,8 @@
                             class="materialize-textarea"
                             name="description"
                             placeholder="<fmt:message key="description"/>"></textarea>
-                        <label for="description"><fmt:message key="description"/> </label>
+                        <label for="description"><fmt:message
+                            key="description"/> </label>
                     </div>
                 </div>
 
@@ -77,13 +78,15 @@
                         <%--service--%>
                     <div class="input-field col s4">
                         <select id="service-select" name="service_id">
-                            <c:forEach items="${applicationScope['services']}"
-                                       var="service"
-                                       begin="1">
-                                <option selected value="${service.id}">${service.title}</option>
+                            <c:forEach items="${sessionScope.get('services')}"
+                                       var="service">
+                                <option selected
+                                        value="${service.id}">${service.title}</option>
                             </c:forEach>
                         </select>
-                        <label for="service-select"><fmt:message key="service"/> </label>
+                        <label for="service-select">
+                            <fmt:message key="service"/>
+                        </label>
                     </div>
                 </div>
 

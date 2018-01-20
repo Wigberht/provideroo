@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebFilter(urlPatterns = {"*"})
+//@WebFilter(urlPatterns = {"*"})
 public class UrlRewriteFilter implements Filter {
     Logger LOGGER = LoggerFactory.getLogger(UrlRewriteFilter.class);
     
@@ -27,7 +27,7 @@ public class UrlRewriteFilter implements Filter {
     /**
      * This lovely filter helps in making URLs more user-friendly.
      * Converts 'MainController?command=subscriber_list' to 'admin/subscriber_list'
-     * And '/jsp/admin/control_panel.jsp' to '/admin/control_panel'
+     * And '/jsp/admin/access_denied.jsp' to '/admin/control_panel'
      *
      * @param req
      * @param res
@@ -37,11 +37,9 @@ public class UrlRewriteFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
-        
-        LOGGER.info("IN URL FILTER");
+        LOGGER.info("Inr url rewrite filter");
         HttpServletRequest request = (HttpServletRequest) req;
-        LOGGER.info("accessing " + request.getRequestURI());
-//        if (request.getRequestURI().contains("admin/")) {
+        
         Matcher matcher = pattern.matcher(request.getRequestURI());
         boolean find = matcher.find();
         if (find) {
@@ -61,7 +59,6 @@ public class UrlRewriteFilter implements Filter {
             }
         } else {
             chain.doFilter(req, res);
-            
         }
     }
     
@@ -88,7 +85,6 @@ public class UrlRewriteFilter implements Filter {
               .append(matchPage)
               .append(".jsp");
             page = sb.toString();
-//            page = "/jsp/admin/" + matchPage + ".jsp";
         }
         
         LOGGER.info("Accessing page: " + page);

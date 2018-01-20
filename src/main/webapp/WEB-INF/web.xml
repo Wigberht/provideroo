@@ -7,24 +7,28 @@
     <display-name>Provideroo</display-name>
 
     <filter>
-        <filter-name>EncodingFilter</filter-name>
-        <filter-class>com.dimbo.filter.EncodingFilter</filter-class>
+        <filter-name>Access filter</filter-name>
+        <filter-class>com.dimbo.filter.AccessFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>EncodingFilter</filter-name>
+        <filter-name>Access filter</filter-name>
         <url-pattern>/*</url-pattern>
+
     </filter-mapping>
 
     <filter>
-        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-name>Url rewrite filter</filter-name>
         <filter-class>com.dimbo.filter.UrlRewriteFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-name>Url rewrite filter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    
 
+
+    <!--Jersey REST servlet binding-->
     <servlet>
         <servlet-name>jersey-servlet</servlet-name>
         <servlet-class>
@@ -52,11 +56,6 @@
     <context-param>
         <param-name>db_type</param-name>
         <param-value>MYSQL</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-        <param-value>ru_RU</param-value>
     </context-param>
 
     <session-config>

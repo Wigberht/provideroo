@@ -28,11 +28,10 @@ public class AddTariffCommand implements Command {
         Tariff newTariff = new Tariff(0, title, description, days, cost, currency, serviceId);
         
         if (ts.createTariff(newTariff) != null) {
-            request.getSession().setAttribute("tariffSuccess", true);
             page = PagesResourceManager.getPage("service_list");
         } else {
             request.getSession().setAttribute("tariffSuccess", false);
-            page = PagesResourceManager.getPage("add_tariff");
+            page = PagesResourceManager.getPage("new_tariff");
         }
         
         ts.returnConnection();
