@@ -66,7 +66,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     private static final String CREATE_SUBSCRIBER =
         "INSERT INTO subscriber " +
             "VALUES(DEFAULT, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_SUBSCRIBER_BY_ID =
+    private static final String UPDATE_SUBSCRIBER =
         "UPDATE subscriber "
             + "SET first_name = ?, last_name = ?, birth_date = ? "
             + "WHERE id = ?";
@@ -143,22 +143,6 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
     @Override
     public Subscriber find(Long id) throws DAOException {
-//        Subscriber subscriber = null;
-//
-//        try (
-//            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false, id);
-//            ResultSet resultSet = statement.executeQuery()
-//        ) {
-//            if (resultSet.next()) {
-//                subscriber = map(resultSet);
-//                subscriber.setUser(findUser(subscriber.getUserId()));
-//                subscriber.setAccount(findAccount(subscriber.getAccountId()));
-//            }
-//        } catch (SQLException e) {
-//            throw new DAOException(e);
-//        }
-
-//        return subscriber;
         return findSubscriber(FIND_BY_ID, id);
     }
     
@@ -209,8 +193,21 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     }
     
     @Override
-    public Subscriber update(Subscriber subscriber) throws DAOException {
-        return null;
+    public boolean update(Subscriber subscriber) throws DAOException {
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, UPDATE_SUBSCRIBER, true,
+                subscriber.getFirstName(), subscriber.getLastName(),
+                subscriber.getBirthDate(), subscriber.getId()
+            )
+        ) {
+            int updatedRows = statement.executeUpdate();
+            
+            return updatedRows > 0;
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
     
     @Override

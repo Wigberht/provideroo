@@ -22,7 +22,7 @@ public interface SubscriberDAO {
 
     public boolean delete(Long id) throws DAOException;
 
-    public Subscriber update(Subscriber subscriber) throws DAOException;
+    public boolean update(Subscriber subscriber) throws DAOException;
 
     public Subscriber create(Subscriber subscriber) throws DAOException;
 

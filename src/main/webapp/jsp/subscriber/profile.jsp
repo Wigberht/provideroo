@@ -10,54 +10,24 @@
         </div>
         <div class="row">
             <div class="col s6">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder"
-                               id="first_name"
-                               type="text"
-                               class="validate">
-                        <label for="first_name">
-                            <fmt:message key="first_name"/>
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder"
-                               id="last_name"
-                               type="text"
-                               class="validate">
-                        <label for="last_name">
-                            <fmt:message key="last_name"/>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder"
-                               id="login"
-                               type="text"
-                               class="validate"
-                               value="">
-                        <label for="login">
-                            <fmt:message key="login"/>
-                        </label>
-                    </div>
-                </div>
+                <subscriber-profile-data
+                    text_update="<fmt:message key="update" />"
+                    text_update_success="<fmt:message key="update_success"/> "
+                    text_update_fail="<fmt:message key="update_fail"/> "
+                    text_first_name="<fmt:message key="first_name" />"
+                    text_last_name="<fmt:message key="last_name" />"
+                    text_login="<fmt:message key="login" />"
+                    subscriber='${sessionScope.get("subscriberJSON")}'
+                />
             </div>
             <div class="col s6">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input placeholder="Placeholder"
-                               id="kek"
-                               type="text"
-                               class="validate">
-                        <label for="first_name">
-                            <fmt:message key="first_name"/>
-                        </label>
-                    </div>
-                </div>
+                <subscriber-profile-balance
+                    text_balance="<fmt:message key="current_balance"/> "
+                    text_replenish="<fmt:message key="replenish" />"
+                    text_replenish_by="<fmt:message key="replenish_by"/>"
+                    text_replenish_success="<fmt:message key="replenish_success"/> "
+                    text_replenish_fail="<fmt:message key="replenish_fail"/> "
+                    subscriber='${sessionScope.get("subscriberJSON")}'/>
             </div>
         </div>
     </div>

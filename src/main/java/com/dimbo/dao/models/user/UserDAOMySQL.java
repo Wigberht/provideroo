@@ -31,6 +31,10 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     
     private static final String CREATE_USER = "INSERT INTO user VALUES(DEFAULT,?,?,?,?)";
     
+    private static final String UPDATE_USER = "UPDATE user "
+        + "SET login = ?, password = ?, banned = ?, role_id= ? "
+        + "WHERE id = ?";
+    
     private static final String UPDATE_LOGIN_WHERE_ID = "UPDATE user SET login=? WHERE id=?";
     private static final String SET_BANNED_WHERE_ID = "UPDATE user SET banned=? WHERE id=?";
     private static final String SET_BANNED_WHERE_LOGIN = "UPDATE user SET banned=? WHERE login=?";
@@ -71,8 +75,22 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     }
     
     @Override
-    public User update(User user) throws DAOException {
-        return null;
+    public boolean update(User user) throws DAOException {
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, UPDATE_USER, true,
+                user.getLogin(), user.getPassword(),
+                user.isBanned(), user.getRoleId(),
+                user.getId()
+            )
+        ) {
+            int updatedRows = statement.executeUpdate();
+            
+            return updatedRows > 0;
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
     
     @Override
@@ -100,7 +118,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_USER, true,
-                user.getLogin(), user.getPassword(), user.isBanned(), user.getRoleId())
+                user.getLogin(), user.getPassword(), user.isBanned(), user
+                    .getRoleId())
         ) {
             statement.executeUpdate();
             

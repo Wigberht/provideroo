@@ -20,7 +20,7 @@ public interface UserDAO {
     
     public boolean delete(String login) throws DAOException;
     
-    public User update(User user) throws DAOException;
+    public boolean update(User user) throws DAOException;
     
     public boolean setBanned(long userId, boolean banned) throws DAOException;
     

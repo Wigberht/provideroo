@@ -3,6 +3,7 @@ package com.dimbo.rest.user;
 import com.dimbo.helper.service.SubscriberService;
 import com.dimbo.helper.service.SubscriptionService;
 import com.dimbo.helper.service.UserService;
+import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.Subscription;
 import com.dimbo.rest.JSONService;
@@ -112,4 +113,64 @@ public class UserREST extends HttpServlet {
                        .entity(response)
                        .build();
     }
+    
+    @POST
+    @Path("/profile/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateProfile(String data) {
+        JSONService jsonService = new JSONService();
+        SubscriberService subscriberService = new SubscriberService();
+        
+        long userId = jsonService.get(data, "userId").asLong();
+        String firstName = jsonService.get(data, "firstName").asText();
+        String lastName = jsonService.get(data, "lastName").asText();
+        String login = jsonService.get(data, "login").asText();
+        
+        Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
+        subscriber.setFirstName(firstName);
+        subscriber.setLastName(lastName);
+        subscriber.getUser().setLogin(login);
+        
+        boolean success = subscriberService.updateSubscriberProfile(subscriber);
+        subscriberService.returnConnection();
+        
+        String response = jsonService.toJSON(new SimpleResponse(success));
+        
+        return Response.status(200).entity(response).build();
+    }
+    
+    @POST
+    @Path("/balance/replenish")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response replenishBalance(String data) {
+        JSONService jsonService = new JSONService();
+        
+        SubscriberService subscriberService = new SubscriberService();
+        
+        LOGGER.info("amount: " + jsonService.get(data, "amount"));
+        long userId = jsonService.get(data, "userId").asLong();
+        double amount = jsonService.get(data, "amount").asDouble();
+        LOGGER.info("double amount " + amount);
+        amount = amount >= 0 ? amount : 0;
+        
+        boolean success;
+        if (amount == 0) {
+            success = false;
+        } else {
+            LOGGER.info("Updatin");
+            Account account = subscriberService.findSubscriberByUserId(userId)
+                                               .getAccount();
+            account.setBalance(account.getBalance() + amount);
+            LOGGER.info("account balance " + account.getBalance());
+            success = subscriberService.updateAccount(account);
+        }
+        
+        subscriberService.returnConnection();
+        
+        String response = jsonService.toJSON(new SimpleResponse(success));
+        
+        return Response.status(200).entity(response).build();
+    }
+    
+    
 }

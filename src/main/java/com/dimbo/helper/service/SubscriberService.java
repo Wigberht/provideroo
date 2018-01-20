@@ -1,8 +1,10 @@
 package com.dimbo.helper.service;
 
 import com.dimbo.dao.factory.FactoryGenerator;
+import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.Subscription;
+import com.dimbo.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +35,31 @@ public class SubscriberService extends ServiceHelper {
         super(connection);
         this.limit = limit;
         this.page = page;
+    }
+    
+    public boolean updateSubscriberProfile(Subscriber subscriber) {
+        boolean subscriberUpdated = updateSubscriber(subscriber);
+        boolean userUpdated = updateUser(subscriber.getUser());
+        
+        return subscriberUpdated && userUpdated;
+    }
+    
+    public boolean updateAccount(Account account) {
+        return FactoryGenerator.getFactory()
+                               .makeAccountDAO(connection)
+                               .update(account);
+    }
+    
+    public boolean updateUser(User user) {
+        return FactoryGenerator.getFactory()
+                               .makeUserDAO(connection)
+                               .update(user);
+    }
+    
+    public boolean updateSubscriber(Subscriber subscriber) {
+        return FactoryGenerator.getFactory()
+                               .makeSubscriberDAO(connection)
+                               .update(subscriber);
     }
     
     public List<Subscriber> getSubscribers() {

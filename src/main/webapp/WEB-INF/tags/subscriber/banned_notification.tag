@@ -18,7 +18,7 @@
                 </div>
                 <div class="col l4 right-align">
                     <br>
-                    <a href="${root}/subscriber/profile"
+                    <a href="${root}/subscriber/subscriber_profile"
                        class="waves-effect waves-light modal-trigger btn btn-large white black-text btn-flat">
                         Replenish balance
                     </a>

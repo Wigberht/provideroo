@@ -4,6 +4,8 @@
 <jsp:include page="/jsp/vue/components/ban-button.jsp"/>
 <jsp:include page="/jsp/vue/components/sort-dropdown.jsp"/>
 <jsp:include page="/jsp/vue/components/page-link.jsp"/>
+<jsp:include page="/jsp/vue/components/subscriber-profile-data.jsp"/>
+<jsp:include page="/jsp/vue/components/subscriber-profile-balance.jsp"/>
 
 <script>
     new Vue().$mount("#app");
