@@ -7,6 +7,8 @@ import java.util.List;
 public interface ServiceDAO {
 
     public List<Service> all() throws DAOException;
+    
+    public List<Service> all(String sort) throws DAOException;
 
     public Service find(Long id) throws DAOException;
 

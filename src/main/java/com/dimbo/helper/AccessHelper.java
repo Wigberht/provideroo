@@ -35,11 +35,15 @@ public class AccessHelper {
 //            LOGGER.info("is not user " + url);
             return true;
         }
+
+//        LOGGER.info("URI ROLE  : "+getUriRole(request));
+//        LOGGER.info("ADMIN ROLE: "+Roles.ADMIN.name());
+//        LOGGER.info("EQUALS    : "+getUriRole(request).equalsIgnoreCase(Roles.ADMIN.name()));
+//        LOGGER.info("REQ IS ADM: "+getRequestUser(request).isAdmin());
         
-        LOGGER.info("URI ROLE  : "+getUriRole(request));
-        LOGGER.info("ADMIN ROLE: "+Roles.ADMIN.name());
-        LOGGER.info("EQUALS    : "+getUriRole(request).equalsIgnoreCase(Roles.ADMIN.name()));
-        LOGGER.info("REQ IS ADM: "+getRequestUser(request).isAdmin());
+        if (getRequestUser(request) == null) {
+            return false;
+        }
         
         if (getUriRole(request).equalsIgnoreCase(Roles.ADMIN.name()) &&
             !getRequestUser(request).isAdmin()) {
