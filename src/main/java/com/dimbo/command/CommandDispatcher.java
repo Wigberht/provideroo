@@ -55,9 +55,12 @@ public class CommandDispatcher {
             
             case NEW_TARIFF:
                 return Commands.NEW_TARIFF.getCommand();
-                
+            
             case SUBSCRIBER_PROFILE:
                 return Commands.SUBSCRIBER_PROFILE.getCommand();
+            
+            case CHANGE_LANGUAGE:
+                return Commands.CHANGE_LANGUAGE.getCommand();
 
 //		default:
 //			LOGGER.warn("Unknown operation.");

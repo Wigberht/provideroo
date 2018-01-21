@@ -1,6 +1,7 @@
 package com.dimbo.command;
 
 import com.dimbo.command.admin.*;
+import com.dimbo.command.general.ChangeLanguageCommand;
 import com.dimbo.command.general.LoginCommand;
 import com.dimbo.command.general.LogoutCommand;
 import com.dimbo.command.general.RegistrationCommand;
@@ -21,7 +22,8 @@ public enum Commands {
     ADD_SERVICE(new AddServiceCommand()),
     ADD_TARIFF(new AddTariffCommand()),
     NEW_TARIFF(new NewTariffCommand()),
-    SUBSCRIBER_PROFILE(new SubscriberProfileCommand());
+    SUBSCRIBER_PROFILE(new SubscriberProfileCommand()),
+    CHANGE_LANGUAGE(new ChangeLanguageCommand());
     
     private Command command;
     

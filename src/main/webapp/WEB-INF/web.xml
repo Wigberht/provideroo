@@ -25,8 +25,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    
-
 
     <!--Jersey REST servlet binding-->
     <servlet>
@@ -46,11 +44,15 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>LandingController</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
     <listener>
         <listener-class>com.dimbo.listeners.ContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.dimbo.listeners.SessionListener</listener-class>
     </listener>
 
     <context-param>
@@ -61,6 +63,13 @@
     <session-config>
         <session-timeout>600</session-timeout>
     </session-config>
+
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
+    </jsp-config>
 
 
 </web-app>

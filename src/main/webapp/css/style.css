@@ -35,3 +35,14 @@ main {
     padding: 15px;
     /*border-radius: 20%;*/
 }
+
+.lang-block {
+    background-color: #ee6e73;
+    position: fixed;
+    top: 70px;
+    left: 10px;
+}
+
+#lang-select {
+    background-color: #ee6e73;
+}

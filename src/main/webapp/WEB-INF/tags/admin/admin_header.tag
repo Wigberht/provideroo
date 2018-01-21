@@ -8,6 +8,21 @@
         <fmt:message key="admin_control_panel"/>
     </a>
 </span>
+
+<div class="lang-block">
+    <select id="lang-select" class="browser-default">
+
+        <option value="ru_RU"
+        ${(sessionScope.get("locale") eq "ru_RU")?"selected":""}>
+            <fmt:message key="russian"/>
+        </option>
+        <option value="en_US"
+        ${(sessionScope.get("locale") eq "en_US")?"selected":""}>
+            <fmt:message key="english"/>
+        </option>
+    </select>
+</div>
+
 <ul id="nav-mobile" class="right">
     <page-link
         active="${pageName.equals("subscribers")}"

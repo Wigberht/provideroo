@@ -33,7 +33,6 @@
 
 <!--custom js scripts-->
 <script src="/js/app.js"></script>
-<script src="/js/tariff.js"></script>
 
 <!-- custom css -->
 <link href="/css/style.css" rel="stylesheet">

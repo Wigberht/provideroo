@@ -38,12 +38,6 @@
                            value="<fmt:message key="login"/>"
                            class="btn waves-effect waves-light">
                 </div>
-                <div class="row">
-                    <a href="jsp/general/registration.jsp"
-                       class="btn waves-effect waves-light">
-                        <fmt:message key="registration"/>
-                    </a>
-                </div>
             </div>
         </form>
     </div>

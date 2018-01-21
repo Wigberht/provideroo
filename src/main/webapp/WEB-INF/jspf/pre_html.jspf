@@ -3,9 +3,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="mt" uri="http://taglib.com/my_tags" %>
 
-<fmt:setLocale value="${locale}"/>
+<fmt:setLocale value='${sessionScope.get("locale")}'/>
 <fmt:setBundle basename="messages"/>
-
 
 <c:set var="url"
        value="${pageContext.request.requestURL}"/>
