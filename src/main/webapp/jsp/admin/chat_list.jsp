@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <mt:admin_layout pageName="chats"

@@ -16,7 +16,6 @@ public class SessionListener implements HttpSessionListener {
         LOGGER.info("Session created");
         httpSessionEvent.getSession().setAttribute("locale", "ru_RU");
         LOGGER.info("Session language set");
-//        Locale.setDefault(new Locale("ru_RU"));
         
     }
     

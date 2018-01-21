@@ -31,6 +31,9 @@
                            type="password" class="validate">
                     <label for="password"><fmt:message key="password"/> </label>
                 </div>
+                <c:if test='${sessionScope.get("loginError")}'>
+                    kek
+                </c:if>
             </div>
             <div class="center-align">
                 <div class="row">

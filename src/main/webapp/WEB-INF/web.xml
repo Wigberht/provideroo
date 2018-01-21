@@ -60,6 +60,11 @@
         <param-value>MYSQL</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>default_locale</param-name>
+        <param-value>ru_RU</param-value>
+    </context-param>
+
     <session-config>
         <session-timeout>600</session-timeout>
     </session-config>
@@ -70,6 +75,5 @@
             <page-encoding>UTF-8</page-encoding>
         </jsp-property-group>
     </jsp-config>
-
-
+    
 </web-app>

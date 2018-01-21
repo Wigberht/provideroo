@@ -1,4 +1,3 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <mt:admin_layout pageName="new_service"
@@ -70,6 +69,8 @@
                                id="currency"
                                class="validate"
                                name="currency"
+                               value="UAH"
+                               readonly="readonly"
                                placeholder="<fmt:message key="currency"/>">
                         <label for="currency"><fmt:message
                             key="currency"/> </label>

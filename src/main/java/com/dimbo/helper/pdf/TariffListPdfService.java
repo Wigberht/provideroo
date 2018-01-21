@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TariffListPdfService {
@@ -34,8 +35,14 @@ public class TariffListPdfService {
     
     private float maxRowY;
     private static final int WRAP_LENGTH = 25;
+    private ResourceBundle resourceBundle;
     
-    public TariffListPdfService() throws IOException {
+    
+    public TariffListPdfService(String locale) throws IOException {
+        String[] tmpLocale = locale.split("_");
+        Locale.setDefault(new Locale(tmpLocale[0], tmpLocale[1]));
+        resourceBundle = ResourceBundle.getBundle("messages");
+        
         ServiceService serviceService = new ServiceService();
         services = serviceService.getAllServices();
         serviceService.returnConnection();
@@ -184,24 +191,16 @@ public class TariffListPdfService {
         
         float headerX = tableX + 20;
         float headerY = tableY - 20;
-        writeText(headerX, headerY,
-            ResourceBundle.getBundle("messages")
-                          .getString("title"));
+        writeText(headerX, headerY, resourceBundle.getString("title"));
         
         headerX += 110;
-        writeText(headerX, headerY,
-            ResourceBundle.getBundle("messages")
-                          .getString("description"));
+        writeText(headerX, headerY, resourceBundle.getString("description"));
         
         headerX += 160;
-        writeText(headerX, headerY,
-            ResourceBundle.getBundle("messages")
-                          .getString("number_of_days"));
+        writeText(headerX, headerY, resourceBundle.getString("number_of_days"));
         
         headerX += 110;
-        writeText(headerX, headerY,
-            ResourceBundle.getBundle("messages")
-                          .getString("cost"));
+        writeText(headerX, headerY, resourceBundle.getString("cost"));
         
         font(mainFont, 10);
         float rowX = tableX + 20;
@@ -229,7 +228,7 @@ public class TariffListPdfService {
         
         float x = 180;
         float y = 700;
-        writeText(x, y, "List of services and tariffs");
+        writeText(x, y, resourceBundle.getString("list_of_services_and_tariffs"));
         
         float tableX = 50;
         float tableY = 640;

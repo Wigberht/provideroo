@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
+
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <mt:subscriber_layout pageName="control_panel"
