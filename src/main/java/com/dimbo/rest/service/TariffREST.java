@@ -1,6 +1,7 @@
 package com.dimbo.rest.service;
 
 import com.dimbo.helper.service.TariffService;
+import com.dimbo.helper.validator.MainValidator;
 import com.dimbo.model.Tariff;
 import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
@@ -33,15 +34,25 @@ public class TariffREST extends HttpServlet {
     public Response update(String data) {
         boolean success;
         JSONService jsonService = new JSONService();
-        TariffService tariffService = new TariffService();
+        String title = jsonService.get(data, "title").asText();
+        String description = jsonService.get(data, "description").asText();
+        int numberOfDays = jsonService.get(data, "numberOfDays").asInt();
+        double cost = jsonService.get(data, "cost").asDouble();
+        String currency = jsonService.get(data, "currencyShortname").asText();
         
-        LOGGER.info("Description: " + jsonService.get(data, "description"));
-        
-        Tariff tariff = (Tariff) jsonService.toObject(data, Tariff.class);
-        
-        success = tariffService.updateTariff(tariff);
-        
-        tariffService.returnConnection();
+        if (!MainValidator.tariffValidator(title, description,
+                                           String.valueOf(numberOfDays),
+                                           String.valueOf(cost),
+                                           currency)) {
+            success = false;
+        } else {
+            TariffService tariffService = new TariffService();
+            
+            Tariff tariff = (Tariff) jsonService.toObject(data, Tariff.class);
+            success = tariffService.updateTariff(tariff);
+            
+            tariffService.returnConnection();
+        }
         
         String response = jsonService.toJSON(new SimpleResponse(success));
         

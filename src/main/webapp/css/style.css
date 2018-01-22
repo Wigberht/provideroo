@@ -46,3 +46,12 @@ main {
 #lang-select {
     background-color: #ee6e73;
 }
+
+.icon_style{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    color: white;
+    cursor:pointer;
+}

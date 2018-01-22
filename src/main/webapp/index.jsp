@@ -13,8 +13,16 @@
             <div class="center-align">
                 <h1><fmt:message key="enter_to_system"/></h1>
             </div>
-
             <input type="hidden" name="command" value="login">
+
+            <mt:alert_box_error>
+                <c:if test="${not empty sessionScope.authError}">
+                    <p><fmt:message key="validation.error.auth"/></p>
+                </c:if>
+
+                <c:remove var="authError" scope="session"/>
+
+            </mt:alert_box_error>
             <div class="row">
                 <div class="input-field col s12">
                     <input placeholder="<fmt:message key="login"/>" id="login"

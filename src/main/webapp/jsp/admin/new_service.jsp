@@ -1,8 +1,7 @@
-
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <mt:admin_layout pageName="new_service"
-                titleKey="new_service">
+                 titleKey="new_service">
 
     <div class="container">
         <div class="row">
@@ -12,6 +11,8 @@
                     <h2><fmt:message key="new_service"/></h2>
                 </div>
                 <input type="hidden" name="command" value="add_service">
+
+                <%@include file="/WEB-INF/jspf/new_service_error_alert.jspf" %>
 
                 <div class="row">
                     <div class="input-field col s12">

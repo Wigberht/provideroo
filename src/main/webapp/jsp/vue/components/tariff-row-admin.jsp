@@ -15,7 +15,7 @@
                 <input type="number" v-model="d_cost">
             </div>
             <div class="col s1">
-                <input type="text" v-model="d_currency">
+                <input type="text" v-model="d_currency" readonly="readonly">
             </div>
         </template>
 
@@ -98,9 +98,13 @@
                     'currencyShortname': this.d_currency,
                 }).then((response) => {
                     console.log(response);
-                    Materialize.toast("SUCCESS", 1500)
+                    if (response.data.success) {
+                        Materialize.toast("SUCCESS", 1500)
+                    } else {
+                        Materialize.toast("FAIL", 1500);
+                    }
                 }).catch((error) => {
-                    Materialize.toast(this.tariff_update_fail, 1500);
+                    Materialize.toast("FAIL", 1500);
                     console.log(error);
                 });
                 this.edit = false;

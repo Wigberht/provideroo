@@ -1,0 +1,50 @@
+<c:if test="${not empty sessionScope.validationError}">
+    <div class="row" id="alert_box">
+        <div class="col s12 m12">
+            <div class="card red darken-1">
+                <div class="row">
+                    <div class="col s12 m10">
+                        <div class="card-content white-text">
+                            <h5><fmt:message key="errors"/></h5>
+
+                            <c:if test="${not empty sessionScope.loginError}">
+                                <p><fmt:message key="validation.error.login"/></p>
+                                <br>
+                            </c:if>
+                            <c:remove var="loginError" scope="session"/>
+
+                            <c:if test="${not empty sessionScope.passwordError}">
+                                <p><fmt:message key="validation.error.password"/></p>
+                                <br>
+                            </c:if>
+                            <c:remove var="passwordError" scope="session"/>
+
+                            <c:if test="${not empty sessionScope.firstNameError}">
+                                <p><fmt:message key="validation.error.first_name"/></p>
+                                <br>
+                            </c:if>
+                            <c:remove var="firstNameError" scope="session"/>
+
+                            <c:if test="${not empty sessionScope.lastNameError}">
+                                <p><fmt:message key="validation.error.last_name"/></p>
+                                <br>
+                            </c:if>
+                            <c:remove var="lastNameError" scope="session"/>
+
+                            <c:if test="${not empty sessionScope.birthdayError}">
+                                <p><fmt:message key="validation.error.birthday"/></p>
+                            </c:if>
+                            <c:remove var="birthdayError" scope="session"/>
+                        </div>
+                    </div>
+                    <div class="col s12 m2">
+                        <i class="fa fa-times icon_style" id="alert_close"
+                           aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</c:if>
+
+<c:remove var="validationError" scope="session"/>

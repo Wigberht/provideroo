@@ -31,6 +31,8 @@ public class LoginCommand implements Command {
         User user = Auth.login(login, password);
         
         if (user == null) {
+            request.getSession().setAttribute("validationError", true);
+            request.getSession().setAttribute("authError", true);
             return PagesResourceManager.getPage("login");
         }
         

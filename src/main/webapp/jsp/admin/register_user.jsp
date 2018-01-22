@@ -1,8 +1,7 @@
-
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <mt:admin_layout pageName="new_service"
-                titleKey="new_service">
+                 titleKey="new_service">
 
     <div class="container">
         <div class="row">
@@ -12,6 +11,8 @@
                     <h2><fmt:message key="new_user_credentials"/></h2>
                 </div>
                 <input type="hidden" name="command" value="registration">
+
+                <%@include file="/WEB-INF/jspf/registration_error_alert.jspf" %>
 
                 <div class="row">
                     <div class="input-field col s12">
@@ -34,12 +35,6 @@
                         <label for="password"><fmt:message
                             key="password"/> </label>
                     </div>
-                </div>
-                <div>
-                    <c:if test="${not empty sessionScope.userError}">
-                        <fmt:message key="unable_to_register"/>
-                        <c:remove var="userError" scope="session"/>
-                    </c:if>
                 </div>
 
                 <div class="row">
@@ -77,16 +72,6 @@
                     </div>
                 </div>
 
-                <div>
-                    <c:if test="${not empty sessionScope.accountError}">
-                        <fmt:message key="unable_to_register"/>
-                    </c:if>
-                </div>
-                <div>
-                    <c:if test="${not empty sessionScope.surscriberError}">
-                        <fmt:message key="unable_to_register"/>
-                    </c:if>
-                </div>
                 <div class="center-align">
                     <div class="row">
                         <input type="submit"

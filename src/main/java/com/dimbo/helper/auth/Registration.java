@@ -48,8 +48,7 @@ public class Registration {
     
     public Account registerAccount() {
         Account resultingAccount = null;
-        AccountDAO accountDAO = FactoryGenerator.getFactory()
-                                                .makeAccountDAO(connection);
+        AccountDAO accountDAO = FactoryGenerator.getFactory().makeAccountDAO(connection);
         try {
             resultingAccount = accountDAO.create(new Account());
             LOGGER.info("User account created successfully");

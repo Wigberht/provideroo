@@ -12,6 +12,31 @@
                 </div>
                 <input type="hidden" name="command" value="add_tariff">
 
+                <mt:alert_box_error>
+                    <c:if test="${not empty sessionScope.titleError}">
+                        <p><fmt:message key="validation.error.tariff_title"/></p>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.descriptionError}">
+                        <p><fmt:message
+                            key="validation.error.tariff_description"/></p>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.daysError}">
+                        <p><fmt:message key="validation.error.days"/></p>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.costError}">
+                        <p><fmt:message key="validation.error.cost"/></p>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.currencyError}">
+                        <p><fmt:message key="validation.error.currency"/></p>
+                    </c:if>
+
+                    <c:remove var="titleError" scope="session"/>
+                    <c:remove var="descriptionError" scope="session"/>
+                    <c:remove var="daysError" scope="session"/>
+                    <c:remove var="costError" scope="session"/>
+                    <c:remove var="currencyError" scope="session"/>
+                </mt:alert_box_error>
+
                     <%--title--%>
                 <div class="row">
                     <div class="input-field col s12">

@@ -12,8 +12,8 @@ public class Auth {
     
     public static User login(String login, String password) {
         User user = null;
-        Connection conn = ConnectionPool.getInstance()
-                                        .getConnection();
+        
+        Connection conn = ConnectionPool.conn();
         UserDAO userDAO = FactoryGenerator.getFactory()
                                           .makeUserDAO(conn);
         
@@ -23,8 +23,7 @@ public class Auth {
             user = DBUser;
         }
         
-        ConnectionPool.getInstance()
-                      .returnConnection(conn);
+        ConnectionPool.returnConn(conn);
         
         return user;
     }
