@@ -77,6 +77,18 @@ public class SubscriberService extends ServiceHelper {
                                .find(id);
     }
     
+    public List<Subscriber> expiredSubscriptionSubscribers() {
+        return FactoryGenerator.getFactory()
+                               .makeSubscriberDAO(connection)
+                               .findSubscriptionExpirers();
+    }
+    
+    public double calculateDebt(long subscriberId) {
+        return FactoryGenerator.getFactory()
+                               .makeSubscriberDAO(connection)
+                               .calculateDebt(subscriberId);
+    }
+    
     public Subscriber findSubscriberByUserId(long userId) {
         return FactoryGenerator.getFactory()
                                .makeSubscriberDAO(connection)
@@ -88,4 +100,54 @@ public class SubscriberService extends ServiceHelper {
                                .makeSubscriptionDAO(connection)
                                .findBySubscriber(id);
     }
+    
+    public double collectSubscriptionFees() {
+        UserService userService = new UserService(connection);
+        AccountService accountService = new AccountService(connection);
+        SubscriptionService subscriptionService = new SubscriptionService(connection);
+        
+        double debtCollected = 0;
+        List<Subscriber> subscribers = expiredSubscriptionSubscribers();
+        for (Subscriber subscriber : subscribers) {
+            
+            double debt = calculateDebt(subscriber.getId());
+            
+            // if (poor) { ban(this.fella); }
+            if (debt > subscriber.getAccount().getBalance()) {
+                userService.setBanned(subscriber.getUser().getId(), true);
+                continue;
+            }
+            
+            if (debt > 0 && accountService.withdrawMoney(subscriber.getAccount(), debt)) {
+                subscriptionService.prolongSubscriptions(subscriber.getId());
+                debtCollected += debt;
+            }
+        }
+        
+        return debtCollected;
+    }
+    
+    public boolean refreshSubscriptions(Subscriber subscriber) {
+        boolean success;
+        SubscriptionService subscriptionService = new SubscriptionService(connection);
+        AccountService accountService = new AccountService(connection);
+        
+        double debt = calculateDebt(subscriber.getId());
+        if (debt > subscriber.getAccount().getBalance()) {
+            success = false;
+        } else {
+            accountService.withdrawMoney(subscriber.getAccount(), debt);
+            subscriptionService.prolongSubscriptions(subscriber.getId());
+            subscriber.getUser().setBanned(false);
+            success = updateUser(subscriber.getUser());
+        }
+        
+        return success;
+    }
+    
+    public boolean updateSubscriptions() {
+        return true;
+    }
+    
+    
 }

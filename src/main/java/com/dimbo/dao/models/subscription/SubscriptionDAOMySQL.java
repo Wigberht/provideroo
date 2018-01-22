@@ -28,7 +28,6 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             "FROM tariff_subscriber " +
             "WHERE tariff_id = ? AND subscriber_id = ?";
     
-    
     private static final String CREATE_SUBSCRIPTION =
         "INSERT INTO tariff_subscriber " +
             "VALUES(DEFAULT, ?, ?, ?, ?, ?)";
@@ -41,6 +40,13 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
         "UPDATE tariff_subscriber "
             + "SET start = ?, end = ?, prolong = ? "
             + "WHERE id = ?";
+    
+    private static final String PROLONG_SUBSCRIPTIONS = "UPDATE tariff_subscriber ts\n" +
+        "  INNER JOIN tariff t ON ts.tariff_id = t.id\n" +
+        "SET ts.end = DATE_ADD(CURDATE(), INTERVAL t.number_of_days DAY)\n" +
+        "WHERE ts.subscriber_id = ?\n" +
+        "      AND ts.end <= CURDATE()\n" +
+        "      AND ts.prolong = TRUE;";
     
     private static final String DELETE_SUBSCRIPTION =
         "DELETE " +
@@ -107,6 +113,12 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
     }
     
     @Override
+    public List<Subscription> findTodaysSubscriptions() throws DAOException {
+        
+        return null;
+    }
+    
+    @Override
     public boolean delete(Long id) throws DAOException {
         return false;
     }
@@ -123,6 +135,23 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             int updatedRows = statement.executeUpdate();
             
             return updatedRows > 0;
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+    
+    @Override
+    public boolean prolongSubscriptions(long subscriberId) throws DAOException {
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, PROLONG_SUBSCRIPTIONS, true,
+                subscriberId
+            )
+        ) {
+            int updatedRows = statement.executeUpdate();
+            
+            return updatedRows >= 0;
             
         } catch (SQLException e) {
             throw new DAOException(e);

@@ -18,15 +18,6 @@ import java.util.List;
 
 public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
-    private static final String FIND_BY_ID =
-        "SELECT * " +
-            "FROM subscriber " +
-            "WHERE id = ?";
-    private static final String FIND_BY_USER_ID =
-        "SELECT * " +
-            "FROM subscriber " +
-            "WHERE user_id = ?";
-    
     private static final String FIND_ALL = "SELECT\n"
         + "  subscriber.id as subscriber_id,\n"
         + "  subscriber.first_name,\n"
@@ -43,38 +34,39 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         + "\n"
         + "FROM subscriber\n"
         + "  INNER JOIN account ON subscriber.account_id = account.id\n"
-        + "  INNER JOIN user ON subscriber.user_id = user.id";
-    private static final String FIND_ALL_LIMIT_OFFSET = "SELECT\n"
-        + "  subscriber.id as subscriber_id,\n"
-        + "  subscriber.first_name,\n"
-        + "  subscriber.last_name,\n"
-        + "  subscriber.birth_date,\n"
-        + "  user.id as user_id,\n"
-        + "  user.login,\n"
-        + "  user.password,\n"
-        + "  user.banned,\n"
-        + "  user.role_id,\n"
-        + "  account.id as account_id,\n"
-        + "  account.balance,\n"
-        + "  account.currency_shortname\n"
-        + "\n"
-        + "FROM subscriber\n"
-        + "  INNER JOIN account ON subscriber.account_id = account.id\n"
-        + "  INNER JOIN user ON subscriber.user_id = user.id\n"
-        + "LIMIT ? OFFSET ?";
+        + "  INNER JOIN user ON subscriber.user_id = user.id ";
+    
+    private static final String FIND_BY_ID = FIND_ALL + " WHERE id = ?";
+    private static final String FIND_BY_USER_ID = FIND_ALL + " WHERE user_id = ?;";
+    private static final String FIND_ALL_LIMIT_OFFSET = FIND_ALL + " LIMIT ? OFFSET ?";
+    private static final String FIND_SUBSCRIPTION_EXPIRERS = FIND_ALL +
+        " WHERE subscriber_id IN (\n" +
+        "  SELECT DISTINCT subscriber_id\n" +
+        "  FROM tariff_subscriber\n" +
+        "  WHERE end <= CURDATE() AND prolong = TRUE\n" +
+        ");";
     
     private static final String CREATE_SUBSCRIBER =
         "INSERT INTO subscriber " +
             "VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+    
     private static final String UPDATE_SUBSCRIBER =
         "UPDATE subscriber "
             + "SET first_name = ?, last_name = ?, birth_date = ? "
             + "WHERE id = ?";
+    
     private static final String DELETE_SUBSCRIBER_BY_ID =
         "DELETE " +
             "FROM subscriber " +
             "WHERE id = ?";
     
+    private static final String CALCULATE_DEBT = "SELECT SUM(cost) AS debt\n" +
+        "FROM tariff\n" +
+        "WHERE id IN (\n" +
+        "  SELECT tariff_id\n" +
+        "  FROM tariff_subscriber\n" +
+        "  WHERE subscriber_id = ? AND end <= CURDATE() AND prolong = TRUE\n" +
+        ");";
     
     Connection connection;
     
@@ -113,7 +105,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         List<Subscriber> subscribers = new ArrayList<>();
         
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_ALL_LIMIT_OFFSET, false, limit, offset);
+            PreparedStatement statement = prepareStatement(connection,
+                                                           FIND_ALL_LIMIT_OFFSET, false,
+                                                           limit, offset);
             ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
@@ -162,16 +156,15 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
-                subscriber = map(resultSet);
-                subscriber.setUser(findUser(subscriber.getUserId()));
-                subscriber.setAccount(findAccount(subscriber.getAccountId()));
+                subscriber = mapAll(resultSet);
+//                subscriber.setUser(findUser(subscriber.getUserId()));
+//                subscriber.setAccount(findAccount(subscriber.getAccountId()));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
         }
         
         return subscriber;
-        
     }
     
     private User findUser(long userId) {
@@ -180,6 +173,47 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
     private Account findAccount(long accountId) {
         return new AccountDAOMySQL(connection).find(accountId);
+    }
+    
+    @Override
+    public List<Subscriber> findSubscriptionExpirers() throws DAOException {
+        List<Subscriber> subscribers = new ArrayList<>();
+        
+        try (
+            PreparedStatement statement = prepareStatement(connection,
+                                                           FIND_SUBSCRIPTION_EXPIRERS,
+                                                           false);
+            ResultSet resultSet = statement.executeQuery()
+        ) {
+            while (resultSet.next()) {
+                subscribers.add(mapAll(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return subscribers;
+    }
+    
+    @Override
+    public double calculateDebt(long id) throws DAOException {
+        double debt = 0;
+        LOGGER.info("Id: " + id);
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, CALCULATE_DEBT, false, id);
+            ResultSet resultSet = statement.executeQuery()
+        ) {
+            if (resultSet.next()) {
+                LOGGER.info("result set nex: " + resultSet.getDouble("debt"));
+                debt = resultSet.getDouble("debt");
+            }
+            LOGGER.info("Debt in dao: " + debt);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return debt;
     }
     
     @Override

@@ -1,8 +1,10 @@
 package com.dimbo.rest.user;
 
+import com.dimbo.helper.service.AccountService;
 import com.dimbo.helper.service.SubscriberService;
 import com.dimbo.helper.service.SubscriptionService;
 import com.dimbo.helper.service.UserService;
+import com.dimbo.helper.validator.MainValidator;
 import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.Subscription;
@@ -41,22 +43,35 @@ public class UserREST extends HttpServlet {
         
         SubscriptionService subscriptionService = new SubscriptionService();
         SubscriberService subscriberService = new SubscriberService();
+        AccountService accountService = new AccountService();
         
         Subscriber subscriber = subscriberService
             .findSubscriberByUserId(userId);
         Subscription activeSubscription = subscriptionService
             .findSubscription(tariffId, subscriber.getId());
+        LOGGER.info("I am here now");
         
         /*if there is such subscription - prolong it, create new otherwise*/
+        // TODO: Refactor probably, or no
         if (activeSubscription != null) {
-            success = subscriptionService
-                .setSubscriptionProlong(activeSubscription, true);
+            subscriptionService.setSubscriptionProlong(activeSubscription, true);
+            double debt = subscriberService.calculateDebt(subscriber.getId());
+            LOGGER.info("Debt: " + debt);
+            if (debt > subscriber.getAccount().getBalance()) {
+                subscriptionService.setSubscriptionProlong(activeSubscription, false);
+                success = false;
+            } else {
+                accountService.withdrawMoney(subscriber.getAccount(), debt);
+                success = subscriptionService.prolongSubscriptions(subscriber.getId());
+            }
         } else {
             success = subscriptionService.createSubscription(userId, tariffId);
         }
         
+        
         subscriptionService.returnConnection();
         subscriberService.returnConnection();
+        accountService.returnConnection();
         
         String response = jsonService.toJSON(new SimpleResponse(success));
         
@@ -78,7 +93,6 @@ public class UserREST extends HttpServlet {
         
         Subscriber subscriber = subscriberService
             .findSubscriberByUserId(userId);
-        
         Subscription subscription = subscriptionService
             .findSubscription(tariffId, subscriber.getId());
         
@@ -146,26 +160,30 @@ public class UserREST extends HttpServlet {
         JSONService jsonService = new JSONService();
         
         SubscriberService subscriberService = new SubscriberService();
+        AccountService accountService = new AccountService();
+        SubscriptionService subscriptionService = new SubscriptionService();
         
-        LOGGER.info("amount: " + jsonService.get(data, "amount"));
         long userId = jsonService.get(data, "userId").asLong();
         double amount = jsonService.get(data, "amount").asDouble();
-        LOGGER.info("double amount " + amount);
-        amount = amount >= 0 ? amount : 0;
         
+        LOGGER.info("Amount: " + amount);
         boolean success;
-        if (amount == 0) {
+        if (!MainValidator.positiveNumber(String.valueOf(amount))) {
+            LOGGER.error("invalid amount");
             success = false;
         } else {
-            LOGGER.info("Updatin");
-            Account account = subscriberService.findSubscriberByUserId(userId)
-                                               .getAccount();
+            Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
+            
+            Account account = subscriber.getAccount();
             account.setBalance(account.getBalance() + amount);
-            LOGGER.info("account balance " + account.getBalance());
-            success = subscriberService.updateAccount(account);
+            subscriberService.updateAccount(account);
+            
+            success = subscriberService.refreshSubscriptions(subscriber);
         }
         
         subscriberService.returnConnection();
+        accountService.returnConnection();
+        subscriptionService.returnConnection();
         
         String response = jsonService.toJSON(new SimpleResponse(success));
         

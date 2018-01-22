@@ -30,7 +30,8 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
         Account account = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false, id);
+            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
+                                                           id);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {

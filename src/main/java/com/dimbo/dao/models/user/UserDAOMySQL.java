@@ -85,7 +85,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             )
         ) {
             int updatedRows = statement.executeUpdate();
-            
+            LOGGER.info("Updated rows: " + updatedRows);
             return updatedRows > 0;
             
         } catch (SQLException e) {
@@ -138,7 +138,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         User user = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, sql, false, values);
+            PreparedStatement statement = prepareStatement(connection, sql, false,
+                                                           values);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
@@ -155,7 +156,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         List<User> users = new ArrayList<>();
         
         try (
-            PreparedStatement statement = prepareStatement(connection, sql, false, values);
+            PreparedStatement statement = prepareStatement(connection, sql, false,
+                                                           values);
             ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {

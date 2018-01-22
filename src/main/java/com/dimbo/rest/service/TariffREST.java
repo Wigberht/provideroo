@@ -27,7 +27,6 @@ public class TariffREST extends HttpServlet {
         return "test";
     }
     
-    
     @POST
     @Path("/update")
     @Consumes({MediaType.APPLICATION_JSON})

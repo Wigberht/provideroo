@@ -45,16 +45,14 @@ public class SubscriptionService extends ServiceHelper {
             .addDaysToDate(localDate, tariff.getNumberOfDays());
         
         Subscription subscription = new Subscription(0,
-            start, end, true, tariffId, subscriber.getId()
+                                                     start, end, true, tariffId,
+                                                     subscriber.getId()
         );
         
         boolean subscriptionCreated = false;
         if (accountService.withdrawMoney(account, tariff.getCost())) {
             subscriptionCreated = createSubscription(subscription) != null;
         }
-        
-        
-        LOGGER.info("subscription generated");
         
         return subscriptionCreated;
     }
@@ -73,11 +71,9 @@ public class SubscriptionService extends ServiceHelper {
     
     public boolean setSubscriptionProlong(Subscription subscription,
                                           boolean prolong) {
-        subscription = FactoryGenerator.getFactory()
-                                       .makeSubscriptionDAO(connection)
-                                       .find(subscription.getId());
         subscription.setProlong(prolong);
         
+        LOGGER.info("setSubscriptionProlong " + subscription.isProlong());
         return FactoryGenerator.getFactory()
                                .makeSubscriptionDAO(connection)
                                .update(subscription);
@@ -87,5 +83,11 @@ public class SubscriptionService extends ServiceHelper {
         return FactoryGenerator.getFactory()
                                .makeSubscriptionDAO(connection)
                                .find(tariffId, subscriberId);
+    }
+    
+    public boolean prolongSubscriptions(long subscriberId) {
+        return FactoryGenerator.getFactory()
+                               .makeSubscriptionDAO(connection)
+                               .prolongSubscriptions(subscriberId);
     }
 }
