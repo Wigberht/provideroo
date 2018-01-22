@@ -40,7 +40,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     private static final String FIND_BY_USER_ID = FIND_ALL + " WHERE user_id = ?;";
     private static final String FIND_ALL_LIMIT_OFFSET = FIND_ALL + " LIMIT ? OFFSET ?";
     private static final String FIND_SUBSCRIPTION_EXPIRERS = FIND_ALL +
-        " WHERE subscriber_id IN (\n" +
+        " WHERE subscriber.id IN (\n" +
         "  SELECT DISTINCT subscriber_id\n" +
         "  FROM tariff_subscriber\n" +
         "  WHERE end <= CURDATE() AND prolong = TRUE\n" +
@@ -198,17 +198,15 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     @Override
     public double calculateDebt(long id) throws DAOException {
         double debt = 0;
-        LOGGER.info("Id: " + id);
+        
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CALCULATE_DEBT, false, id);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
-                LOGGER.info("result set nex: " + resultSet.getDouble("debt"));
                 debt = resultSet.getDouble("debt");
             }
-            LOGGER.info("Debt in dao: " + debt);
         } catch (SQLException e) {
             throw new DAOException(e);
         }
