@@ -16,6 +16,7 @@ public class UpdateSubscriptionsJob implements Runnable {
         SubscriberService subscriberService = new SubscriberService();
         
         subscriberService.collectSubscriptionFees();
+        
         subscriberService.returnConnection();
         
     }

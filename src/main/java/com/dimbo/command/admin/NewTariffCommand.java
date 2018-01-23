@@ -3,7 +3,7 @@ package com.dimbo.command.admin;
 import com.dimbo.command.Command;
 import com.dimbo.helper.service.ServiceService;
 import com.dimbo.helper.service.TariffService;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.Tariff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

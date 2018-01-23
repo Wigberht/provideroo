@@ -3,7 +3,7 @@ package com.dimbo.command.general;
 import com.dimbo.command.Command;
 import com.dimbo.helper.auth.Registration;
 import com.dimbo.helper.validator.MainValidator;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.Account;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.User;

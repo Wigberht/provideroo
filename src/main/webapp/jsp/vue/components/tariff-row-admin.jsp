@@ -5,7 +5,7 @@
             <div class="col s2">
                 <input type="text" v-model="d_title">
             </div>
-            <div class="col s3">
+            <div class="col s2">
                 <textarea v-model="d_description"></textarea>
             </div>
             <div class="col s1">
@@ -15,7 +15,7 @@
                 <input type="number" v-model="d_cost">
             </div>
             <div class="col s1">
-                <input type="text" v-model="d_currency" readonly="readonly">
+                {{d_currency}}
             </div>
         </template>
 
@@ -29,7 +29,7 @@
             <div @mouseover="showTruncated"
                  @mouseleave="hideTruncated"
                  v-bind:class="{truncate:isTruncated}"
-                 class="col s3">
+                 class="col s2">
                 {{d_description}}
             </div>
             <div class="col s1">{{d_days}}</div>
@@ -37,17 +37,24 @@
             <div class="col s1">{{d_currency}}</div>
         </template>
 
-        <div class="col s2">{{subscribers_amount}}</div>
+        <div class="col s2">{{subscribers}}</div>
         <div class="col s2">
             <a v-if="!edit"
                @click="startEdit"
-               class="waves-effect waves-light btn">
+               class="waves-effect waves-light btn btn-small">
                 {{buttonText}}
             </a>
             <a v-if="edit"
                @click="finishEdit"
-               class="waves-effect waves-light btn">
+               class="waves-effect waves-light btn btn-small">
                 {{buttonText}}
+            </a>
+        </div>
+        <div class="col s1">
+            <a @click="startEdit"
+               class="waves-effect waves-light btn btn-small red darken-5 tooltipped"
+               data-position="top" data-delay="200" data-tooltip="Delete">
+                X
             </a>
         </div>
     </div>
@@ -58,7 +65,7 @@
     Vue.component('tariff-row-admin', {
         props: [
             'id', 'title', 'description',
-            'number_of_days', 'cost', 'currency',
+            'number_of_days', 'cost', 'currency', 'subscribers',
             'edit_text', 'save_text'
         ],
         data: function () {
@@ -80,7 +87,6 @@
                 isTruncated: true,
 
                 edit: false,
-                subscribers_amount: 0
             }
         },
         template: "#tariff-row-admin-template",

@@ -7,7 +7,7 @@ import com.dimbo.dao.models.service.ServiceDAO;
 import com.dimbo.helper.service.ServiceService;
 import com.dimbo.helper.service.SubscriberService;
 import com.dimbo.helper.service.SubscriptionService;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.*;
 
 import java.sql.Connection;
@@ -37,36 +37,41 @@ public class ServiceListCommand implements Command {
     
     private void fillServices(HttpServletRequest request, Connection connection) {
         ServiceService serviceService = new ServiceService(connection);
+        List<Service> services;
         
         HttpSession s = request.getSession();
-        
-        if (request.getParameter("sort") != null) {
-            s.setAttribute("sort", request.getParameter("sort"));
+        Object sortParam = request.getParameter("sort");
+        LOGGER.info("filling services");
+        if (sortParam != null) {
+            s.setAttribute("sort", sortParam);
         }
         
-        if (s.getAttribute("sort") != null) {
-            request.setAttribute("services",
-                serviceService.getAllServices(
-                    s.getAttribute("sort").toString(), true));
+        sortParam = s.getAttribute("sort");
+        
+        
+        if (sortParam != null) {
+            String sort = (String) sortParam;
+            services = serviceService.getAllServices(sort, true);
         } else {
-            request.setAttribute("services", serviceService.getAllServices());
+            services = serviceService.getAllServices();
         }
+        
+        request.setAttribute("services", services);
     }
     
     private void fillSubscriptions(HttpServletRequest request, Connection connection) {
         SubscriberService subscriberService = new SubscriberService(connection);
         SubscriptionService subscriptionService = new SubscriptionService(connection);
         JSONService jsonService = new JSONService();
+        Subscriber subscriber;
+        List<Subscription> subscriptions;
         
         Object userObj = request.getSession().getAttribute("user");
         if (userObj != null && !((User) userObj).isAdmin()) {
             User user = (User) userObj;
             
-            Subscriber subscriber = subscriberService
-                .findSubscriberByUserId(user.getId());
-            
-            List<Subscription> subscriptions = subscriptionService
-                .getSubscriptions(subscriber.getId());
+            subscriber = subscriberService.findSubscriberByUserId(user.getId());
+            subscriptions = subscriptionService.getSubscriptions(subscriber.getId());
             
             String jsonSubscriptions = jsonService.toJSON(subscriptions);
             

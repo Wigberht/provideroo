@@ -4,7 +4,7 @@ import com.dimbo.ConnectionPool;
 import com.dimbo.command.Command;
 import com.dimbo.dao.factory.FactoryGenerator;
 import com.dimbo.helper.auth.Auth;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.Service;
 import com.dimbo.model.User;
 import org.apache.pdfbox.pdmodel.PDDocument;

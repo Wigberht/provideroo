@@ -21,7 +21,7 @@
                         <div class="col s2">
                             <p><b><fmt:message key="title"/></b></p>
                         </div>
-                        <div class="col s3">
+                        <div class="col s2">
                             <p><b><fmt:message key="description"/></b></p>
                         </div>
                         <div class="col s1">

@@ -1,4 +1,4 @@
-package com.dimbo.managers;
+package com.dimbo.manager;
 
 import java.util.ResourceBundle;
 

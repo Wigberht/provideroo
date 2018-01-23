@@ -1,6 +1,6 @@
 package com.dimbo;
 
-import com.dimbo.managers.DBResourceManager;
+import com.dimbo.manager.DBResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,7 +118,8 @@ public class ConnectionPool {
             pool = new ArrayBlockingQueue<>(connectionsAmount);
         }
         
-        LOGGER.info("Connections amount on ConnectionPool.initPool(): " + connectionsAmount);
+        LOGGER.info(
+            "Connections amount on ConnectionPool.initPool(): " + connectionsAmount);
         
         for (int i = 0; i < connectionsAmount; i++) {
             try {

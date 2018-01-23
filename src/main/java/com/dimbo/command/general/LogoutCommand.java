@@ -1,7 +1,7 @@
 package com.dimbo.command.general;
 
 import com.dimbo.command.Command;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 
 import javax.servlet.http.HttpServletRequest;
 

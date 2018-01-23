@@ -1,4 +1,4 @@
-package com.dimbo.servlets;
+package com.dimbo.servlet;
 
 import com.dimbo.command.Command;
 import com.dimbo.command.CommandDispatcher;

@@ -1,7 +1,7 @@
 package com.dimbo.dao.factory;
 
 import com.dimbo.dao.DAOException;
-import com.dimbo.managers.DBResourceManager;
+import com.dimbo.manager.DBResourceManager;
 
 import javax.servlet.ServletContext;
 

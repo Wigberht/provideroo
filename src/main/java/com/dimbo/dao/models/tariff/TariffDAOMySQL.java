@@ -14,8 +14,22 @@ import java.util.List;
 
 public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
-    private static final String FIND_BY_ID = "SELECT * FROM tariff WHERE id = ?";
+    //    private static final String FIND_BY_ID = "SELECT * FROM tariff WHERE id = ?";
+    private static final String FIND_BY_ID = "SET @tariff_id:=?;\n" +
+        "SELECT *\n" +
+        "FROM tariff, (\n" +
+        "               SELECT COUNT(id) AS subscribers\n" +
+        "               FROM tariff_subscriber\n" +
+        "               WHERE tariff_id = @tariff_id AND prolong = TRUE\n" +
+        "             ) AS counters\n" +
+        "WHERE id = @tariff_id;";
+    
+    private static final String COUNT_SUBSCRIBERS = "SELECT COUNT(DISTINCT subscriber_id) AS subscribers\n" +
+        "FROM tariff_subscriber\n" +
+        "WHERE tariff_id = ? AND prolong = TRUE";
+    
     private static final String FIND_BY_SERVICE_ID = "SELECT * FROM tariff WHERE service_id = ?";
+    //    private static final String FIND_BY_SERVICE_ID = "";
     private static final String CREATE_TARIFF = "INSERT INTO tariff VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_TARIFF = "UPDATE tariff "
         + "SET title = ?, description = ?, number_of_days = ?, cost = ?, currency_shortname = ? "
@@ -32,14 +46,23 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     @Override
     public List<Tariff> findByService(Long serviceId) throws DAOException {
         List<Tariff> tariffs = new ArrayList<>();
-        
+        LOGGER.info("TariffDao#findByService");
+        LOGGER.info("serviceID: " + serviceId);
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_BY_SERVICE_ID, false,
-                serviceId);
+            PreparedStatement statement = prepareStatement(connection, FIND_BY_SERVICE_ID,
+                                                           false,
+                                                           serviceId);
             ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
-                tariffs.add(map(resultSet));
+                Tariff tariff = map(resultSet);
+//                LOGGER.info("Tariff {}, id: {}, subscribers: {}",
+//                            tariff.getTitle(),
+//                            tariff.getId(),
+//                            countSubscribers(tariff.getId()));
+                
+                tariff.setSubscriberAmount(countSubscribers(tariff.getId()));
+                tariffs.add(tariff);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -48,12 +71,32 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         return tariffs;
     }
     
+    private int countSubscribers(long tariffId) throws DAOException {
+        int subscribers = 0;
+        
+        try (
+            PreparedStatement statement = prepareStatement(connection, COUNT_SUBSCRIBERS,
+                                                           false,
+                                                           tariffId);
+            ResultSet resultSet = statement.executeQuery()
+        ) {
+            if (resultSet.next()) {
+                subscribers = resultSet.getInt("subscribers");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return subscribers;
+    }
+    
     @Override
     public Tariff find(Long id) throws DAOException {
         Tariff tariff = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false, id);
+            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
+                                                           id);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {

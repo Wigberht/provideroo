@@ -2,7 +2,7 @@ package com.dimbo.command.general;
 
 import com.dimbo.command.Command;
 import com.dimbo.helper.auth.Auth;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

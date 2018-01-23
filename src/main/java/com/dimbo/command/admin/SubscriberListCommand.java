@@ -2,7 +2,7 @@ package com.dimbo.command.admin;
 
 import com.dimbo.command.Command;
 import com.dimbo.helper.service.SubscriberService;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 
 import javax.servlet.http.HttpServletRequest;
 

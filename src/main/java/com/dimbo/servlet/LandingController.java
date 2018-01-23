@@ -1,6 +1,6 @@
-package com.dimbo.servlets;
+package com.dimbo.servlet;
 
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

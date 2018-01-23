@@ -1,7 +1,7 @@
 package com.dimbo.filter;
 
 import com.dimbo.helper.AccessHelper;
-import com.dimbo.managers.PagesResourceManager;
+import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.Roles;
 import com.dimbo.model.User;
 import org.slf4j.Logger;

@@ -34,9 +34,10 @@ public class ServiceService extends ServiceHelper {
     }
     
     public List<Service> getAllServices() {
-        ServiceDAO serviceDAO = FactoryGenerator.getFactory()
-                                                .makeServiceDAO(connection);
-        return serviceDAO.all();
+        return FactoryGenerator.getFactory()
+                               .makeServiceDAO(connection)
+                               .all();
+        
     }
     
     public List<Service> getAllServices(String sort, boolean ascOrder) {

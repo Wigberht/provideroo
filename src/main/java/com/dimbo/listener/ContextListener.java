@@ -1,4 +1,4 @@
-package com.dimbo.listeners;
+package com.dimbo.listener;
 
 import com.dimbo.ConnectionPool;
 import com.dimbo.dao.factory.FactoryGenerator;

@@ -13,6 +13,7 @@
         number_of_days="${tariff.numberOfDays}"
         cost="${tariff.cost}"
         currency="${tariff.currencyShortname}"
+        subscribers="${tariff.subscriberAmount}"
         edit_text='<fmt:message key="edit"/>'
         save_text='<fmt:message key="save"/>'
     ></tariff-row-admin>
