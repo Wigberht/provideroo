@@ -10,16 +10,18 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 public class JSONService {
-    Logger LOGGER = LoggerFactory.getLogger(JSONService.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(JSONService.class);
     
-    private ObjectMapper objectMapper;
+    private static ObjectMapper objectMapper = new ObjectMapper();
     
-    public JSONService() {
-        objectMapper = new ObjectMapper();
+    static {
         objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
     }
     
-    public JsonNode get(String json, String key) {
+    public JSONService() {
+    }
+    
+    public static JsonNode get(String json, String key) {
         try {
             return objectMapper.readTree(json).get(key);
         } catch (IOException e) {
@@ -29,7 +31,7 @@ public class JSONService {
         return null;
     }
     
-    public Object toObject(String json, Class<?> clasz) {
+    public static Object toObject(String json, Class<?> clasz) {
         try {
             return objectMapper.readValue(json, clasz);
         } catch (IOException e) {
@@ -38,7 +40,7 @@ public class JSONService {
         return null;
     }
     
-    public String toJSON(Object obj) {
+    public static String toJSON(Object obj) {
         try {
             return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException jpe) {

@@ -5,6 +5,7 @@ import com.dimbo.helper.validator.MainValidator;
 import com.dimbo.model.Tariff;
 import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,24 @@ public class TariffREST extends HttpServlet {
         }
         
         String response = jsonService.toJSON(new SimpleResponse(success));
+        
+        return Response.status(200).entity(response).build();
+    }
+    
+    @POST
+    @Path("/delete")
+    public Response delete(String data) {
+        boolean success = false;
+        
+        JsonNode node = JSONService.get(data, "tariffId");
+        if (node != null) {
+            long id = node.asLong();
+            TariffService tariffService = new TariffService();
+            success = tariffService.deleteTariff(id);
+            tariffService.returnConnection();
+        }
+        
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(200).entity(response).build();
     }

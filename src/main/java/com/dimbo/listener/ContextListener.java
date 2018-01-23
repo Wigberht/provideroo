@@ -4,12 +4,15 @@ import com.dimbo.ConnectionPool;
 import com.dimbo.dao.factory.FactoryGenerator;
 import com.dimbo.dao.models.role.RoleDAO;
 import com.dimbo.dao.models.service.ServiceDAO;
+import com.dimbo.helper.SessionNumberHolder;
 import com.dimbo.helper.schedule.UpdateSubscriptionsJob;
 import com.dimbo.model.Role;
+import com.mysql.cj.api.Session;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.http.HttpSessionContext;
 import java.sql.Connection;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -46,6 +49,7 @@ public class ContextListener implements ServletContextListener {
 //        scheduler.scheduleAtFixedRate(
 //            new UpdateSubscriptionsJob(), 0, 2, TimeUnit.SECONDS);
         
+        SessionNumberHolder.getInstance().setSessions(0);
     }
     
     /**

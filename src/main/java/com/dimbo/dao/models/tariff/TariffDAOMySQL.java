@@ -46,8 +46,6 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     @Override
     public List<Tariff> findByService(Long serviceId) throws DAOException {
         List<Tariff> tariffs = new ArrayList<>();
-        LOGGER.info("TariffDao#findByService");
-        LOGGER.info("serviceID: " + serviceId);
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_SERVICE_ID,
                                                            false,
@@ -56,11 +54,6 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         ) {
             while (resultSet.next()) {
                 Tariff tariff = map(resultSet);
-//                LOGGER.info("Tariff {}, id: {}, subscribers: {}",
-//                            tariff.getTitle(),
-//                            tariff.getId(),
-//                            countSubscribers(tariff.getId()));
-                
                 tariff.setSubscriberAmount(countSubscribers(tariff.getId()));
                 tariffs.add(tariff);
             }
@@ -111,7 +104,20 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
     @Override
     public boolean delete(Long id) throws DAOException {
-        return false;
+        
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, DELETE_TARIFF_BY_ID, true,
+                id
+            )
+        ) {
+            int updatedRows = statement.executeUpdate();
+            
+            return updatedRows > 0;
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
     
     @Override

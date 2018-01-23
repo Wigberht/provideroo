@@ -1,61 +1,62 @@
 <script type="text/x-template" id="tariff-row-admin-template">
+    <div v-if="show" class="tariff-row-card teal lighten-5">
+        <div class="row zero-margin center-align">
+            <template v-if="edit">
+                <div class="col s2">
+                    <input type="text" v-model="d_title">
+                </div>
+                <div class="col s2">
+                    <textarea v-model="d_description"></textarea>
+                </div>
+                <div class="col s1">
+                    <input type="number" v-model="d_days">
+                </div>
+                <div class="col s1">
+                    <input type="number" v-model="d_cost">
+                </div>
+                <div class="col s1">
+                    {{d_currency}}
+                </div>
+            </template>
 
-    <div class="row zero-margin center-align">
-        <template v-if="edit">
+            <template v-else>
+                <div @mouseover="showTruncated"
+                     @mouseleave="hideTruncated"
+                     v-bind:class="{truncate:isTruncated}"
+                     class="col s2">
+                    {{d_title}}
+                </div>
+                <div @mouseover="showTruncated"
+                     @mouseleave="hideTruncated"
+                     v-bind:class="{truncate:isTruncated}"
+                     class="col s2">
+                    {{d_description}}
+                </div>
+                <div class="col s1">{{d_days}}</div>
+                <div class="col s1">{{d_cost}}</div>
+                <div class="col s1">{{d_currency}}</div>
+            </template>
+
+            <div class="col s2">{{subscribers}}</div>
             <div class="col s2">
-                <input type="text" v-model="d_title">
-            </div>
-            <div class="col s2">
-                <textarea v-model="d_description"></textarea>
+                <a v-if="!edit"
+                   @click="startEdit"
+                   class="waves-effect waves-light btn btn-small">
+                    {{buttonText}}
+                </a>
+                <a v-if="edit"
+                   @click="finishEdit"
+                   class="waves-effect waves-light btn btn-small">
+                    {{buttonText}}
+                </a>
             </div>
             <div class="col s1">
-                <input type="number" v-model="d_days">
+                <a @click="deleteTariff"
+                   class="waves-effect waves-light btn btn-small red darken-5 tooltipped"
+                   data-position="top" data-delay="200" data-tooltip="Delete">
+                    X
+                </a>
             </div>
-            <div class="col s1">
-                <input type="number" v-model="d_cost">
-            </div>
-            <div class="col s1">
-                {{d_currency}}
-            </div>
-        </template>
-
-        <template v-else>
-            <div @mouseover="showTruncated"
-                 @mouseleave="hideTruncated"
-                 v-bind:class="{truncate:isTruncated}"
-                 class="col s2">
-                {{d_title}}
-            </div>
-            <div @mouseover="showTruncated"
-                 @mouseleave="hideTruncated"
-                 v-bind:class="{truncate:isTruncated}"
-                 class="col s2">
-                {{d_description}}
-            </div>
-            <div class="col s1">{{d_days}}</div>
-            <div class="col s1">{{d_cost}}</div>
-            <div class="col s1">{{d_currency}}</div>
-        </template>
-
-        <div class="col s2">{{subscribers}}</div>
-        <div class="col s2">
-            <a v-if="!edit"
-               @click="startEdit"
-               class="waves-effect waves-light btn btn-small">
-                {{buttonText}}
-            </a>
-            <a v-if="edit"
-               @click="finishEdit"
-               class="waves-effect waves-light btn btn-small">
-                {{buttonText}}
-            </a>
-        </div>
-        <div class="col s1">
-            <a @click="startEdit"
-               class="waves-effect waves-light btn btn-small red darken-5 tooltipped"
-               data-position="top" data-delay="200" data-tooltip="Delete">
-                X
-            </a>
         </div>
     </div>
 
@@ -85,8 +86,8 @@
                 d_currency: this.currency,
 
                 isTruncated: true,
-
                 edit: false,
+                show: true
             }
         },
         template: "#tariff-row-admin-template",
@@ -115,6 +116,22 @@
                 });
                 this.edit = false;
             },
+
+            deleteTariff() {
+                axios.post("/rest/tariff/delete", {
+                    'tariffId': this.id
+                }).then(response => {
+                    console.log(response);
+                    if (response.data.success) {
+                        $('.tooltipped').tooltip('remove');
+                        this.show = false;
+                        Materialize.toast("DELETE SUCCESS", 1500, "green darken-2");
+                    }
+                }).catch(error => {
+                    Materialize.toast("UNABLE TO DELETE, there may be subscribers", 1500, "red darken-2");
+                })
+            },
+
             showTruncated() {
                 this.isTruncated = false;
             },

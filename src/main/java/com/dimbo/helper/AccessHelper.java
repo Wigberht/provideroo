@@ -32,14 +32,8 @@ public class AccessHelper {
         
         
         if (!isUser(request)) {
-//            LOGGER.info("is not user " + url);
             return true;
         }
-
-//        LOGGER.info("URI ROLE  : "+getUriRole(request));
-//        LOGGER.info("ADMIN ROLE: "+Roles.ADMIN.name());
-//        LOGGER.info("EQUALS    : "+getUriRole(request).equalsIgnoreCase(Roles.ADMIN.name()));
-//        LOGGER.info("REQ IS ADM: "+getRequestUser(request).isAdmin());
         
         if (getRequestUser(request) == null) {
             return false;
@@ -47,13 +41,11 @@ public class AccessHelper {
         
         if (getUriRole(request).equalsIgnoreCase(Roles.ADMIN.name()) &&
             !getRequestUser(request).isAdmin()) {
-            LOGGER.info("First false");
             return false;
         }
         
         if (getUriRole(request).equalsIgnoreCase(Roles.SUBSCRIBER.name()) &&
             getRequestUser(request).isAdmin()) {
-            LOGGER.info("Second false");
             return false;
         }
         

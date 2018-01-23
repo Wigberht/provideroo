@@ -13,10 +13,14 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         SessionNumberHolder.getInstance().addSession();
-        LOGGER.info("Session created");
-        httpSessionEvent.getSession().setAttribute("locale", "ru_RU");
-        LOGGER.info("Session language set");
+        String baseLocale = httpSessionEvent.getSession()
+                                            .getServletContext()
+                                            .getInitParameter("db_type");
+        if (baseLocale == null || baseLocale.equals("")) {
+            baseLocale = "ru_RU";
+        }
         
+        httpSessionEvent.getSession().setAttribute("locale", baseLocale);
     }
     
     @Override

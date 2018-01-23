@@ -50,10 +50,9 @@
                     <c:forEach items="${service.tariffs}"
                                var="tariff"
                                varStatus="status">
-                        <div
-                            class="tariff-row-card teal lighten-5">
+
                             <mt:tariff_row tariff="${tariff}"/>
-                        </div>
+
                     </c:forEach>
 
 

@@ -36,8 +36,8 @@ public class UrlRewriteFilter implements Filter {
      * @throws IOException
      */
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
-        LOGGER.info("Inr url rewrite filter");
+    public void doFilter(ServletRequest req, ServletResponse res,
+                         FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         
         Matcher matcher = pattern.matcher(request.getRequestURI());

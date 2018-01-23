@@ -46,4 +46,10 @@ public class TariffService extends ServiceHelper {
                                .makeTariffDAO(connection)
                                .update(tariff);
     }
+    
+    public boolean deleteTariff(long id) {
+        return FactoryGenerator.getFactory()
+                               .makeTariffDAO(connection)
+                               .delete(id);
+    }
 }

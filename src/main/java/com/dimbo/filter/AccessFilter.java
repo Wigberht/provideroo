@@ -37,7 +37,6 @@ public class AccessFilter implements Filter {
      */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
-        LOGGER.info("In access filter");
         HttpServletRequest request = (HttpServletRequest) req;
         
         if (!AccessHelper.isAccessAllowed(request)) {
@@ -48,7 +47,6 @@ public class AccessFilter implements Filter {
             
             rd.forward(req, res);
         } else {
-            LOGGER.info("Access granted, doing next filter");
             chain.doFilter(req, res);
         }
     }

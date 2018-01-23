@@ -1,28 +1,28 @@
 <script type="text/x-template" id="tariff-row-subscriber-template">
+    <div class="tariff-row-card teal lighten-5">
+        <div class="row zero-margin center-align">
+            <div class="col s2">{{title}}</div>
+            <div class="col s3">{{description}}</div>
+            <div class="col s1">{{number_of_days}}</div>
+            <div class="col s1">{{cost}}</div>
+            <div class="col s1">{{currency}}</div>
+            <div class="col s2">{{dueDate}}</div>
 
-    <div class="row zero-margin center-align">
-        <div class="col s2">{{title}}</div>
-        <div class="col s3">{{description}}</div>
-        <div class="col s1">{{number_of_days}}</div>
-        <div class="col s1">{{cost}}</div>
-        <div class="col s1">{{currency}}</div>
-        <div class="col s2">{{dueDate}}</div>
-
-        <div class="col s2">
-            <a v-if="!isSubscribed"
-               :disabled="isBanned"
-               @click="subscribe"
-               class="waves-effect waves-light btn btn-small noselect">
-                {{buttonText}}
-            </a>
-            <a v-if="isSubscribed"
-               @click="unsubscribe"
-               class="waves-effect waves-light btn btn-small noselect">
-                {{buttonText}}
-            </a>
-            <%--<p v-if=""--%>
+            <div class="col s2">
+                <a v-if="!isSubscribed"
+                   :disabled="isBanned"
+                   @click="subscribe"
+                   class="waves-effect waves-light btn btn-small noselect">
+                    {{buttonText}}
+                </a>
+                <a v-if="isSubscribed"
+                   @click="unsubscribe"
+                   class="waves-effect waves-light btn btn-small noselect">
+                    {{buttonText}}
+                </a>
+                <%--<p v-if=""--%>
+            </div>
         </div>
-
     </div>
 
 </script>
