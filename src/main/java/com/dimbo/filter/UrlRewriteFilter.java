@@ -1,13 +1,13 @@
 package com.dimbo.filter;
 
-import com.dimbo.command.Commands;
+import com.dimbo.command.commands.CommandsAdmin;
+import com.dimbo.command.commands.CommandsGeneral;
+import com.dimbo.command.commands.CommandsSubscriber;
 import com.dimbo.model.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class UrlRewriteFilter implements Filter {
     Logger LOGGER = LoggerFactory.getLogger(UrlRewriteFilter.class);
     
-    String regex = "(.*)/(.*)";
+    String regex = "/(.*)/(.*)";
     Pattern pattern = Pattern.compile(regex);
     
     @Override
@@ -38,22 +38,24 @@ public class UrlRewriteFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res,
                          FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest request = (HttpServletRequest) req;
         
+        HttpServletRequest request = (HttpServletRequest) req;
         Matcher matcher = pattern.matcher(request.getRequestURI());
-        boolean find = matcher.find();
-        if (find) {
+        if (matcher.find()) {
+//            LOGGER.info("Find 1: " + matcher.group(1) + " : " + matcher.group(2));
+            String roleName = matcher.group(1).toUpperCase();
+            
             boolean isUser = false;
             for (Roles role : Roles.values()) {
-                if (matcher.group(1).contains(role.name().toLowerCase()))
+                if (roleName.equals(role.name())) {
                     isUser = true;
+                }
             }
             
             if (isUser) {
                 String resultPage = getResultPage(matcher);
-                RequestDispatcher requestDispatcher = request
-                    .getRequestDispatcher(resultPage);
-                requestDispatcher.forward(req, res);
+                RequestDispatcher rd = request.getRequestDispatcher(resultPage);
+                rd.forward(req, res);
             } else {
                 chain.doFilter(req, res);
             }
@@ -64,32 +66,60 @@ public class UrlRewriteFilter implements Filter {
     
     private String getResultPage(Matcher matcher) {
         String page;
-        boolean isCommand = false;
+        
         String user = matcher.group(1);
         String matchPage = matcher.group(2);
+
+
+//        for (CommandsGeneral command : CommandsGeneral.values()) {
+//            if (command.name().equalsIgnoreCase(matchPage)) {
+//                isCommand = true;
+//                break;
+//            }
+//        }
         
-        for (Commands command : Commands.values()) {
-            if (command.name().equalsIgnoreCase(matchPage)) {
-                isCommand = true;
-                break;
-            }
-        }
-        
+        boolean isCommand = isCommand(matchPage);
         StringBuilder sb = new StringBuilder();
         if (isCommand) {
-            page = "/MainController?command=" + matchPage;
+            sb.append("/MainController?command=")
+              .append(matchPage)
+              .append("&role=")
+              .append(user);
         } else {
-            sb.append("/jsp")
+            sb.append("/jsp/")
               .append(user)
               .append("/")
               .append(matchPage)
               .append(".jsp");
-            page = sb.toString();
         }
+        
+        page = sb.toString();
         
         LOGGER.info("Accessing page: " + page);
         
         return page;
+    }
+    
+    private boolean isCommand(String page) {
+        for (CommandsGeneral command : CommandsGeneral.values()) {
+            if (command.name().equalsIgnoreCase(page)) {
+                return true;
+            }
+        }
+        
+        for (CommandsAdmin command : CommandsAdmin.values()) {
+            if (command.name().equalsIgnoreCase(page)) {
+                return true;
+            }
+        }
+        
+        for (CommandsSubscriber command : CommandsSubscriber.values()) {
+            if (command.name().equalsIgnoreCase(page)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     @Override

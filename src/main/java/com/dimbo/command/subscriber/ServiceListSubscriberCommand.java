@@ -1,27 +1,27 @@
-package com.dimbo.command.admin;
+package com.dimbo.command.subscriber;
 
 import com.dimbo.ConnectionPool;
 import com.dimbo.command.Command;
-import com.dimbo.dao.factory.FactoryGenerator;
-import com.dimbo.dao.models.service.ServiceDAO;
 import com.dimbo.helper.service.ServiceService;
 import com.dimbo.helper.service.SubscriberService;
 import com.dimbo.helper.service.SubscriptionService;
 import com.dimbo.manager.PagesResourceManager;
-import com.dimbo.model.*;
-
-import java.sql.Connection;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.dimbo.model.Service;
+import com.dimbo.model.Subscriber;
+import com.dimbo.model.Subscription;
+import com.dimbo.model.User;
 import com.dimbo.rest.JSONService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ServiceListCommand implements Command {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.Connection;
+import java.util.List;
+
+public class ServiceListSubscriberCommand implements Command {
     
-    Logger LOGGER = LoggerFactory.getLogger(ServiceListCommand.class);
+    Logger LOGGER = LoggerFactory.getLogger(ServiceListSubscriberCommand.class);
     
     @Override
     public String execute(HttpServletRequest request) {

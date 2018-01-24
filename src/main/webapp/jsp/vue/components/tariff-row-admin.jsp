@@ -144,11 +144,12 @@
 
         },
         mounted: function () {
+
         },
 
         computed: {
             buttonText() {
-                return this.edit ? this.save_text : this.edit_text;
+                return this.edit ? strings['save'] : strings['edit'];
             }
         }
     })

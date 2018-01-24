@@ -1,7 +1,7 @@
 package com.dimbo.servlet;
 
 import com.dimbo.command.Command;
-import com.dimbo.command.CommandDispatcher;
+import com.dimbo.command.dispatcher.CommandDispatcher;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

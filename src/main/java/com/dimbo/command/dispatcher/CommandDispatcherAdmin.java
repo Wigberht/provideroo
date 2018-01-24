@@ -1,6 +1,9 @@
-package com.dimbo.command;
+package com.dimbo.command.dispatcher;
 
 
+import com.dimbo.command.Command;
+import com.dimbo.command.commands.CommandsAdmin;
+import com.dimbo.command.commands.CommandsGeneral;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,13 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * The Class CommandDispatcher provides method for commands management.
  */
-public class CommandDispatcherGeneral {
+public class CommandDispatcherAdmin {
     
     /**
      * The Constant LOGGER.
      */
     static final Logger LOGGER = LoggerFactory
-        .getLogger(CommandDispatcherGeneral.class);
+        .getLogger(CommandDispatcherAdmin.class);
     
     /**
      * Gets the command by name.
@@ -31,39 +34,32 @@ public class CommandDispatcherGeneral {
         CommandsAdmin commandType = CommandsAdmin.valueOf(commandParam);
         
         switch (commandType) {
-            case LOGIN:
-                return Commands.LOGIN.getCommand();
-            
             case REGISTRATION:
-                return Commands.REGISTRATION.getCommand();
-            
-            case LOGOUT:
-                return Commands.LOGOUT.getCommand();
+                command = CommandsAdmin.REGISTRATION.getCommand();
+                break;
             
             case SUBSCRIBER_LIST:
-                return Commands.SUBSCRIBER_LIST.getCommand();
+                command = CommandsAdmin.SUBSCRIBER_LIST.getCommand();
+                break;
             
             case SERVICE_LIST:
-                return Commands.SERVICE_LIST.getCommand();
+                command = CommandsAdmin.SERVICE_LIST.getCommand();
+                break;
             
             case ADD_SERVICE:
-                return Commands.ADD_SERVICE.getCommand();
+                command = CommandsAdmin.ADD_SERVICE.getCommand();
+                break;
             
             case ADD_TARIFF:
-                return Commands.ADD_TARIFF.getCommand();
+                command = CommandsAdmin.ADD_TARIFF.getCommand();
+                break;
             
             case NEW_TARIFF:
-                return Commands.NEW_TARIFF.getCommand();
+                command = CommandsAdmin.NEW_TARIFF.getCommand();
+                break;
             
-            case SUBSCRIBER_PROFILE:
-                return Commands.SUBSCRIBER_PROFILE.getCommand();
-            
-            case CHANGE_LANGUAGE:
-                return Commands.CHANGE_LANGUAGE.getCommand();
-
-//		default:
-//			LOGGER.warn("Unknown operation.");
-//			command = new EmptyCommand();
+            default:
+                command = CommandsGeneral.MISSING_COMMAND.getCommand();
         }
         
         return command;

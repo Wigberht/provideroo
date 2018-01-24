@@ -1,4 +1,4 @@
-<%@tag description="Admin Page template" pageEncoding="UTF-8" %>
+<%@tag description="Service list template" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <%@attribute name="services"
@@ -46,16 +46,23 @@
                         </c:if>
                     </div>
 
-
                     <c:forEach items="${service.tariffs}"
                                var="tariff"
                                varStatus="status">
-
-                            <mt:tariff_row tariff="${tariff}"/>
-
+                        <tariff-row
+                            id="${tariff.id}"
+                            title="${tariff.title}"
+                            description="${tariff.description}"
+                            days="${tariff.numberOfDays}"
+                            cost="${tariff.cost}"
+                            currency="${tariff.currencyShortname}"
+                            subscribers="${tariff.subscriberAmount}"
+                            is_admin="${isAdmin}"
+                            subscriptions='${subscriptions}'
+                            user_id="${user.id}"
+                            is_banned="${user.isBanned()}"
+                        ></tariff-row>
                     </c:forEach>
-
-
                 </c:if>
             </div>
         </li>

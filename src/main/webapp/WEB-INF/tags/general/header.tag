@@ -18,5 +18,3 @@
         </div>
     </nav>
 </div>
-
-<%--<%@ include file="/jsp/vue/vue-integration.jspf" %>--%>

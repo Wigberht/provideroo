@@ -1,4 +1,4 @@
-<%@tag description="Header of the body tag" pageEncoding="UTF-8" %>
+<%@tag description="Header of the body tag for subscriber" pageEncoding="UTF-8" %>
 <%@ attribute name="pageName" %>
 
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
@@ -27,7 +27,7 @@
 <ul id="nav-mobile" class="right">
     <page-link
         active="${pageName.equals("subscriber_profile")}"
-        link="${root}/subscriber/subscriber_profile"
+        link="${root}/subscriber/profile"
         icon="person"
         message="<fmt:message key="subscriber_profile"/>"
     ></page-link>

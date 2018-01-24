@@ -30,7 +30,7 @@ main {
 .tariff-row-card {
     margin: 10px auto 0;
     width: 100%;
-    height: 80px;
+    /*height: 80px;*/
 
     padding: 15px;
     /*border-radius: 20%;*/
@@ -47,11 +47,11 @@ main {
     background-color: #ee6e73;
 }
 
-.icon_style{
+.icon_style {
     position: absolute;
     right: 10px;
     top: 10px;
     font-size: 20px;
     color: white;
-    cursor:pointer;
+    cursor: pointer;
 }

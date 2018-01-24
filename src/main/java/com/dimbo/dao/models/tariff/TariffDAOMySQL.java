@@ -15,14 +15,15 @@ import java.util.List;
 public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
     //    private static final String FIND_BY_ID = "SELECT * FROM tariff WHERE id = ?";
-    private static final String FIND_BY_ID = "SET @tariff_id:=?;\n" +
+//    private static final String FIND_BY_ID = "SET @tariff_id:=?;\n" +
+    private static final String FIND_BY_ID =
         "SELECT *\n" +
-        "FROM tariff, (\n" +
-        "               SELECT COUNT(id) AS subscribers\n" +
-        "               FROM tariff_subscriber\n" +
-        "               WHERE tariff_id = @tariff_id AND prolong = TRUE\n" +
-        "             ) AS counters\n" +
-        "WHERE id = @tariff_id;";
+            "FROM tariff, (\n" +
+            "               SELECT COUNT(id) AS subscribers\n" +
+            "               FROM tariff_subscriber\n" +
+            "               WHERE tariff_id = ? AND prolong = TRUE\n" +
+            "             ) AS counters\n" +
+            "WHERE id = ?;";
     
     private static final String COUNT_SUBSCRIBERS = "SELECT COUNT(DISTINCT subscriber_id) AS subscribers\n" +
         "FROM tariff_subscriber\n" +
@@ -88,9 +89,9 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         Tariff tariff = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
-                                                           id);
-            ResultSet resultSet = statement.executeQuery()
+            PreparedStatement pstmt = prepareStatement(connection, FIND_BY_ID, false,
+                                                       id, id);
+            ResultSet resultSet = pstmt.executeQuery()
         ) {
             if (resultSet.next()) {
                 tariff = map(resultSet);

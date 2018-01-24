@@ -37,8 +37,7 @@
 <!-- custom css -->
 <link href="/css/style.css" rel="stylesheet">
 
+<!--pass localization to js -->
 <script type="text/javascript">
-    console.log("Json bundle");
-    <%--console.log(${requestScope.get("JSONMessages")});--%>
     window.strings =${requestScope.get("JSONMessages")};
 </script>

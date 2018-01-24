@@ -1,8 +1,20 @@
 <script type="text/x-template" id="tariff-row-subscriber-template">
     <div class="tariff-row-card teal lighten-5">
         <div class="row zero-margin center-align">
-            <div class="col s2">{{title}}</div>
-            <div class="col s3">{{description}}</div>
+            <div @mouseover="showTruncated"
+                 @mouseleave="hideTruncated"
+                 v-bind:class="{truncate:isTruncated}"
+                 class="col s2">
+
+                {{title}}
+            </div>
+            <div @mouseover="showTruncated"
+                 @mouseleave="hideTruncated"
+                 v-bind:class="{truncate:isTruncated}"
+                 class="col s2">
+
+                {{description}}
+            </div>
             <div class="col s1">{{number_of_days}}</div>
             <div class="col s1">{{cost}}</div>
             <div class="col s1">{{currency}}</div>
@@ -38,7 +50,8 @@
                 isSubscribed: false,
                 isProlong: false,
                 dueDate: "-------------",
-                isBanned: this.banned == "true"
+                isBanned: this.banned == "true",
+                isTruncated: true
             }
         },
         template: "#tariff-row-subscriber-template",
@@ -84,7 +97,14 @@
             getDueDate() {
                 return moment().add(this.number_of_days, 'days')
                                .format("YYYY-MM-DD");
-            }
+            },
+
+            showTruncated() {
+                this.isTruncated = false;
+            },
+            hideTruncated() {
+                this.isTruncated = true;
+            },
 
         },
 
@@ -97,13 +117,12 @@
                     if (Date.parse(elem.end) > Date.now()) {
                         this.dueDate = elem.end;
                     }
-                    console.log("subscribed " + this.isSubscribed);
+//                    console.log("subscribed " + this.isSubscribed);
                 }
             });
         },
         mounted: function () {
-            console.log("Banned: " + Boolean(this.banned));
-            console.log("Is banned: ", Boolean(this.banned));
+//            console.log("Is banned: ", Boolean(this.banned));
         },
 
         computed: {

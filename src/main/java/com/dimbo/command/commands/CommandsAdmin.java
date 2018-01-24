@@ -1,5 +1,6 @@
-package com.dimbo.command;
+package com.dimbo.command.commands;
 
+import com.dimbo.command.Command;
 import com.dimbo.command.admin.*;
 import com.dimbo.command.general.ChangeLanguageCommand;
 import com.dimbo.command.general.LoginCommand;
@@ -8,26 +9,22 @@ import com.dimbo.command.general.RegistrationCommand;
 import com.dimbo.command.subscriber.SubscriberProfileCommand;
 
 /**
- * The Enum Commands.
+ * The Enum CommandsGeneral.
  */
-public enum CommandsSubscriber {
+public enum CommandsAdmin {
     /**
-     * Commands that are available
+     * CommandsGeneral that are available
      */
     REGISTRATION(new RegistrationCommand()),
-    LOGIN(new LoginCommand()),
-    LOGOUT(new LogoutCommand()),
     SUBSCRIBER_LIST(new SubscriberListCommand()),
-    SERVICE_LIST(new ServiceListCommand()),
+    SERVICE_LIST(new ServiceListAdminCommand()),
     ADD_SERVICE(new AddServiceCommand()),
     ADD_TARIFF(new AddTariffCommand()),
-    NEW_TARIFF(new NewTariffCommand()),
-    SUBSCRIBER_PROFILE(new SubscriberProfileCommand()),
-    CHANGE_LANGUAGE(new ChangeLanguageCommand());
+    NEW_TARIFF(new NewTariffCommand());
     
     private Command command;
     
-    CommandsSubscriber(Command command) {
+    CommandsAdmin(Command command) {
         this.command = command;
     }
     

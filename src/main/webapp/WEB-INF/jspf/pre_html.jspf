@@ -9,10 +9,13 @@
 <c:set var="url"
        value="${pageContext.request.requestURL}"/>
 
+<c:set var="user" value='${sessionScope.get("user")}'/>
+
 <c:set var="isAdmin"
-       value='${sessionScope.user.roleId==applicationScope.get("admin_role_id")}'/>
+       value='${user.roleId==applicationScope.get("admin_role_id")}'/>
 <c:set var="isSubscriber"
-       value='${sessionScope.user.roleId==applicationScope.get("subscriber_role_id")}'/>
+       value='${user.roleId==applicationScope.get("subscriber_role_id")}'/>
+
 
 <c:set var="roleName" value='${isAdmin?"admin":"subscriber"}'/>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
