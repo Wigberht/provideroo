@@ -18,10 +18,6 @@
     <%--necessary for Vue.js integration--%>
     <div id="app">
         <jsp:invoke fragment="header"/>
-        <div class="container">
-
-        <mt:banned_notification/>
-    </div>
         <jsp:doBody/>
     </div>
 </main>

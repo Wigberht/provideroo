@@ -32,7 +32,7 @@ public class ServiceListSubscriberCommand implements Command {
         
         ConnectionPool.returnConn(connection);
         
-        return PagesResourceManager.getPage("service_list_jsp");
+        return PagesResourceManager.getPage("service_list_subscriber_jsp");
     }
     
     private void fillServices(HttpServletRequest request, Connection connection) {
