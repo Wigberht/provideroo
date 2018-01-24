@@ -1,5 +1,0 @@
-<jsp:include page="/jsp/vue/components/page-link.jsp"/>
-
-<script>
-    new Vue().$mount("#navbar_header");
-</script>

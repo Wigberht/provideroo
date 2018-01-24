@@ -14,8 +14,6 @@
         cost="${tariff.cost}"
         currency="${tariff.currencyShortname}"
         subscribers="${tariff.subscriberAmount}"
-        edit_text='<fmt:message key="edit"/>'
-        save_text='<fmt:message key="save"/>'
     ></tariff-row-admin>
 </c:if>
 
@@ -28,16 +26,8 @@
         number_of_days="${tariff.numberOfDays}"
         cost="${tariff.cost}"
         currency="${tariff.currencyShortname}"
-        subscribe_text='<fmt:message key="subscribe"/>'
-        unsubscribe_text='<fmt:message key="unsubscribe"/>'
         subscriptions='${subscriptions}'
         subscribed='${subscribed}'
         user_id='${sessionScope.user.id}'
-        subscription_fail_text='<fmt:message key="subscription.fail" />'
-        subscription_success_text='<fmt:message key="subscription.success" />'
-        subscription_prolong_success_text='
-            <fmt:message key="subscription.prolong.success" />'
-        subscription_prolong_fail_text='
-            <fmt:message key="subscription.prolong.fail" />'
     ></tariff-row-subscriber>
 </c:if>

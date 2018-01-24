@@ -20,7 +20,6 @@
                    class="waves-effect waves-light btn btn-small noselect">
                     {{buttonText}}
                 </a>
-                <%--<p v-if=""--%>
             </div>
         </div>
     </div>
@@ -32,10 +31,7 @@
         props: ['banned',
             'id', 'title', 'description',
             'number_of_days', 'cost', 'currency',
-            'subscribe_text', 'unsubscribe_text', 'subscribed',
-            'subscriptions', 'user_id',
-            'subscription_fail_text', 'subscription_success_text',
-            'subscription_prolong_fail_text', 'subscription_prolong_success_text',
+            'subscribed', 'subscriptions', 'user_id',
         ],
         data: function () {
             return {
@@ -54,11 +50,11 @@
                 }).then((response) => {
                     console.log(response);
                     if (response.data.success) {
-                        Materialize.toast(this.subscription_success_text, 1500);
+                        Materialize.toast(strings['subscription.success'], 1500);
                         this.isSubscribed = true;
                         this.dueDate = this.getDueDate();
                     } else {
-                        Materialize.toast(this.subscription_fail_text, 1500)
+                        Materialize.toast(strings['subscription.fail'], 1500)
                     }
 
                 }).catch((error) => {
@@ -74,10 +70,10 @@
                 }).then((response) => {
                     console.log(response);
                     if (response.data.success) {
-                        Materialize.toast(this.subscription_success_text, 1500);
+                        Materialize.toast(strings['unsubscription.success'], 1500);
                         this.isSubscribed = false;
                     } else {
-                        Materialize.toast(this.subscription_fail_text, 1500)
+                        Materialize.toast(strings['unsubscription.fail'], 1500);
                     }
 
                 }).catch((error) => {
@@ -106,14 +102,15 @@
             });
         },
         mounted: function () {
-
             console.log("Banned: " + Boolean(this.banned));
             console.log("Is banned: ", Boolean(this.banned));
         },
 
         computed: {
             buttonText() {
-                return this.isSubscribed ? this.unsubscribe_text : this.subscribe_text;
+                return this.isSubscribed
+                    ? strings['unsubscribe']
+                    : strings['subscribe'];
             }
         }
     })

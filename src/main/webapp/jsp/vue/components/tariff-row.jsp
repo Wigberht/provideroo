@@ -1,49 +1,24 @@
 <script type="text/x-template" id="tariff-row-template">
+    <div>
+        here you are
+        <template v-if="isAdmin">
 
-    <div class="row zero-margin center-align">
-        <div class="col s2">{{title}}</div>
-        <div class="col s2">{{description}}</div>
-        <div class="col s2">{{number_of_days}}</div>
-        <div class="col s1">{{cost}}</div>
-        <div class="col s2">{{currency}}</div>
-        <div class="col s2"></div>
-        <div class="col s2">
-            <a v-if="isAdmin && !edit"
-               @click="startEdit"
-               class="waves-effect waves-light btn">
-                {{buttonText}}
-            </a>
-            <a v-if="isAdmin && edit"
-               @click="finishEdit"
-               class="waves-effect waves-light btn">
-                {{buttonText}}
-            </a>
-            <a v-if="!isAdmin && !isSubscribed"
-               @click="subscribe"
-               class="waves-effect waves-light btn">
-                {{buttonText}}
-            </a>
-            <a v-if="!isAdmin && isSubscribed"
-               @click="unsubscribe"
-               class="waves-effect waves-light btn">
-                {{buttonText}}
-            </a>
-        </div>
+        </template>
+
+        <template v-else>
+
+        </template>
     </div>
-
 </script>
 
 <script>
     Vue.component('tariff-row', {
         props: [
-            'id',
-            'title', 'description',
-            'number_of_days', 'cost',
-            'currency', 'role',
-            'edit_text', 'save_text',
-            'subscribe_text', 'unsubscribe_text',
-            'subscribed', 'user_id',
-            'subscription_fail_text'
+            'id', 'title', 'description', 'number_of_days', 'cost', 'currency', 'isAdmin',
+            'subscribers',
+            'banned',
+            'subscriptions',
+            'user_id',
         ],
         data: function () {
             return {

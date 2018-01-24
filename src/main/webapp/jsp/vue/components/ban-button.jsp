@@ -5,7 +5,7 @@
 
 <script>
     Vue.component('ban-button', {
-        props: ['text_ban', 'text_unban', 'banned_state', 'user_id'],
+        props: ['banned_state', 'user_id'],
         template: "#ban-button-template",
         data() {
             return {
@@ -37,11 +37,11 @@
         },
         mounted: function () {
             this.banned = this.banned_state == 'true';
-            console.log("Banned: ", this.banned);
+            console.log(strings['access_denied_description']);
         },
         computed: {
             buttonText() {
-                return this.banned ? this.text_unban : this.text_ban;
+                return this.banned ? strings['unban'] : strings['ban'];
             }
         }
     })

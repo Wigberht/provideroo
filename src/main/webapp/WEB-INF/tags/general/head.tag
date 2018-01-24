@@ -21,8 +21,8 @@
       rel="stylesheet">
 
 <!--vuejs-->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/vue-select@latest"></script>
+<!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
 
 <!-- axios -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -38,14 +38,7 @@
 <link href="/css/style.css" rel="stylesheet">
 
 <script type="text/javascript">
-    console.log(${messages.getString('logout')});
-    window.msg = {};
-    <c:forEach items="${messages.keySet()}" var="key">
-    try {
-        msg['${key}'] = "${messages[key]}";
-    } catch (e) {
-        console.log("error fullfilling the msgForms resource from bundle " + e);
-    }
-    </c:forEach>
-    console.log(msg);
+    console.log("Json bundle");
+    <%--console.log(${requestScope.get("JSONMessages")});--%>
+    window.strings =${requestScope.get("JSONMessages")};
 </script>
