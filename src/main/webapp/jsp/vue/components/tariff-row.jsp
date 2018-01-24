@@ -38,11 +38,10 @@
         ],
         data() {
             return {
-                isAdmin: this.is_admin == "admin"
+                isAdmin: this.is_admin == "true"
             }
         },
         mounted() {
-
         },
         template: "#tariff-row-template",
     })

@@ -1,6 +1,11 @@
 <script type="text/x-template" id="tariff-row-admin-template">
     <div v-if="show" class="tariff-row-card teal lighten-5">
         <div class="row zero-margin center-align">
+            <template v-if="service">
+                <div class="col s2">
+                    {{service}}
+                </div>
+            </template>
             <template v-if="edit">
                 <div class="col s2">
                     <input type="text" v-model="d_title">
@@ -37,24 +42,25 @@
                 <div class="col s1">{{d_currency}}</div>
             </template>
 
-            <div class="col s2">{{subscribers}}</div>
-            <div class="col s2">
+            <div class="col s1">{{subscribers}}</div>
+            <div class="col s1">
                 <a v-if="!edit"
                    @click="startEdit"
                    class="waves-effect waves-light btn btn-small">
-                    {{buttonText}}
+                    <i class="material-icons">mode_edit</i>
                 </a>
                 <a v-if="edit"
                    @click="finishEdit"
                    class="waves-effect waves-light btn btn-small">
-                    {{buttonText}}
+                    <i class="material-icons">save</i>
+
                 </a>
             </div>
             <div class="col s1">
                 <a @click="deleteTariff"
                    class="waves-effect waves-light btn btn-small red darken-5 tooltipped"
                    data-position="top" data-delay="200" data-tooltip="Delete">
-                    X
+                    <i class="material-icons">delete</i>
                 </a>
             </div>
         </div>
@@ -65,9 +71,8 @@
 <script>
     Vue.component('tariff-row-admin', {
         props: [
-            'id', 'title', 'description',
-            'number_of_days', 'cost', 'currency', 'subscribers',
-            'edit_text', 'save_text'
+            'id', 'title', 'description', 'number_of_days', 'cost', 'currency', 'service',
+            'subscribers'
         ],
         data: function () {
             return {
@@ -138,6 +143,15 @@
             hideTruncated() {
                 this.isTruncated = true;
             },
+
+            updateFields() {
+//                'id', 'title', 'description','number_of_days', 'cost', 'currency', 'service',
+                this.d_title = this.title;
+                this.d_description = this.description;
+                this.d_days = this.number_of_days;
+                this.d_cost = this.cost;
+                this.d_currency = this.currency;
+            }
         },
 
         beforeMount() {
@@ -151,6 +165,12 @@
             buttonText() {
                 return this.edit ? strings['save'] : strings['edit'];
             }
+        },
+        watch: {
+            id(oldVal, newVal) {
+                console.log("New id: " + newVal);
+                this.updateFields();
+            }
         }
-    })
+    });
 </script>

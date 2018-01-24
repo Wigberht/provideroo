@@ -16,6 +16,9 @@ public class MainValidator {
     private static final String BIRTHDAY_REGEX = "^(\\d{4})-(\\d{2})-(\\d{2})$";
     private static final Pattern BIRTHDAY_PATTERN = Pattern.compile(BIRTHDAY_REGEX);
     
+    private static final String SEARCH_REGEX = "^([\\w\\d\\sа-яА-Я])+$";
+    private static final Pattern SEARCH_PATTERN = Pattern.compile(SEARCH_REGEX);
+    
     public static boolean registrationValidator(String login, String password,
                                                 String firstName, String lastName,
                                                 String birthDay) {
@@ -62,5 +65,11 @@ public class MainValidator {
     
     public static boolean simpleText(String text) {
         return text.length() > 0;
+    }
+    
+    public static boolean searchText(String text) {
+        Matcher matcher = SEARCH_PATTERN.matcher(text);
+        
+        return matcher.find();
     }
 }

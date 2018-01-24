@@ -2,10 +2,10 @@
 <jsp:include page="/jsp/vue/components/tariff-row-admin.jsp"/>
 <jsp:include page="/jsp/vue/components/tariff-row-subscriber.jsp"/>
 <jsp:include page="/jsp/vue/components/ban-button.jsp"/>
-<jsp:include page="/jsp/vue/components/sort-dropdown.jsp"/>
 <jsp:include page="/jsp/vue/components/page-link.jsp"/>
 <jsp:include page="/jsp/vue/components/subscriber-profile-data.jsp"/>
 <jsp:include page="/jsp/vue/components/subscriber-profile-balance.jsp"/>
+<jsp:include page="/jsp/vue/components/search-block.jsp"/>
 
 <script>
     new Vue().$mount("#app");

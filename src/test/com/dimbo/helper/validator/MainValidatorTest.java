@@ -31,7 +31,7 @@ public class MainValidatorTest {
     }
     
     @Test
-    public void testLoginExactLength(){
+    public void testLoginExactLength() {
         String login = "hamakue";
         assertEquals(true, MainValidator.login(login));
     }
@@ -112,6 +112,13 @@ public class MainValidatorTest {
     public void testSimpleTextBlank() {
         String text = "";
         assertEquals(false, MainValidator.simpleText(text));
+    }
+    
+    @Test
+    public void testSearchTextValid() {
+        String text = "русский текст вместе с english text";
+        
+        assertEquals(true,MainValidator.searchText(text));
     }
     
 }

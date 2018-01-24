@@ -39,7 +39,7 @@
                             </div>
                         </c:if>
                         <c:if test="${isAdmin}">
-                            <div class="col s2">
+                            <div class="col s1">
                                 <p><b><fmt:message
                                     key="subscribers_amount"/></b></p>
                             </div>

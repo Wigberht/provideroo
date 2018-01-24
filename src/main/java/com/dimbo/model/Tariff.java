@@ -10,6 +10,8 @@ public class Tariff extends Entity {
     private long serviceId;
     private int subscriberAmount;
     
+    private String serviceTitle;
+    
     public Tariff() {
     }
     
@@ -92,5 +94,13 @@ public class Tariff extends Entity {
     
     public void setSubscriberAmount(int subscriberAmount) {
         this.subscriberAmount = subscriberAmount;
+    }
+    
+    public String getServiceTitle() {
+        return serviceTitle;
+    }
+    
+    public void setServiceTitle(String serviceTitle) {
+        this.serviceTitle = serviceTitle;
     }
 }

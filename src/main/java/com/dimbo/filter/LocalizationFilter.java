@@ -31,7 +31,6 @@ public class LocalizationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res,
                          FilterChain chain) throws ServletException, IOException {
-        LOGGER.info("In localization filter");
         
         HttpSession s = ((HttpServletRequest) req).getSession();
         String locale = (String) s.getAttribute("locale");

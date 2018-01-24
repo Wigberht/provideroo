@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Localization {
-    private static Logger LOGGER= LoggerFactory.getLogger(Localization.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(Localization.class);
     
     private static Map<String, String> bundleMap = new HashMap<>();
     
@@ -25,7 +25,6 @@ public class Localization {
         if (language.contains("_")) {
             language = language.split("_")[0];
         }
-        LOGGER.info("requested locale: " + language);
         if (bundleMap.containsKey(language)) {
             return bundleMap.get(language);
         } else {

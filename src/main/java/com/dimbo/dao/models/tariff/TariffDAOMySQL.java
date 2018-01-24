@@ -5,17 +5,12 @@ import com.dimbo.dao.models.DAOModel;
 import com.dimbo.model.Subscriber;
 import com.dimbo.model.Tariff;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
-    //    private static final String FIND_BY_ID = "SELECT * FROM tariff WHERE id = ?";
-//    private static final String FIND_BY_ID = "SET @tariff_id:=?;\n" +
     private static final String FIND_BY_ID =
         "SELECT *\n" +
             "FROM tariff, (\n" +
@@ -24,6 +19,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             "               WHERE tariff_id = ? AND prolong = TRUE\n" +
             "             ) AS counters\n" +
             "WHERE id = ?;";
+    
+    private static final String CALL_SEARCH_TARIFF = "{call search_tariff_utf(?,?,?)}";
     
     private static final String COUNT_SUBSCRIBERS = "SELECT COUNT(DISTINCT subscriber_id) AS subscribers\n" +
         "FROM tariff_subscriber\n" +
@@ -101,6 +98,32 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         }
         
         return tariff;
+    }
+    
+    @Override
+    public List<Tariff> search(String word1, String word2,
+                               String word3) throws DAOException {
+        List<Tariff> tariffs = new ArrayList<>();
+        try (
+            CallableStatement cstmt = connection.prepareCall(CALL_SEARCH_TARIFF)
+        ) {
+            cstmt.setString("str1", word1);
+            cstmt.setString("str2", word2);
+            cstmt.setString("str3", word3);
+            cstmt.execute();
+            
+            ResultSet rs = cstmt.getResultSet();
+            while (rs.next()) {
+                Tariff tariff = map(rs);
+                tariff.setServiceTitle(rs.getString("service_title"));
+                tariff.setSubscriberAmount(countSubscribers(tariff.getId()));
+                tariffs.add(tariff);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return tariffs;
     }
     
     @Override

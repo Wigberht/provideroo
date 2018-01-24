@@ -12,10 +12,11 @@ public interface TariffDAO {
     
     List<Tariff> findByService(Long serviceId) throws DAOException;
     
+    List<Tariff> search(String word1, String word2, String word3) throws DAOException;
+    
     boolean delete(Long id) throws DAOException;
     
     boolean update(Tariff tariff) throws DAOException;
     
     Tariff create(Tariff tariff) throws DAOException;
-    
 }

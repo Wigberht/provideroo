@@ -26,17 +26,12 @@
         </div>
 
 
-        <div class="search-block">
-            <div class="row">
-                <div class="col s10">
-                    <input type="text">
-                </div>
-                <div class="btn col s2">
-                    <fmt:message key="search"/>
-                </div>
-            </div>
-
-        </div>
+        <search-block
+            is_admin="${isAdmin}"
+            subscriptions='${subscriptions}'
+            user_id="${user.id}"
+            is_banned="${user.banned}"
+        ></search-block>
 
         <mt:service_table services="${services}"/>
 

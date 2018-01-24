@@ -42,7 +42,7 @@
     Vue.component('tariff-row-subscriber', {
         props: ['banned',
             'id', 'title', 'description',
-            'number_of_days', 'cost', 'currency',
+            'number_of_days', 'cost', 'currency', 'service',
             'subscribed', 'subscriptions', 'user_id',
         ],
         data: function () {
@@ -109,17 +109,20 @@
         },
 
         beforeMount() {
-            const subscriptions = JSON.parse(this.subscriptions);
+            try {
+                const subscriptions = JSON.parse(this.subscriptions);
 
-            subscriptions.forEach((elem) => {
-                if (elem.tariffId == this.id) {
-                    this.isSubscribed = elem.prolong == true;
-                    if (Date.parse(elem.end) > Date.now()) {
-                        this.dueDate = elem.end;
+                subscriptions.forEach((elem) => {
+                    if (elem.tariffId == this.id) {
+                        this.isSubscribed = elem.prolong == true;
+                        if (Date.parse(elem.end) > Date.now()) {
+                            this.dueDate = elem.end;
+                        }
                     }
-//                    console.log("subscribed " + this.isSubscribed);
-                }
-            });
+                });
+            } catch (error) {
+
+            }
         },
         mounted: function () {
 //            console.log("Is banned: ", Boolean(this.banned));

@@ -15,6 +15,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/tariff")
 public class TariffREST extends HttpServlet {
@@ -74,6 +76,25 @@ public class TariffREST extends HttpServlet {
         
         String response = JSONService.toJSON(new SimpleResponse(success));
         
+        return Response.status(200).entity(response).build();
+    }
+    
+    @GET
+    @Path("/search")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response search(@QueryParam("query") String query) {
+        String response;
+        LOGGER.info("Q received: '" + query + "'");
+        LOGGER.info("Validator ok: " + MainValidator.searchText(query));
+        if (MainValidator.searchText(query)) {
+            LOGGER.info("validator passed");
+            TariffService ts = new TariffService();
+            List<Tariff> tariffs = ts.search(query);
+            ts.returnConnection();
+            response = JSONService.toJSON(tariffs);
+        } else {
+            response = "";
+        }
         return Response.status(200).entity(response).build();
     }
 }
