@@ -1,9 +1,8 @@
-package com.dimbo.rest.service;
+package com.dimbo.rest;
 
 import com.dimbo.helper.service.TariffService;
 import com.dimbo.helper.validator.MainValidator;
 import com.dimbo.model.Tariff;
-import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;

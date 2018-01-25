@@ -1,9 +1,8 @@
-package com.dimbo.rest.user;
+package com.dimbo.rest;
 
 import com.dimbo.helper.service.*;
 import com.dimbo.helper.validator.MainValidator;
 import com.dimbo.model.*;
-import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
