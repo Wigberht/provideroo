@@ -2,10 +2,7 @@ package com.dimbo.command.commands;
 
 import com.dimbo.command.Command;
 import com.dimbo.command.admin.*;
-import com.dimbo.command.general.ChangeLanguageCommand;
-import com.dimbo.command.general.LoginCommand;
-import com.dimbo.command.general.LogoutCommand;
-import com.dimbo.command.general.RegistrationCommand;
+import com.dimbo.command.general.*;
 import com.dimbo.command.subscriber.SubscriberProfileCommand;
 
 /**
@@ -20,7 +17,8 @@ public enum CommandsAdmin {
     SERVICE_LIST(new ServiceListAdminCommand()),
     ADD_SERVICE(new AddServiceCommand()),
     ADD_TARIFF(new AddTariffCommand()),
-    NEW_TARIFF(new NewTariffCommand());
+    NEW_TARIFF(new NewTariffCommand()),
+    CHAT_LIST(new ChatListCommand());
     
     private Command command;
     

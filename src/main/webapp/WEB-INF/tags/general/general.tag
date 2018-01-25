@@ -18,7 +18,9 @@
     <%--necessary for Vue.js integration--%>
     <div id="app">
         <jsp:invoke fragment="header"/>
-        <jsp:doBody/>
+        <div class="container">
+            <jsp:doBody/>
+        </div>
     </div>
 </main>
 <jsp:invoke fragment="footer"/>

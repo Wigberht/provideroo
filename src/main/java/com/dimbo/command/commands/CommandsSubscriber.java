@@ -1,6 +1,7 @@
 package com.dimbo.command.commands;
 
 import com.dimbo.command.Command;
+import com.dimbo.command.general.ChatListCommand;
 import com.dimbo.command.subscriber.ServiceListSubscriberCommand;
 import com.dimbo.command.subscriber.SubscriberProfileCommand;
 
@@ -12,7 +13,8 @@ public enum CommandsSubscriber {
      * Commands available to subscriber
      */
     SERVICE_LIST(new ServiceListSubscriberCommand()),
-    PROFILE(new SubscriberProfileCommand());
+    PROFILE(new SubscriberProfileCommand()),
+    CHAT_LIST(new ChatListCommand());
     
     private Command command;
     

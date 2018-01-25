@@ -28,6 +28,14 @@
             <version>2.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+
         <!--servlet annotation and stuff-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -35,6 +43,7 @@
             <version>4.0.0</version>
         </dependency>
 
+        <!--wont need that since there is mysql jar in tomcat lib directory-->
         <!--<dependency>-->
         <!--<groupId>mysql</groupId>-->
         <!--<artifactId>mysql-connector-java</artifactId>-->

@@ -53,42 +53,6 @@ public class CommandDispatcher {
                 CommandDispatcherGeneral cdg = new CommandDispatcherGeneral();
                 command = cdg.getCommand(request);
         }
-
-//        switch (commandType) {
-//            case LOGIN:
-//                return CommandsGeneral.LOGIN.getCommand();
-//
-//            case REGISTRATION:
-//                return CommandsGeneral.REGISTRATION.getCommand();
-//
-//            case LOGOUT:
-//                return CommandsGeneral.LOGOUT.getCommand();
-//
-//            case SUBSCRIBER_LIST:
-//                return CommandsGeneral.SUBSCRIBER_LIST.getCommand();
-//
-//            case SERVICE_LIST:
-//                return CommandsGeneral.SERVICE_LIST.getCommand();
-//
-//            case ADD_SERVICE:
-//                return CommandsGeneral.ADD_SERVICE.getCommand();
-//
-//            case ADD_TARIFF:
-//                return CommandsGeneral.ADD_TARIFF.getCommand();
-//
-//            case NEW_TARIFF:
-//                return CommandsGeneral.NEW_TARIFF.getCommand();
-//
-//            case SUBSCRIBER_PROFILE:
-//                return CommandsGeneral.SUBSCRIBER_PROFILE.getCommand();
-//
-//            case CHANGE_LANGUAGE:
-//                return CommandsGeneral.CHANGE_LANGUAGE.getCommand();
-//
-////		default:
-////			LOGGER.warn("Unknown operation.");
-////			command = new EmptyCommand();
-//        }
         
         return command;
     }

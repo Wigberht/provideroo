@@ -8,6 +8,8 @@ import java.util.List;
 public interface ChatDAO {
 
     public Chat find(Long id) throws DAOException;
+    
+    public List<Chat> findByUser(long userId) throws DAOException;
 
     public List<Message> findMessages(long chatId) throws DAOException;
 

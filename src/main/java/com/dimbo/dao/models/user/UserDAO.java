@@ -8,21 +8,23 @@ import java.util.List;
 
 public interface UserDAO {
     
-    public User find(Long id) throws DAOException;
+    List<User> all() throws DAOException;
     
-    public User find(String login) throws DAOException;
+    User find(Long id) throws DAOException;
     
-    public User find(String login, String password) throws DAOException;
+    User find(String login) throws DAOException;
     
-    public List<User> find(Roles role) throws DAOException;
+    User find(String login, String password) throws DAOException;
     
-    public boolean delete(Long id) throws DAOException;
+    List<User> find(Roles role) throws DAOException;
     
-    public boolean delete(String login) throws DAOException;
+    boolean delete(Long id) throws DAOException;
     
-    public boolean update(User user) throws DAOException;
+    boolean delete(String login) throws DAOException;
     
-    public boolean setBanned(long userId, boolean banned) throws DAOException;
+    boolean update(User user) throws DAOException;
     
-    public User create(User user) throws DAOException;
+    boolean setBanned(long userId, boolean banned) throws DAOException;
+    
+    User create(User user) throws DAOException;
 }

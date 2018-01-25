@@ -19,9 +19,7 @@
     </jsp:attribute>
 
     <jsp:body>
-        <div class="container">
-            <mt:banned_notification/>
-        </div>
+        <mt:banned_notification/>
         <jsp:doBody/>
     </jsp:body>
 </mt:general>

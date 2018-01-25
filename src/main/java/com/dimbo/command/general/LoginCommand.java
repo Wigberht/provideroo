@@ -4,6 +4,7 @@ import com.dimbo.command.Command;
 import com.dimbo.helper.auth.Auth;
 import com.dimbo.manager.PagesResourceManager;
 import com.dimbo.model.User;
+import com.dimbo.rest.JSONService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +40,12 @@ public class LoginCommand implements Command {
         request.getSession().invalidate();
         request.getSession(true);
         
+        user.setPassword(null);
         request.getSession().setAttribute("user", user);
         request.getSession().setAttribute("banned", user.isBanned());
+        
+        /*for front-end purposes*/
+        request.getSession().setAttribute("userJSON", JSONService.toJSON(user));
         
         if (user.isAdmin()) {
             return PagesResourceManager.getPage("admin.control_panel");

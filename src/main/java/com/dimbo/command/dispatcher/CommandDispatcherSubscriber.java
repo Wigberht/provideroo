@@ -37,11 +37,17 @@ public class CommandDispatcherSubscriber {
         switch (commandType) {
             
             case SERVICE_LIST:
-                return CommandsSubscriber.SERVICE_LIST.getCommand();
+                command = CommandsSubscriber.SERVICE_LIST.getCommand();
+                break;
             
             case PROFILE:
-                return CommandsSubscriber.PROFILE.getCommand();
-    
+                command = CommandsSubscriber.PROFILE.getCommand();
+                break;
+            
+            case CHAT_LIST:
+                command = CommandsAdmin.CHAT_LIST.getCommand();
+                break;
+            
             default:
                 command = CommandsGeneral.MISSING_COMMAND.getCommand();
         }

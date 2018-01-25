@@ -3,16 +3,15 @@
 
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
-<div id="app"></div>
 <div class="navbar-fixed">
     <nav>
         <div id="navbar_header">
             <div class="nav-wrapper">
                 <c:if test='${isAdmin}'>
-                    <mt:admin_header/>
+                    <mt:admin_header pageName="${pageName}"/>
                 </c:if>
                 <c:if test='${isSubscriber}'>
-                    <mt:subscriber_header/>
+                    <mt:subscriber_header pageName="${pageName}"/>
                 </c:if>
             </div>
         </div>

@@ -58,6 +58,10 @@ public class CommandDispatcherAdmin {
                 command = CommandsAdmin.NEW_TARIFF.getCommand();
                 break;
             
+            case CHAT_LIST:
+                command = CommandsAdmin.CHAT_LIST.getCommand();
+                break;
+            
             default:
                 command = CommandsGeneral.MISSING_COMMAND.getCommand();
         }

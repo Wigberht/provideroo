@@ -1,4 +1,3 @@
-
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 
@@ -22,8 +21,6 @@
                     <fmt:message key="back"/>
                 </a>
             </c:if>
-
-
         </div>
     </jsp:body>
 </mt:general>

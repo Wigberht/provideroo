@@ -3,7 +3,6 @@
 <mt:admin_layout pageName="new_service"
                  titleKey="new_service">
 
-    <div class="container">
         <div class="row">
             <form class="col s8 offset-s2" action="/MainController"
                   method="post">
@@ -81,6 +80,5 @@
                 </div>
             </form>
         </div>
-    </div>
 
 </mt:admin_layout>

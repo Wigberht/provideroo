@@ -35,10 +35,6 @@ public class SubscriberDAOMySQLTest {
                                    .makeSubscriberDAO(connection)
                                    .calculateDebt(subscriberId) >= 0);
         
-        System.out.println("Debt:" + FactoryGenerator.getFactory()
-                                                     .makeSubscriberDAO(connection)
-                                                     .calculateDebt(subscriberId));
-        
         ConnectionPool.returnConn(connection);
         
     }

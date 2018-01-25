@@ -1,13 +1,8 @@
 package com.dimbo.rest.user;
 
-import com.dimbo.helper.service.AccountService;
-import com.dimbo.helper.service.SubscriberService;
-import com.dimbo.helper.service.SubscriptionService;
-import com.dimbo.helper.service.UserService;
+import com.dimbo.helper.service.*;
 import com.dimbo.helper.validator.MainValidator;
-import com.dimbo.model.Account;
-import com.dimbo.model.Subscriber;
-import com.dimbo.model.Subscription;
+import com.dimbo.model.*;
 import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
 import org.slf4j.Logger;
@@ -17,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/user")
 public class UserREST extends HttpServlet {
@@ -190,5 +187,32 @@ public class UserREST extends HttpServlet {
         return Response.status(200).entity(response).build();
     }
     
+    @GET
+    @Path("/get")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response all() {
+        UserService us = new UserService();
+        List<User> userList = us.getAllUsers();
+        userList = userList.stream().map((user) -> {
+            user.setPassword(null);
+            return user;
+        }).collect(Collectors.toList());
+        
+        String response = JSONService.toJSON(userList);
+        return Response.status(200).entity(response).build();
+    }
+    
+    @GET
+    @Path("/chats")
+    public Response getChats(@QueryParam("userId") long userId) {
+        LOGGER.info("user id received: " + userId);
+        
+        ChatService cs = new ChatService();
+        List<Chat> chats = cs.getUserChats(userId);
+        cs.returnConnection();
+        
+        String response = JSONService.toJSON(chats);
+        return Response.status(200).entity(response).build();
+    }
     
 }

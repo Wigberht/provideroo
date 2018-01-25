@@ -15,7 +15,8 @@ public enum CommandsGeneral {
     MISSING_COMMAND(new MissingCommand()),
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),
-    CHANGE_LANGUAGE(new ChangeLanguageCommand());
+    CHANGE_LANGUAGE(new ChangeLanguageCommand()),
+    CHAT_LIST(new ChatListCommand());
     
     private Command command;
     

@@ -6,7 +6,6 @@ import com.dimbo.model.Tariff;
 import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/tariff")

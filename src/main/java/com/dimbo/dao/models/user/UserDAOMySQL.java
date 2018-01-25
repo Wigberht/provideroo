@@ -17,14 +17,16 @@ import java.util.List;
 public class UserDAOMySQL extends DAOModel implements UserDAO {
     Logger LOGGER = LoggerFactory.getLogger(UserDAOMySQL.class);
     
-    private static final String FIND_BY_ID = "" +
+    private static final String FIND_BY_ID =
         "SELECT * FROM user WHERE id = ?";
-    private static final String FIND_BY_LOGIN = "" +
+    private static final String FIND_BY_LOGIN =
         "SELECT * FROM user WHERE login = ?";
-    private static final String FIND_BY_LOGIN_AND_PASSWORD = "" +
+    private static final String FIND_BY_LOGIN_AND_PASSWORD =
         "SELECT * FROM user WHERE login = ? AND password = ?";
     private static final String FIND_BY_ROLE = ""
         + "SELECT * FROM user WHERE role_id = ?";
+    
+    private static final String FIND_ALL = "SELECT * from user";
     
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE id=?";
     private static final String DELETE_BY_LOGIN = "DELETE FROM user WHERE login=?";
@@ -45,6 +47,11 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     
     public UserDAOMySQL(Connection connection) {
         this.connection = connection;
+    }
+    
+    @Override
+    public List<User> all() throws DAOException {
+        return findUsers(FIND_ALL);
     }
     
     public User find(Long id) throws DAOException {

@@ -1,11 +1,17 @@
-<jsp:include page="/jsp/vue/components/tariff-row.jsp"/>
-<jsp:include page="/jsp/vue/components/tariff-row-admin.jsp"/>
-<jsp:include page="/jsp/vue/components/tariff-row-subscriber.jsp"/>
+<jsp:include page="/jsp/vue/components/service/tariff-row.jsp"/>
+<jsp:include page="/jsp/vue/components/service/tariff-row-admin.jsp"/>
+<jsp:include page="/jsp/vue/components/service/tariff-row-subscriber.jsp"/>
 <jsp:include page="/jsp/vue/components/ban-button.jsp"/>
 <jsp:include page="/jsp/vue/components/page-link.jsp"/>
-<jsp:include page="/jsp/vue/components/subscriber-profile-data.jsp"/>
-<jsp:include page="/jsp/vue/components/subscriber-profile-balance.jsp"/>
-<jsp:include page="/jsp/vue/components/search-block.jsp"/>
+<jsp:include page="/jsp/vue/components/profile/subscriber-profile-data.jsp"/>
+<jsp:include page="/jsp/vue/components/profile/subscriber-profile-balance.jsp"/>
+<jsp:include page="/jsp/vue/components/tariff-search-block.jsp"/>
+<jsp:include page="/jsp/vue/components/chat/chat-dialogue.jsp"/>
+<jsp:include page="/jsp/vue/components/chat/chat-message.jsp"/>
+<jsp:include page="/jsp/vue/components/chat/chat-page.jsp"/>
+<jsp:include page="/jsp/vue/components/chat/user-list.jsp"/>
+<jsp:include page="/jsp/vue/components/chat/chat-list.jsp"/>
+<jsp:include page="/jsp/vue/components/chat/chat-send-message.jsp"/>
 
 <script>
     new Vue().$mount("#app");

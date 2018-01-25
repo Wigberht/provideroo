@@ -1,4 +1,4 @@
-<script type="text/x-template" id="search-block-template">
+<script type="text/x-template" id="tariff-search-block-template">
     <div>
         <div class="search-block">
             <div class="row">
@@ -52,7 +52,7 @@
 </script>
 
 <script>
-    Vue.component('search-block', {
+    Vue.component('tariff-search-block', {
         props: [
             'is_admin', 'subscriptions', 'user_id', 'is_banned',
         ],
@@ -91,6 +91,6 @@
         mounted() {
             console.log("search-block mounted");
         },
-        template: "#search-block-template",
+        template: "#tariff-search-block-template",
     })
 </script>
