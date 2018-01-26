@@ -5,5 +5,4 @@
 
     <chat-page/>
 
-
 </mt:admin_layout>

@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <%@attribute name="services"
-             type="java.util.List<com.dimbo.model.Service>" %>
+             type="java.util.List<com.d_cherkashyn.epam.model.Service>" %>
 
 <ul class="collapsible" data-collapsible="expandable" id="service-table">
     <c:forEach items="${services}" var="service">

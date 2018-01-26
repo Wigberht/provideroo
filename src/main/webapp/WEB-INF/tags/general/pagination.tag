@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <%@attribute name="pagination"
-             type="com.dimbo.helper.Pagination" %>
+             type="com.d_cherkashyn.epam.helper.Pagination" %>
 
 <ul class="pagination">
     <li class="disabled"><a href="#!">

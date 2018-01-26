@@ -7,7 +7,7 @@
 
     <filter>
         <filter-name>Access filter</filter-name>
-        <filter-class>com.dimbo.filter.AccessFilter</filter-class>
+        <filter-class>com.d_cherkashyn.epam.filter.AccessFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Access filter</filter-name>
@@ -16,7 +16,7 @@
 
     <filter>
         <filter-name>Localization filter</filter-name>
-        <filter-class>com.dimbo.filter.LocalizationFilter</filter-class>
+        <filter-class>com.d_cherkashyn.epam.filter.LocalizationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Localization filter</filter-name>
@@ -25,7 +25,7 @@
 
     <filter>
         <filter-name>Url rewrite filter</filter-name>
-        <filter-class>com.dimbo.filter.UrlRewriteFilter</filter-class>
+        <filter-class>com.d_cherkashyn.epam.filter.UrlRewriteFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Url rewrite filter</filter-name>
@@ -41,7 +41,7 @@
     <!--</servlet-class>-->
     <!--<init-param>-->
     <!--<param-name>com.sun.jersey.config.property.packages</param-name>-->
-    <!--<param-value>com.dimbo.rest</param-value>-->
+    <!--<param-value>com.d_cherkashyn.epam.rest</param-value>-->
     <!--</init-param>-->
     <!--<load-on-startup>1</load-on-startup>-->
     <!--</servlet>-->
@@ -62,11 +62,11 @@
     </welcome-file-list>
 
     <listener>
-        <listener-class>com.dimbo.listener.ContextListener</listener-class>
+        <listener-class>com.d_cherkashyn.epam.listener.ContextListener</listener-class>
     </listener>
 
     <listener>
-        <listener-class>com.dimbo.listener.SessionListener</listener-class>
+        <listener-class>com.d_cherkashyn.epam.listener.SessionListener</listener-class>
     </listener>
 
     <context-param>

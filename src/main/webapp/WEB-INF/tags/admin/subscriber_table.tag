@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jspf/pre_html.jspf" %>
 
 <%@attribute name="subscribers"
-             type="java.util.List<com.dimbo.model.Subscriber>" %>
+             type="java.util.List<com.d_cherkashyn.epam.model.Subscriber>" %>
 
 <div id="subscriber-list">
     <mt:pagination/>
