@@ -123,15 +123,15 @@
         <finalName>provideroo</finalName>
 
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <outputDirectory>
-                        /home/dimbo/IT/tomcat/apache-tomcat-8.5.24/webapps/
-                    </outputDirectory>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<outputDirectory>-->
+                        <!--/home/dimbo/IT/tomcat/apache-tomcat-8.5.24/webapps/-->
+                    <!--</outputDirectory>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
 
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
