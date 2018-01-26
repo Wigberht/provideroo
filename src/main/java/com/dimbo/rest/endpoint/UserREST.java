@@ -1,8 +1,9 @@
-package com.dimbo.rest;
+package com.dimbo.rest.endpoint;
 
 import com.dimbo.helper.service.*;
 import com.dimbo.helper.validator.MainValidator;
 import com.dimbo.model.*;
+import com.dimbo.rest.JSONService;
 import com.dimbo.rest.response.SimpleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -187,8 +188,7 @@ public class UserREST extends HttpServlet {
     }
     
     @GET
-    @Path("/get")
-    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/all")
     public Response all() {
         UserService us = new UserService();
         List<User> userList = us.getAllUsers();

@@ -3,21 +3,26 @@ package com.dimbo.dao.models.chat;
 import com.dimbo.dao.DAOException;
 import com.dimbo.model.Chat;
 import com.dimbo.model.Message;
+
 import java.util.List;
 
 public interface ChatDAO {
-
-    public Chat find(Long id) throws DAOException;
     
-    public List<Chat> findByUser(long userId) throws DAOException;
-
-    public List<Message> findMessages(long chatId) throws DAOException;
-
-    public boolean delete(Long id) throws DAOException;
-
-    public Chat update(Chat chat) throws DAOException;
-
-    public Chat create(Chat chat) throws DAOException;
-
-
+    Chat find(Long id) throws DAOException;
+    
+    boolean addMessage(long chatId, long messageId) throws DAOException;
+    
+    boolean addUserToChat(long userId, long chatId) throws DAOException;
+    
+    List<Chat> findByUser(long userId) throws DAOException;
+    
+    List<Message> findMessages(long chatId) throws DAOException;
+    
+    boolean delete(Long id) throws DAOException;
+    
+    Chat update(Chat chat) throws DAOException;
+    
+    Chat create(Chat chat) throws DAOException;
+    
+    
 }

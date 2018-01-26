@@ -39,7 +39,7 @@
 
 <!--pass localization to js -->
 <script type="text/javascript">
-    window.strings =${requestScope.get("JSONMessages")};
+    window.strings = (${requestScope.get("JSONMessages")});
     window.user = ('${sessionScope.get("userJSON")}');
     if (window.user.length > 5) {
         window.user = JSON.parse(window.user);

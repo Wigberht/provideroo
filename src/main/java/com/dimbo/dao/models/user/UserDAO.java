@@ -18,6 +18,8 @@ public interface UserDAO {
     
     List<User> find(Roles role) throws DAOException;
     
+    List<User> findChatMembers(long chatId) throws DAOException;
+    
     boolean delete(Long id) throws DAOException;
     
     boolean delete(String login) throws DAOException;

@@ -28,6 +28,17 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     
     private static final String FIND_ALL = "SELECT * from user";
     
+    private static final String FIND_CHAT_MEMBERS = "SELECT u.id,\n" +
+        "  u.login,\n" +
+        "  u.password,\n" +
+        "  u.banned,\n" +
+        "  u.updated_at,\n" +
+        "  u.created_at,\n" +
+        "  u.role_id\n" +
+        "FROM user as u\n" +
+        "  INNER JOIN chat_user ON u.id = chat_user.user_id\n" +
+        "WHERE chat_id=?";
+    
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE id=?";
     private static final String DELETE_BY_LOGIN = "DELETE FROM user WHERE login=?";
     
@@ -70,6 +81,10 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         return findUsers(FIND_BY_ROLE, role.getId());
     }
     
+    @Override
+    public List<User> findChatMembers(long chatId) throws DAOException {
+        return findUsers(FIND_CHAT_MEMBERS, chatId);
+    }
     
     @Override
     public boolean delete(Long id) throws DAOException {
@@ -112,7 +127,6 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             success = updatedRows != 0;
             
         } catch (SQLException e) {
-            LOGGER.error("UserDAOMySQL#setBanned was unsuccessful");
             throw new DAOException(e);
         }
         
@@ -145,9 +159,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         User user = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, sql, false,
-                                                           values);
-            ResultSet resultSet = statement.executeQuery()
+            PreparedStatement stmt = prepareStatement(connection, sql, false, values);
+            ResultSet resultSet = stmt.executeQuery()
         ) {
             if (resultSet.next()) {
                 user = map(resultSet);
@@ -163,9 +176,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         List<User> users = new ArrayList<>();
         
         try (
-            PreparedStatement statement = prepareStatement(connection, sql, false,
-                                                           values);
-            ResultSet resultSet = statement.executeQuery()
+            PreparedStatement stmt = prepareStatement(connection, sql, false, values);
+            ResultSet resultSet = stmt.executeQuery()
         ) {
             while (resultSet.next()) {
                 users.add(map(resultSet));
@@ -183,7 +195,9 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             resultset.getString("login"),
             resultset.getString("password"),
             resultset.getBoolean("banned"),
-            resultset.getLong("role_id")
+            resultset.getLong("role_id"),
+            resultset.getString("updated_at"),
+            resultset.getString("created_at")
         );
     }
 }

@@ -1,9 +1,28 @@
 <script type="text/x-template" id="chat-dialogue-template">
     <div class="chat-dialogue">
-        <div v-for="message in messages" class="row">
-            <chat-message :message="message"/>
+        <h4>
+            {{title}}
+            <b>
+                <template v-for="user in users">
+                    <template v-if="user.id!=currentUserId">
+                        {{user.login}}
+                    </template>
+                </template>
+            </b>
+        </h4>
+
+        <div id="messages-block"
+             class="messages-block"
+             ref="scrollableBlock">
+
+            <div v-for="message in messages" class="row">
+                <chat-message :message="message"
+                              :users="users"/>
+            </div>
+
         </div>
-        <chat-send-message ></chat-send-message>
+        <br>
+        <chat-send-message @send="sendMessage"></chat-send-message>
     </div>
 </script>
 
@@ -13,34 +32,39 @@
         template: "#chat-dialogue-template",
         data() {
             return {
-                chats: [1, 2, 3],
-                users: [9, 8, 7],
+                users: [],
+                messages: [],
+                chat: "",
+                scrollableBlock: "",
+                title: strings['chat_with'],
+                currentUserId: window.user.id
             }
         },
         methods: {
             fetchChat(chatId) {
                 axios.get("/rest/chat/get?chatId=" + chatId)
                      .then((response) => {
-                         console.log(response);
-                         if (response.data.length > 0) {
+//                         console.log(response);
+                         if (response.data) {
                              this.chat = response.data;
+                             this.users = this.chat.users;
+                             this.messages = this.chat.messages;
+                             this.scrollToBottom();
                          }
+
                      }).catch((error) => {
                         console.log(error);
                     }
                 )
             },
-            sendMessage() {
-                const message = {
-                    id: "3",
-                    message: this.message,
-                    userId: this.user_id
-                };
-                console.log("Sending message : ", message);
+
+            sendMessage(message) {
+                console.log("Emitted message : ", message);
                 this.webSocket.send(JSON.stringify(message));
             },
             initWebSocket() {
-                this.webSocket = new WebSocket("ws://localhost:8081/socket/chat");
+                this.webSocket =
+                    new WebSocket("ws://localhost:8081/socket/chat/" + this.chat_id);
                 this.webSocket.onopen = (message) => this.wsOpen(message);
                 this.webSocket.onclose = (message) => this.wsClose(message);
                 this.webSocket.onerror = (message) => this.wsError(message);
@@ -56,18 +80,26 @@
                 console.log("socket closed with message: " + message);
             },
 
-            wsGetMessage(message) {
-                console.log("Message received " + message);
+            wsGetMessage(messageEvent) {
+                const message = JSON.parse(messageEvent.data);
+                console.log("Message received ", message);
+                this.messages.push(message);
+                this.scrollToBottom();
             },
 
             wsError(message) {
                 console.log("error occured: " + message);
+            },
+
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.$refs.scrollableBlock.scrollTop = this.$refs.scrollableBlock.scrollHeight;
+                }, 400)
             }
         },
         mounted: function () {
-//            this.initWebSocket();
-            console.log("chat dialogua page mounted");
             this.fetchChat(this.chat_id);
+            this.initWebSocket();
         },
         computed: {}
     })

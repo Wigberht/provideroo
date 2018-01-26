@@ -1,9 +1,21 @@
 <script type="text/x-template" id="chat-list-template">
     <div class="chat-list">
-        <%--<chat-send-message :user_id="user_id"/>--%>
-        <div v-for="chat in chats" class="row">
-            CHAT
+        <h3>{{title}}</h3>
+        <div v-if="chats.length==0">
+            No active chats
         </div>
+        <div v-if="chats.length>0">
+            <div v-for="chat in chats" class="row">
+                <div @click="toChat(chat.id)" class="card-panel blue lighten-3">
+                    {{chat.title}}
+                </div>
+            </div>
+        </div>
+        <a class="btn-floating btn-large waves-effect waves-light red darken-2 right"
+           @click="toUserList">
+
+            <i class="material-icons">add</i>
+        </a>
     </div>
 </script>
 
@@ -12,14 +24,14 @@
         template: "#chat-list-template",
         data() {
             return {
-                chats: [1, 2, 3],
+                chats: [],
+                title:strings['list_of_chats']
             }
         },
         methods: {
             fetchChats() {
                 axios.get("/rest/user/chats?userId=" + window.user.id)
                      .then((response) => {
-//                         console.log(response);
                          console.log("chats", response.data);
                          if (response.data.length > 0) {
                              this.chats = response.data;
@@ -29,18 +41,15 @@
                     }
                 )
             },
-            fetchChat(chatId) {
-                axios.get("/rest/chat/get?chatId=" + chatId)
-                     .then((response) => {
-                         console.log(response);
-                         if (response.data.length > 0) {
-                             this.chat = response.data;
-                         }
-                     }).catch((error) => {
-                        console.log(error);
-                    }
-                )
+
+            toChat(chatId) {
+                this.$emit("toChat", chatId);
             },
+
+            toUserList() {
+                this.$emit("toUserList");
+            },
+
             sendMessage() {
                 const message = {
                     id: "3",

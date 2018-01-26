@@ -5,10 +5,12 @@ import com.dimbo.model.Message;
 import java.util.List;
 
 public interface MessageDAO {
-
-    public List<Message> getMessages(int chatId);
-
-    public boolean deleteMessage(int id);
-
-    public boolean addMessage(int chatId, Message message);
+    
+    Message find(long id);
+    
+    List<Message> getMessages(long chatId);
+    
+    boolean deleteMessage(long id);
+    
+    Message create(Message message);
 }

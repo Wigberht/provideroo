@@ -3,7 +3,7 @@ package com.dimbo.model;
 public class Message extends Entity {
     
     private String message;
-    private boolean read;
+    private boolean wasRead;
     private String updatedAt;
     private String createdAt;
     private long userId;
@@ -22,11 +22,11 @@ public class Message extends Entity {
         this.userId = userId;
     }
     
-    public Message(long id, String message, boolean read, String updatedAt,
+    public Message(long id, String message, boolean wasRead, String updatedAt,
                    String createdAt, long userId) {
         super(id);
         this.message = message;
-        this.read = read;
+        this.wasRead = wasRead;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
         this.userId = userId;
@@ -48,19 +48,35 @@ public class Message extends Entity {
         this.userId = userId;
     }
     
-    public boolean isRead() {
-        return read;
+    public boolean wasRead() {
+        return wasRead;
     }
     
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setWasRead(boolean wasRead) {
+        this.wasRead = wasRead;
+    }
+    
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+    
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
+    public String getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
     
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Message{");
         sb.append("message='").append(message).append('\'');
-        sb.append(", read=").append(read);
+        sb.append(", wasRead=").append(wasRead);
         sb.append(", updatedAt='").append(updatedAt).append('\'');
         sb.append(", createdAt='").append(createdAt).append('\'');
         sb.append(", userId=").append(userId);

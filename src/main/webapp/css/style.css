@@ -55,3 +55,44 @@ main {
     color: white;
     cursor: pointer;
 }
+
+.messages-block {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-width: 100%;
+    margin: 0 10%;
+    height: 400px;
+    padding: 5px 25px;
+    /*width: 80%;*/
+    border: 2px solid #ee6e73;
+    border-radius: 10px;
+}
+
+.message-block {
+    margin: auto 0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 90%;
+    white-space: normal;
+}
+
+.message-right {
+    background-color: #7ebaff;
+}
+
+.message-left {
+    background-color: #ffdb51;
+}
+
+.word-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.small-margin {
+    margin: 1% !important;
+}
+
+.small-padding {
+    padding: 10px !important;
+}

@@ -14,11 +14,14 @@ import java.util.List;
 
 public class ChatDAOMySQL extends DAOModel implements ChatDAO {
     
-    private static final String FIND_BY_ID = "SELECT * FROM chat WHERE id = ?";
+    private static final String FIND_BY_ID = "SELECT DISTINCT * FROM chat WHERE id = ?";
     private static final String FIND_CHATS_BY_USER = "SELECT c.id,c.title\n" +
         "FROM chat as c\n" +
         "INNER JOIN chat_user ON c.id = chat_user.chat_id\n" +
         "WHERE user_id=?";
+    
+    private static final String FIND_BY_TWO_USERS = "SELECT * FROM chat WHERE id = ?";
+    
     
     private static final String FIND_MESSAGES = "SELECT\n"
         + "  message.id,\n"
@@ -34,6 +37,10 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         + "SET title = ? "
         + "WHERE id = ?";
     
+    private static final String ADD_MESSAGE = "INSERT INTO message_chat VALUES(?,?)";
+    private static final String ADD_USER_TO_CHAT = "INSERT INTO chat_user VALUES(?,?)";
+    
+    
     private static final String DELETE_CHAT_BY_ID = "DELETE FROM chat WHERE id = ?";
     
     
@@ -42,6 +49,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
     public ChatDAOMySQL(Connection connection) {
         this.connection = connection;
     }
+    
     
     @Override
     public Chat find(Long id) throws DAOException {
@@ -54,7 +62,6 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         ) {
             if (resultSet.next()) {
                 chat = map(resultSet);
-                chat.setMessages(findMessages(id));
             }
             
         } catch (SQLException e) {
@@ -62,6 +69,37 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         }
         
         return chat;
+    }
+    
+    @Override
+    public boolean addMessage(long chatId, long messageId) throws DAOException {
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, ADD_MESSAGE, true,
+                messageId, chatId
+            )
+        ) {
+            return (statement.executeUpdate() > 0);
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+    
+    @Override
+    public boolean addUserToChat(long userId, long chatId) throws DAOException {
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, ADD_USER_TO_CHAT, true,
+                userId, chatId
+            )
+        ) {
+            
+            return (statement.executeUpdate() > 0);
+            
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
     
     public List<Chat> findByUser(long userId) {
@@ -81,6 +119,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         
         return chats;
     }
+    
     
     @Override
     public List<Message> findMessages(long chatId) {

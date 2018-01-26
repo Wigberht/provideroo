@@ -6,6 +6,8 @@ public class User extends Entity {
     private String password;
     private boolean banned;
     private long roleId;
+    private String updatedAt;
+    private String createdAt;
     
     public User() {
     }
@@ -28,6 +30,17 @@ public class User extends Entity {
         this.password = password;
         this.banned = banned;
         this.roleId = roleId;
+    }
+    
+    public User(long id, String login, String password, boolean banned, long roleId,
+                String updatedAt, String createdAt) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.banned = banned;
+        this.roleId = roleId;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
     }
     
     public boolean isAdmin() {
@@ -72,6 +85,22 @@ public class User extends Entity {
     
     public void setRoleId(long roleId) {
         this.roleId = roleId;
+    }
+    
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+    
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
+    public String getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
     
     @Override
