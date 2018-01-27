@@ -19,15 +19,11 @@ public class SubscriberProfileCommand implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession s = request.getSession();
         SubscriberService subscriberService = new SubscriberService();
-        JSONService jsonService = new JSONService();
         
         long userId = ((User) s.getAttribute("user")).getId();
         
         Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
         s.setAttribute("subscriber", subscriber);
-        
-        s.setAttribute("subscriberJSON", jsonService.toJSON(subscriber));
-        LOGGER.info("JSON: " + jsonService.toJSON(subscriber));
         
         subscriberService.returnConnection();
         

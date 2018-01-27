@@ -28,11 +28,6 @@
     Vue.component('subscriber-profile-balance', {
         props: [
             'subscriber',
-            'text_replenish',
-            'text_balance',
-            'text_replenish_by',
-            'text_replenish_success',
-            'text_replenish_fail',
         ],
         template: "#subscriber-profile-balance-template",
         data() {
@@ -40,7 +35,13 @@
                 d_subscriber: JSON.parse(this.subscriber),
                 balance: JSON.parse(this.subscriber).account.balance,
                 currency: JSON.parse(this.subscriber).account.currencyShortname,
-                replenishAmount: 50
+                replenishAmount: 50,
+
+                text_replenish: strings['replenish'],
+                text_balance: strings['balance'],
+                text_replenish_by: strings['replenish_by'],
+                text_replenish_success: strings['replenish_success'],
+                text_replenish_fail: strings['replenish_fail'],
             }
         },
         methods: {

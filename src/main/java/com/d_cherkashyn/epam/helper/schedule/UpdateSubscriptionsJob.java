@@ -12,7 +12,8 @@ public class UpdateSubscriptionsJob implements Runnable {
         LOGGER.info("Running the job");
         SubscriberService subscriberService = new SubscriberService();
         
-        subscriberService.collectSubscriptionFees();
+        double collectedFees = subscriberService.collectSubscriptionFees();
+        LOGGER.info("Fees collected! Amount: {}", collectedFees);
         
         subscriberService.returnConnection();
         

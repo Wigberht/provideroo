@@ -48,10 +48,13 @@ public class ContextListener implements ServletContextListener {
         scheduler = Executors.newScheduledThreadPool(4);
         
         LocalDateTime startOfDay = LocalDate.now().plusDays(1).atStartOfDay();
-        Long initialDelayInMinutes = LocalDateTime.now()
+        long initialDelayInMinutes = LocalDateTime.now()
                                                   .until(startOfDay, ChronoUnit.MINUTES);
+        initialDelayInMinutes = 1;
         
         long continuousDelayInMinutes = TimeUnit.DAYS.toMinutes(1);
+        continuousDelayInMinutes = 1;
+        
         
         scheduler.scheduleAtFixedRate(new UpdateSubscriptionsJob(),
                                       initialDelayInMinutes,

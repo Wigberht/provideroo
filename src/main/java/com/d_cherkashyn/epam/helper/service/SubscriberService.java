@@ -107,10 +107,13 @@ public class SubscriberService extends ServiceHelper {
         SubscriptionService subscriptionService = new SubscriptionService(connection);
         
         double debtCollected = 0;
+        
+        /* get subscribers that have atleast one expired subscription */
         List<Subscriber> subscribers = expiredSubscriptionSubscribers();
+        LOGGER.info("Debters: " + subscribers.size());
         for (Subscriber subscriber : subscribers) {
-            
             double debt = calculateDebt(subscriber.getId());
+            LOGGER.info("{} debt: {}", subscriber.getFirstName(), debt);
             
             // if (poor) { ban(this.fella); }
             if (debt > subscriber.getAccount().getBalance()) {

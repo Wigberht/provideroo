@@ -157,8 +157,6 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         ) {
             if (resultSet.next()) {
                 subscriber = mapAll(resultSet);
-//                subscriber.setUser(findUser(subscriber.getUserId()));
-//                subscriber.setAccount(findAccount(subscriber.getAccountId()));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -178,7 +176,6 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     @Override
     public List<Subscriber> findSubscriptionExpirers() throws DAOException {
         List<Subscriber> subscribers = new ArrayList<>();
-        
         try (
             PreparedStatement statement = prepareStatement(connection,
                                                            FIND_SUBSCRIPTION_EXPIRERS,

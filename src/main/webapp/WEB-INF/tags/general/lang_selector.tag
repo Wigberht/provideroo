@@ -12,5 +12,5 @@
         ${(sessionScope.get("locale") eq "en_US")?"selected":""}>
             <fmt:message key="english"/>
         </option>
-    </select>
+    </select>   
 </div>

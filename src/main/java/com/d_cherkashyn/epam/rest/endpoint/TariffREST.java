@@ -33,11 +33,13 @@ public class TariffREST extends HttpServlet {
     public Response update(String data) {
         boolean success;
         JSONService jsonService = new JSONService();
+        
         String title = jsonService.get(data, "title").asText();
         String description = jsonService.get(data, "description").asText();
         int numberOfDays = jsonService.get(data, "numberOfDays").asInt();
         double cost = jsonService.get(data, "cost").asDouble();
         String currency = jsonService.get(data, "currencyShortname").asText();
+        
         
         if (!MainValidator.tariffValidator(title, description,
                                            String.valueOf(numberOfDays),

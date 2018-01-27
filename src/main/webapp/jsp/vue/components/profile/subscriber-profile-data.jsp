@@ -6,7 +6,7 @@
                        id="first_name"
                        type="text"
                        class="validate"
-                       v-model="firstName">
+                       v-model="d_subscriber.firstName">
                 <label for="first_name">
                     {{text_first_name}}
                 </label>
@@ -18,7 +18,7 @@
                        id="last_name"
                        type="text"
                        class="validate"
-                       v-model="lastName">
+                       v-model="d_subscriber.lastName">
                 <label for="last_name">
                     {{text_last_name}}
                 </label>
@@ -31,7 +31,7 @@
                        id="login"
                        type="text"
                        class="validate"
-                       v-model="login">
+                       v-model="d_subscriber.user.login">
                 <label for="login">
                     {{text_login}}
                 </label>
@@ -39,10 +39,10 @@
         </div>
 
         <div class="row">
-            <a href="" @click.prevent="updateProfile" class="btn">{{text_update}}</a>
+            <a href="" @click.prevent="updateProfile" class="btn">
+                {{text_update}}
+            </a>
         </div>
-
-
     </div>
 </script>
 
@@ -50,42 +50,34 @@
     Vue.component('subscriber-profile-data', {
         props: [
             'subscriber',
-            'text_login',
-            'text_first_name',
-            'text_last_name',
-            'text_update',
-            'text_update_success',
-            'text_update_fail',
         ],
         template: "#subscriber-profile-data-template",
         data() {
             return {
                 d_subscriber: JSON.parse(this.subscriber),
-                firstName: JSON.parse(this.subscriber).firstName,
-                lastName: JSON.parse(this.subscriber).lastName,
-                login: JSON.parse(this.subscriber).user.login,
+                text_first_name: strings['first_name'],
+                text_last_name: strings['last_name'],
+                text_login: strings['login'],
+                text_update: strings['update']
             }
         },
         methods: {
             updateProfile() {
-                console.log("Login: " + this.login);
                 axios.post("/api/user/profile/update", {
                     'userId': this.d_subscriber.user.id,
-                    'firstName': this.firstName,
-                    'lastName': this.lastName,
-                    'login': this.login
+                    'firstName': this.d_subscriber.firstName,
+                    'lastName': this.d_subscriber.lastName,
+                    'login': this.d_subscriber.user.login
                 }).then((response) => {
                     console.log(response);
-                    Materialize.toast(this.text_update_success, 1500, "green darken-2")
+                    Materialize.toast(strings['update_success'], 1500, "green darken-2")
                 }).catch((error) => {
-                    Materialize.toast(this.text_update_fail, 1500, "red darken-2");
                     console.log(error);
+                    Materialize.toast(strings['update_fail'], 1500, "red darken-2");
                 })
             },
         },
-        mounted: function () {
-            console.log(this.d_subscriber)
-        },
+        mounted: function () { },
         computed: {}
     })
 </script>

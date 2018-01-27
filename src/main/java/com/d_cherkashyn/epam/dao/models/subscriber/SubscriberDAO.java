@@ -7,28 +7,28 @@ import java.util.List;
 
 public interface SubscriberDAO {
     
-    public List<Subscriber> all() throws DAOException;
+    List<Subscriber> all() throws DAOException;
     
-    public List<Subscriber> all(boolean limited) throws DAOException;
+    List<Subscriber> all(boolean limited) throws DAOException;
     
-    public List<Subscriber> all(int limit) throws DAOException;
+    List<Subscriber> all(int limit) throws DAOException;
     
-    public List<Subscriber> all(int limit, int offset) throws DAOException;
+    List<Subscriber> all(int limit, int offset) throws DAOException;
     
-    public Subscriber findByUserId(Long id) throws DAOException;
+    Subscriber findByUserId(Long id) throws DAOException;
     
-    public Subscriber find(Long id) throws DAOException;
+    Subscriber find(Long id) throws DAOException;
     
-    public Subscriber find(String firstName, String lastName) throws DAOException;
+    Subscriber find(String firstName, String lastName) throws DAOException;
     
-    public double calculateDebt(long id) throws DAOException;
+    double calculateDebt(long id) throws DAOException;
     
-    public List<Subscriber> findSubscriptionExpirers() throws DAOException;
+    List<Subscriber> findSubscriptionExpirers() throws DAOException;
     
-    public boolean delete(Long id) throws DAOException;
+    boolean delete(Long id) throws DAOException;
     
-    public boolean update(Subscriber subscriber) throws DAOException;
+    boolean update(Subscriber subscriber) throws DAOException;
     
-    public Subscriber create(Subscriber subscriber) throws DAOException;
+    Subscriber create(Subscriber subscriber) throws DAOException;
     
 }

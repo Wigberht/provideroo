@@ -11,42 +11,46 @@
             </div>
         </div>
         <div class="search-response-block">
+            <div v-if="tariffs.length>0" class="row center-align">
+                <div class="col s2">
+                    <p><b>{{service_title_text}}</b></p>
+                </div>
+                <div class="col s2">
+                    <p><b>{{title_text}}</b></p>
+                </div>
+                <div class="col s2">
+                    <p><b>{{description_text}}</b></p>
+                </div>
+                <div class="col s1">
+                    <p><b>{{number_of_days_text}}</b></p>
+                </div>
+                <div class='col s1'>
+                    <p><b>{{cost_text}}</b></p>
+                </div>
+                <template v-if="!d_user.admin">
+                    <div class="col s2">
+                        <p><b>{{due_date_text}}</b></p>
+                    </div>
+                </template>
+                <template v-if="d_user.admin">
+                    <div class="col s1">
+                        <p><b>{{subscribers_amount_text}}</b></p>
+                    </div>
+                </template>
+            </div>
+
             <template v-if="noResults">
                 <h5>No results</h5>
-            </template>
-            <template v-if="isAdmin">
-                <tariff-row-admin
-                    v-for="tariff in tariffs"
-
-                    :id="tariff.id"
-                    :title="tariff.title"
-                    :description="tariff.description"
-                    :number_of_days="tariff.numberOfDays"
-                    :cost="tariff.cost"
-                    :currency="tariff.currencyShortname"
-                    :service="tariff.serviceTitle"
-
-                    :subscribers="tariff.subscriberAmount"
-                ></tariff-row-admin>
+                <br>
             </template>
 
-            <%--<template v-if="!isAdmin">--%>
-            <%--<tariff-row-subscriber--%>
-            <%--v-for="tariff in tariffs"--%>
+            <tariff-row
+                v-for="tariff in tariffs"
 
-            <%--:id="tariff.id"--%>
-            <%--:title="tariff.title"--%>
-            <%--:description="tariff.description"--%>
-            <%--:number_of_days="tariff.numberOfDays"--%>
-            <%--:cost="tariff.cost"--%>
-            <%--:currency="tariff.currencyShortname"--%>
-            <%--:service="tariff.serviceTitle"--%>
-
-            <%--:banned="is_banned"--%>
-            <%--:subscriptions="subscriptions"--%>
-            <%--:user_id="user_id"--%>
-            <%--></tariff-row-subscriber>--%>
-            <%--</template>--%>
+                :tariff='tariff'
+                :user='user'
+                :subscriptions='subscriptions'
+            ></tariff-row>
         </div>
     </div>
 </script>
@@ -54,18 +58,27 @@
 <script>
     Vue.component('tariff-search-block', {
         props: [
-            'is_admin', 'subscriptions', 'user_id', 'is_banned',
+            'user', 'subscriptions',
         ],
         data() {
             return {
+                d_user: JSON.parse(this.user),
                 tariffs: [],
-                isAdmin: this.is_admin == "true",
                 searchQ: "",
-                noResults: false
+                noResults: false,
+
+                service_title_text: strings['service'],
+                title_text: strings['title'],
+                description_text: strings['description'],
+                number_of_days_text: strings['number_of_days'],
+                cost_text: strings['cost'],
+                due_date_text: strings['due_date'],
+                subscribers_amount_text: strings['subscribers_amount'],
             }
         },
         methods: {
             search() {
+                this.tariffs = [];
                 axios.get("/api/tariff/search?query=" + encodeURIComponent(this.searchQ))
                      .then((response) => {
                          console.log(response);
@@ -87,10 +100,7 @@
             }
 
         },
-        mounted() {
-            console.log("search-block mounted");
-//            console.log("subscriptions: ", JSON.parse(this.subscriptions));
-        },
+        mounted() { },
         template: "#tariff-search-block-template",
     })
 </script>

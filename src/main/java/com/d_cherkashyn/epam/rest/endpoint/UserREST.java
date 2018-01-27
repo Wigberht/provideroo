@@ -35,8 +35,11 @@ public class UserREST extends HttpServlet {
         boolean success;
         JSONService jsonService = new JSONService();
         
+        
         long userId = jsonService.get(data, "userId").asLong();
         long tariffId = jsonService.get(data, "tariffId").asLong();
+        LOGGER.info("Subscribe: userId: {}, tariffId: {}", userId, tariffId);
+        
         
         SubscriptionService subscriptionService = new SubscriptionService();
         SubscriberService subscriberService = new SubscriberService();

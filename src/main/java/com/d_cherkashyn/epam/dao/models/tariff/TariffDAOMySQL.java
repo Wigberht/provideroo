@@ -23,7 +23,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
     private static final String COUNT_SUBSCRIBERS = "SELECT COUNT(DISTINCT subscriber_id) AS subscribers\n" +
         "FROM tariff_subscriber\n" +
-        "WHERE tariff_id = ? AND prolong = TRUE";
+//        "WHERE tariff_id = ? AND prolong = TRUE";
+        "WHERE tariff_id = ?";
     
     private static final String FIND_BY_SERVICE_ID = "SELECT * FROM tariff WHERE service_id = ?";
     //    private static final String FIND_BY_SERVICE_ID = "";

@@ -25,12 +25,12 @@
     </div>
 
     <tariff-search-block
+        user='<mt:jsonify obj="${user}"/>'
         is_admin="${isAdmin}"
         subscriptions='<mt:jsonify obj="${subscriptions}"/>'
         user_id="${user.id}"
         is_banned="${user.banned}"
-    />
-
+    ></tariff-search-block>
 
     <mt:service_table services="${services}"/>
 

@@ -21,17 +21,14 @@
                         <div class="col s2">
                             <p><b><fmt:message key="title"/></b></p>
                         </div>
-                        <div class="col s2">
+                        <div class="col s3">
                             <p><b><fmt:message key="description"/></b></p>
                         </div>
                         <div class="col s1">
                             <p><b><fmt:message key="number_of_days"/></b></p>
                         </div>
-                        <div class='col s1'>
+                        <div class="col s2">
                             <p><b><fmt:message key="cost"/></b></p>
-                        </div>
-                        <div class="col s1">
-                            <p><b><fmt:message key="currency"/></b></p>
                         </div>
                         <c:if test="${isSubscriber}">
                             <div class="col s2">
@@ -47,20 +44,11 @@
                     </div>
 
                     <c:forEach items="${service.tariffs}"
-                               var="tariff"
-                               varStatus="status">
+                               var="tariff">
                         <tariff-row
-                            id="${tariff.id}"
-                            title="${tariff.title}"
-                            description="${tariff.description}"
-                            days="${tariff.numberOfDays}"
-                            cost="${tariff.cost}"
-                            currency="${tariff.currencyShortname}"
-                            subscribers="${tariff.subscriberAmount}"
-                            is_admin="${isAdmin}"
+                            tariff='<mt:jsonify obj="${tariff}"/>'
+                            user='<mt:jsonify obj="${user}"/>'
                             subscriptions='<mt:jsonify obj="${subscriptions}"/>'
-                            user_id="${user.id}"
-                            is_banned="${user.isBanned()}"
                         ></tariff-row>
                     </c:forEach>
                 </c:if>
@@ -68,4 +56,3 @@
         </li>
     </c:forEach>
 </ul>
-

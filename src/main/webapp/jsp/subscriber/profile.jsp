@@ -15,7 +15,7 @@
                 text_first_name="<fmt:message key="first_name" />"
                 text_last_name="<fmt:message key="last_name" />"
                 text_login="<fmt:message key="login" />"
-                subscriber='${sessionScope.get("subscriberJSON")}'
+                subscriber='<mt:jsonify obj='${sessionScope.get("subscriber")}'/>'
             />
         </div>
         <div class="col s6">
@@ -25,7 +25,8 @@
                 text_replenish_by="<fmt:message key="replenish_by"/>"
                 text_replenish_success="<fmt:message key="replenish_success"/> "
                 text_replenish_fail="<fmt:message key="replenish_fail"/> "
-                subscriber='${sessionScope.get("subscriberJSON")}'/>
+                subscriber='<mt:jsonify obj='${sessionScope.get("subscriber")}'/>'
+            />
         </div>
     </div>
 

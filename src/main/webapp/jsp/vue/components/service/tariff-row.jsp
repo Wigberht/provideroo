@@ -1,30 +1,19 @@
 <script type="text/x-template" id="tariff-row-template">
-    <div>
+    <div v-if="show">
         <template v-if="isAdmin">
             <tariff-row-admin
-                :id="id"
-                :title="title"
-                :description="description"
-                :number_of_days="days"
-                :cost="cost"
-                :currency="currency"
+                @update="updateTariff"
+                @delete="deleteTariff"
 
-                :subscribers="subscribers"
+                :tariff="tariff"
             ></tariff-row-admin>
         </template>
 
         <template v-if="!isAdmin">
             <tariff-row-subscriber
-                :id="id"
-                :title="title"
-                :description="description"
-                :number_of_days="days"
-                :cost="cost"
-                :currency="currency"
-
-                :banned="is_banned"
+                :tariff="tariff"
+                :user="user"
                 :subscriptions="subscriptions"
-                :user_id="user_id"
             ></tariff-row-subscriber>
         </template>
     </div>
@@ -32,17 +21,50 @@
 
 <script>
     Vue.component('tariff-row', {
-        props: [
-            'id', 'title', 'description', 'days', 'cost', 'currency',
-            'subscribers', 'is_admin', 'subscriptions', 'user_id', 'is_banned',
-        ],
+        props: ['tariff', 'user', 'subscriptions'],
         data() {
             return {
-                isAdmin: this.is_admin == "true"
+                isAdmin: JSON.parse(this.user).admin,
+                show: true
             }
         },
-        mounted() {
+        methods: {
+            updateTariff(tariff) {
+                axios.post("/api/tariff/update", {
+                    'id': tariff.id,
+                    'title': tariff.title,
+                    'description': tariff.description,
+                    'numberOfDays': tariff.numberOfDays,
+                    'cost': tariff.cost,
+                    'currencyShortname': tariff.currencyShortname,
+                }).then((response) => {
+                    console.log(response);
+                    if (response.data.success) {
+                        Materialize.toast("SUCCESS", 1500)
+                    } else {
+                        Materialize.toast("FAIL", 1500);
+                    }
+                }).catch((error) => {
+                    Materialize.toast("FAIL", 1500);
+                    console.log(error);
+                });
+            },
+            deleteTariff(tariffId) {
+                axios.post("/api/tariff/delete", {
+                    'tariffId': tariffId
+                }).then(response => {
+                    console.log(response);
+                    if (response.data.success) {
+                        $('.tooltipped').tooltip('remove');
+                        this.show = false;
+                        Materialize.toast("DELETE SUCCESS", 1500, "green darken-2");
+                    }
+                }).catch(error => {
+                    Materialize.toast("UNABLE TO DELETE, there may be subscribers", 1500, "red darken-2");
+                })
+            }
         },
+        mounted() { },
         template: "#tariff-row-template",
     })
 </script>
