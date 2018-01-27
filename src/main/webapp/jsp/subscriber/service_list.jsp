@@ -24,13 +24,13 @@
         </div>
     </div>
 
-
-    <search-block
+    <tariff-search-block
         is_admin="${isAdmin}"
-        subscriptions='${subscriptions}'
+        subscriptions='<mt:jsonify obj="${subscriptions}"/>'
         user_id="${user.id}"
         is_banned="${user.banned}"
-    ></search-block>
+    />
+
 
     <mt:service_table services="${services}"/>
 

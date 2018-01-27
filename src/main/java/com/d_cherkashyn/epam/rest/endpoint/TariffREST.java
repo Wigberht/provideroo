@@ -65,11 +65,14 @@ public class TariffREST extends HttpServlet {
         
         JsonNode node = JSONService.get(data, "tariffId");
         if (node != null) {
+            LOGGER.info("NODE NOT NULL");
             long id = node.asLong();
             TariffService tariffService = new TariffService();
             success = tariffService.deleteTariff(id);
             tariffService.returnConnection();
+            LOGGER.info("Success in deletion: " + success);
         }
+        LOGGER.info("Success in post-deletion: " + success);
         
         String response = JSONService.toJSON(new SimpleResponse(success));
         

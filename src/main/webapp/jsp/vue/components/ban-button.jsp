@@ -1,6 +1,8 @@
 <script type="text/x-template" id="ban-button-template">
     <a @click="banToggle"
-       class="waves-effect waves-light btn">{{buttonText}}</a>
+       class="waves-effect waves-light btn"
+       v-bind:class="{red:!banned, green:banned}"
+    >{{buttonText}}</a>
 </script>
 
 <script>
@@ -11,13 +13,13 @@
             return {
                 banned: false,
                 toast: {
-                    time: 1000,
+                    time: 2000,
                 }
             }
         },
         methods: {
             banToggle() {
-                axios.post("/rest/user/ban", {
+                axios.post("/api/user/ban", {
                     'userId': this.user_id,
                     'banned': !this.banned
                 }).then((response) => {

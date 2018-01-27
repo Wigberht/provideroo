@@ -64,6 +64,7 @@ public class Chat extends Entity {
         if (id != chat.id) {
             return false;
         }
+        
         if (!title.equals(chat.title)) {
             return false;
         }

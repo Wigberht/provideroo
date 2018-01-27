@@ -1,6 +1,11 @@
 <script type="text/x-template" id="chat-page-template">
 
     <div class="chat-page">
+        <template v-if="page!='chats'">
+            <br>
+            <a @click="toChatList" class="btn">{{pageTitle}}</a>
+        </template>
+
         <chat-list v-if="page=='chats'"
                    @toChat="toChat(...arguments)"
                    @toUserList="toUserList"
@@ -28,6 +33,9 @@
             }
         },
         methods: {
+            toChatList() {
+                this.setActivePage("chats");
+            },
             toChat(args) {
                 console.log("args in chat page: ", args);
                 this.dialogue_id = args;

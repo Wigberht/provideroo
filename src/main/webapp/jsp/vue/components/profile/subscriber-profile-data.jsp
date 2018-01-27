@@ -69,7 +69,7 @@
         methods: {
             updateProfile() {
                 console.log("Login: " + this.login);
-                axios.post("/rest/user/profile/update", {
+                axios.post("/api/user/profile/update", {
                     'userId': this.d_subscriber.user.id,
                     'firstName': this.firstName,
                     'lastName': this.lastName,

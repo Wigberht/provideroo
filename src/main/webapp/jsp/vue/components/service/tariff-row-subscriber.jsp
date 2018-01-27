@@ -51,13 +51,14 @@
                 isProlong: false,
                 dueDate: "-------------",
                 isBanned: this.banned == "true",
-                isTruncated: true
+                isTruncated: true,
+                d_subscriptions: JSON.parse(this.subscriptions)
             }
         },
         template: "#tariff-row-subscriber-template",
         methods: {
             subscribe() {
-                axios.post("/rest/user/subscribe", {
+                axios.post("/api/user/subscribe", {
                     'userId': this.user_id,
                     'tariffId': this.id
                 }).then((response) => {
@@ -77,7 +78,7 @@
             },
 
             unsubscribe() {
-                axios.post("/rest/user/unsubscribe", {
+                axios.post("/api/user/unsubscribe", {
                     'userId': this.user_id,
                     'tariffId': this.id
                 }).then((response) => {
@@ -126,6 +127,7 @@
         },
         mounted: function () {
 //            console.log("Is banned: ", Boolean(this.banned));
+            console.log("tariff row mouted", this.subscriptions)
         },
 
         computed: {

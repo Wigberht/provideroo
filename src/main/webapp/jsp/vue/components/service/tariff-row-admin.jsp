@@ -101,7 +101,7 @@
                 this.edit = true;
             },
             finishEdit() {
-                axios.post("/rest/tariff/update", {
+                axios.post("/api/tariff/update", {
                     'id': this.id,
                     'title': this.d_title,
                     'description': this.d_description,
@@ -123,7 +123,7 @@
             },
 
             deleteTariff() {
-                axios.post("/rest/tariff/delete", {
+                axios.post("/api/tariff/delete", {
                     'tariffId': this.id
                 }).then(response => {
                     console.log(response);

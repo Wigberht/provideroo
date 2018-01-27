@@ -31,7 +31,7 @@
         },
         methods: {
             fetchUsers() {
-                axios.get("/rest/user/all")
+                axios.get("/api/user/all")
                      .then((response) => {
                          console.log(response);
                          if (response.data.length > 0) {
@@ -44,7 +44,7 @@
             },
             createChat(userId, userLogin) {
                 console.log("chat with " + userLogin)
-                axios.post("/rest/chat/create", {
+                axios.post("/api/chat/create", {
                     creatorId: window.user.id,
                     creatorLogin: window.user.login,
                     receiverId: userId,

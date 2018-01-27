@@ -11,25 +11,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     
     private static final String FIND_BY_ID = "SELECT * FROM message where id=?";
     
-    private static final String GET_MESSAGES_BY_CHAT_ID = "SELECT\n" +
-        "  msg.id,\n" +
-        "  msg.message,\n" +
-        "  msg.was_read,\n" +
-        "  msg.created_at,\n" +
-        "  msg.updated_at,\n" +
-        "  msg.user_id\n" +
-        "FROM chat AS c\n" +
-        "  INNER JOIN message_chat AS mc ON c.id = mc.chat_id\n" +
-        "  INNER JOIN message AS msg ON mc.message_id = msg.id\n" +
-        "WHERE c.id = ?";
+    private static final String GET_MESSAGES_BY_CHAT_ID = "SELECT\n"
+        + "  message.id,\n"
+        + "  message.message,\n"
+        + "  message.was_read,\n"
+        + "  message.user_id,\n"
+        + "  message.chat_id,\n"
+        + "  message.created_at,\n"
+        + "  message.updated_at\n"
+        + "FROM message\n"
+        + "WHERE message.chat_id = ?";
     
     private static final String CREATE_MESSAGE = "INSERT INTO message" +
-        " VALUES(DEFAULT,?,DEFAULT,DEFAULT,DEFAULT,?)";
+        " VALUES(DEFAULT,?,DEFAULT,DEFAULT,DEFAULT,?,?)";
     
     Connection connection;
     
@@ -87,7 +85,7 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_MESSAGE, true,
-                message.getMessage(), message.getUserId()
+                message.getMessage(), message.getUserId(), message.getChatId()
             )
         ) {
             statement.executeUpdate();
@@ -110,7 +108,8 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
             resultSet.getBoolean("was_read"),
             resultSet.getString("updated_at"),
             resultSet.getString("created_at"),
-            resultSet.getLong("user_id")
+            resultSet.getLong("user_id"),
+            resultSet.getLong("chat_id")
         );
     }
 }

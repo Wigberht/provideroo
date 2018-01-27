@@ -33,7 +33,6 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
     
     @Override
     public List<Service> all() throws DAOException {
-        LOGGER.info("ServiceDao#all");
         return findAllServices(FIND_ALL);
     }
     
@@ -49,7 +48,6 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
             statement.executeQuery(sql);
             
             ResultSet resultSet = statement.getResultSet();
-            LOGGER.info("ServiceDao#findAllServices");
             while (resultSet.next()) {
                 Service service = map(resultSet);
                 service.setTariffs(getTariffs(service.getId()));
@@ -73,7 +71,8 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
         Service service = null;
         
         try (
-            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false, id);
+            PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
+                                                           id);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
@@ -123,12 +122,4 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
             resultset.getString("title")
         );
     }
-    
-//    private static Service mapAll(ResultSet resultset) throws SQLException {
-//        List<Tariff> tariffs=new ArrayList<>();
-//        return new Service(
-//            resultset.getLong("service_id"),
-//            resultset.getString("service_title"),
-//        );
-//    }
 }

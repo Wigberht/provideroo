@@ -47,7 +47,7 @@
             replenishBalance() {
                 console.log(this.balance);
                 console.log(this.replenishAmount);
-                axios.post("/rest/user/balance/replenish", {
+                axios.post("/api/user/balance/replenish", {
                     'userId': this.d_subscriber.user.id,
                     'amount': this.replenishAmount,
                 }).then((response) => {

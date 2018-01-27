@@ -8,7 +8,7 @@
 
         <template v-if="!isMine">
             <p class="left message-left message-block word-wrap">
-                <b>{{messageAuthor}}</b> : {{message.message}}
+                <b>{{messageAuthor.login}}</b> : {{message.message}}
             </p>
         </template>
     </div>
@@ -25,23 +25,14 @@
             }
         },
         methods: {
-            fetchUsers() {
-                axios.get("/rest/user/get")
-                     .then((response) => {
-                         console.log(response);
-                         if (response.data.length > 0) {
-                             this.users = response.data;
-                         }
-                     }).catch((error) => {
-                        console.log(error);
-                    }
-                )
-            },
+            getMessageUser() {
+                return this.users.find((messageUser) => {
+                    return messageUser.id == this.message.userId;
+                });
+            }
         },
         mounted: function () {
-            this.messageAuthor = this.users.find((messageUser) => {
-                return messageUser.id == this.message.userId;
-            }).login;
+            this.messageAuthor = this.getMessageUser();
         },
         computed: {}
     })

@@ -7,6 +7,7 @@ public class Message extends Entity {
     private String updatedAt;
     private String createdAt;
     private long userId;
+    private long chatId;
     
     public Message() {
     }
@@ -23,13 +24,14 @@ public class Message extends Entity {
     }
     
     public Message(long id, String message, boolean wasRead, String updatedAt,
-                   String createdAt, long userId) {
+                   String createdAt, long userId, long chatId) {
         super(id);
         this.message = message;
         this.wasRead = wasRead;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
         this.userId = userId;
+        this.chatId = chatId;
     }
     
     public String getMessage() {
@@ -72,6 +74,14 @@ public class Message extends Entity {
         this.createdAt = createdAt;
     }
     
+    public long getChatId() {
+        return chatId;
+    }
+    
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+    
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Message{");
@@ -80,6 +90,7 @@ public class Message extends Entity {
         sb.append(", updatedAt='").append(updatedAt).append('\'');
         sb.append(", createdAt='").append(createdAt).append('\'');
         sb.append(", userId=").append(userId);
+        sb.append(", chatId=").append(chatId);
         sb.append(", id=").append(id);
         sb.append('}');
         return sb.toString();

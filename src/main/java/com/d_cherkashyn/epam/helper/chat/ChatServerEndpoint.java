@@ -9,10 +9,9 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint(value = "/socket/chat/{chatId}",
     encoders = {MessageEncoder.class},
@@ -20,19 +19,16 @@ import java.util.concurrent.ConcurrentSkipListSet;
 )
 public class ChatServerEndpoint {
     
-    Logger LOGGER = LoggerFactory.getLogger(ChatServerEndpoint.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(ChatServerEndpoint.class);
     
-    private static final Set<String> USERS = new ConcurrentSkipListSet<>();
     private static final List<Session> sessions = new ArrayList<>();
-    private String user;
-    private Session endpointSession;
-    private boolean dupUserDetected;
     private long chatId;
     
     @OnOpen
     public void onOpen(@PathParam("chatId") long chatId,
                        Session session) throws IOException, EncodeException {
         this.chatId = chatId;
+        
         sessions.add(session);
         
         LOGGER.info("Chat endpoint opened");
@@ -40,14 +36,15 @@ public class ChatServerEndpoint {
     
     @OnClose
     public void onClose(Session session) {
-        for (Session s : sessions) {
-            
-            if (s.getId().equals(session.getId())) {
-                synchronized (sessions) {
-                    sessions.remove(session);
-                }
-            }
-        }
+
+//        for (Session s : sessions) {
+//
+//            if (s.getId().equals(session.getId())) {
+//                synchronized (sessions) {
+//                    sessions.remove(session);
+//                }
+//            }
+//        }
         
         LOGGER.info("Chat endpoint closed");
     }
@@ -58,7 +55,8 @@ public class ChatServerEndpoint {
         LOGGER.info("Message received: " + message);
         
         ChatService cs = new ChatService();
-        message = cs.pushMessage(message, chatId);
+        message.setChatId(chatId);
+        message = cs.pushMessage(message);
         cs.returnConnection();
         
         broadcast(message);
@@ -71,7 +69,9 @@ public class ChatServerEndpoint {
     
     private static void broadcast(Message message) throws IOException, EncodeException {
         for (Session s : sessions) {
-            s.getBasicRemote().sendObject(message);
+            if (s.isOpen()) {
+                s.getBasicRemote().sendObject(message);
+            }
         }
     }
 }

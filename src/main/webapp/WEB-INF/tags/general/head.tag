@@ -44,4 +44,6 @@
     if (window.user.length > 5) {
         window.user = JSON.parse(window.user);
     }
+
+    window.websocket_url = "localhost:8081/socket/chat/";
 </script>

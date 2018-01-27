@@ -25,12 +25,12 @@
     </div>
 
 
-    <search-block
+    <tariff-search-block
         is_admin="${isAdmin}"
         subscriptions='${subscriptions}'
         user_id="${user.id}"
         is_banned="${user.banned}"
-    ></search-block>
+    ></tariff-search-block>
 
     <mt:service_table services="${services}"/>
 

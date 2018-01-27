@@ -45,12 +45,18 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     private static final String CREATE_USER = "INSERT INTO user VALUES(DEFAULT,?,?,?,?)";
     
     private static final String UPDATE_USER = "UPDATE user "
-        + "SET login = ?, password = ?, banned = ?, role_id= ? "
+        + "SET login = ?, password = ?, banned = ?, role_id= ? ," +
+        "updated_at=current_timestamp()"
         + "WHERE id = ?";
     
     private static final String UPDATE_LOGIN_WHERE_ID = "UPDATE user SET login=? WHERE id=?";
-    private static final String SET_BANNED_WHERE_ID = "UPDATE user SET banned=? WHERE id=?";
-    private static final String SET_BANNED_WHERE_LOGIN = "UPDATE user SET banned=? WHERE login=?";
+    private static final String SET_BANNED_WHERE_ID = "UPDATE user SET banned=?," +
+        " updated_at=current_timestamp()" +
+        " WHERE " +
+        "id=?";
+    private static final String SET_BANNED_WHERE_LOGIN = "UPDATE user " +
+        "SET banned=?, updated_at=current_timestamp()" +
+        "WHERE login=?";
     private static final String UPDATE_PASSWORD_WHERE_ID = "UPDATE user SET password=? WHERE id=?";
     private static final String UPDATE_PASSWORD_WHERE_LOGIN = "UPDATE user SET password=? WHERE login=?";
     

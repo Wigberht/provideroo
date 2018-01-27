@@ -7,6 +7,7 @@
     <nav>
         <div id="navbar_header">
             <div class="nav-wrapper">
+                <mt:lang_selector/>
                 <c:if test='${isAdmin}'>
                     <mt:admin_header pageName="${pageName}"/>
                 </c:if>

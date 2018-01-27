@@ -1,14 +1,19 @@
 <script type="text/x-template" id="chat-dialogue-template">
     <div class="chat-dialogue">
         <h4>
-            {{title}}
-            <b>
-                <template v-for="user in users">
-                    <template v-if="user.id!=currentUserId">
-                        {{user.login}}
+            <template v-if="users.length==1">
+                {{chatWithYourselfTitle}}
+            </template>
+            <template v-else>
+                {{title}}
+                <b>
+                    <template v-for="user in users">
+                        <template v-if="user.id!=currentUserId">
+                            {{user.login}}
+                        </template>
                     </template>
-                </template>
-            </b>
+                </b>
+            </template>
         </h4>
 
         <div id="messages-block"
@@ -37,21 +42,20 @@
                 chat: "",
                 scrollableBlock: "",
                 title: strings['chat_with'],
-                currentUserId: window.user.id
+                currentUserId: window.user.id,
+                chatWithYourselfTitle: strings['chat_with_yourself']
             }
         },
         methods: {
             fetchChat(chatId) {
-                axios.get("/rest/chat/get?chatId=" + chatId)
+                axios.get("/api/chat/get?chatId=" + chatId)
                      .then((response) => {
-//                         console.log(response);
                          if (response.data) {
                              this.chat = response.data;
                              this.users = this.chat.users;
                              this.messages = this.chat.messages;
                              this.scrollToBottom();
                          }
-
                      }).catch((error) => {
                         console.log(error);
                     }
@@ -59,12 +63,14 @@
             },
 
             sendMessage(message) {
-                console.log("Emitted message : ", message);
-                this.webSocket.send(JSON.stringify(message));
+                if (message.message.length > 1) {
+                    this.webSocket.send(JSON.stringify(message));
+                }
             },
+
             initWebSocket() {
                 this.webSocket =
-                    new WebSocket("ws://localhost:8081/socket/chat/" + this.chat_id);
+                    new WebSocket("ws://" + websocket_url + this.chat_id);
                 this.webSocket.onopen = (message) => this.wsOpen(message);
                 this.webSocket.onclose = (message) => this.wsClose(message);
                 this.webSocket.onerror = (message) => this.wsError(message);
@@ -82,8 +88,10 @@
 
             wsGetMessage(messageEvent) {
                 const message = JSON.parse(messageEvent.data);
-                console.log("Message received ", message);
-                this.messages.push(message);
+                if (message.chatId == this.chat_id) {
+                    this.messages.push(message);
+                }
+
                 this.scrollToBottom();
             },
 
@@ -92,14 +100,17 @@
             },
 
             scrollToBottom() {
-                setTimeout(() => {
-                    this.$refs.scrollableBlock.scrollTop = this.$refs.scrollableBlock.scrollHeight;
-                }, 400)
+                if (this.$refs.scrollableBlock !== undefined) {
+                    setTimeout(() => {
+                        this.$refs.scrollableBlock.scrollTop = this.$refs.scrollableBlock.scrollHeight;
+                    }, 400)
+                }
             }
         },
         mounted: function () {
             this.fetchChat(this.chat_id);
             this.initWebSocket();
+            console.log("dialogue mounted for chat " + this.chat_id)
         },
         computed: {}
     })

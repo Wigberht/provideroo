@@ -73,9 +73,10 @@ public class ServiceListSubscriberCommand implements Command {
             subscriber = subscriberService.findSubscriberByUserId(user.getId());
             subscriptions = subscriptionService.getSubscriptions(subscriber.getId());
             
-            String jsonSubscriptions = jsonService.toJSON(subscriptions);
+//            String jsonSubscriptions = jsonService.toJSON(subscriptions);
             
-            request.setAttribute("subscriptions", jsonSubscriptions);
+            request.setAttribute("subscriptions", subscriptions);
+//            request.setAttribute("subscriptions", jsonSubscriptions);
         }
     }
     

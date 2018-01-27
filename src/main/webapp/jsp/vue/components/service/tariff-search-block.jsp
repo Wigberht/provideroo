@@ -30,23 +30,23 @@
                 ></tariff-row-admin>
             </template>
 
-            <template v-if="!isAdmin">
-                <tariff-row-subscriber
-                    v-for="tariff in tariffs"
+            <%--<template v-if="!isAdmin">--%>
+            <%--<tariff-row-subscriber--%>
+            <%--v-for="tariff in tariffs"--%>
 
-                    :id="tariff.id"
-                    :title="tariff.title"
-                    :description="tariff.description"
-                    :number_of_days="tariff.numberOfDays"
-                    :cost="tariff.cost"
-                    :currency="tariff.currencyShortname"
-                    :service="tariff.serviceTitle"
+            <%--:id="tariff.id"--%>
+            <%--:title="tariff.title"--%>
+            <%--:description="tariff.description"--%>
+            <%--:number_of_days="tariff.numberOfDays"--%>
+            <%--:cost="tariff.cost"--%>
+            <%--:currency="tariff.currencyShortname"--%>
+            <%--:service="tariff.serviceTitle"--%>
 
-                    :banned="is_banned"
-                    :subscriptions="subscriptions"
-                    :user_id="user_id"
-                ></tariff-row-subscriber>
-            </template>
+            <%--:banned="is_banned"--%>
+            <%--:subscriptions="subscriptions"--%>
+            <%--:user_id="user_id"--%>
+            <%--></tariff-row-subscriber>--%>
+            <%--</template>--%>
         </div>
     </div>
 </script>
@@ -61,13 +61,12 @@
                 tariffs: [],
                 isAdmin: this.is_admin == "true",
                 searchQ: "",
-                subscriptions: [],
                 noResults: false
             }
         },
         methods: {
             search() {
-                axios.get("/rest/tariff/search?query=" + encodeURIComponent(this.searchQ))
+                axios.get("/api/tariff/search?query=" + encodeURIComponent(this.searchQ))
                      .then((response) => {
                          console.log(response);
                          this.tariffs = response.data;
@@ -90,6 +89,7 @@
         },
         mounted() {
             console.log("search-block mounted");
+//            console.log("subscriptions: ", JSON.parse(this.subscriptions));
         },
         template: "#tariff-search-block-template",
     })

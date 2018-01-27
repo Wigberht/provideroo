@@ -14,7 +14,6 @@
             <td><fmt:message key="login"/></td>
             <td><fmt:message key="balance"/></td>
             <td><fmt:message key="birth_date"/></td>
-            <td><fmt:message key="banned"/></td>
         </tr>
         </thead>
         <tbody>
@@ -28,10 +27,7 @@
                         ${subscriber.account.currencyShortname}
                 </td>
                 <td class="col s2">${subscriber.birthDate}</td>
-                <td class="col s1">
-                    <fmt:message key='${subscriber.user.banned?"yes":"no"}'/>
-                </td>
-                <td class="col s3">
+                <td class="col s2">
                     <ban-button
                         text_ban="<fmt:message key="ban"/>"
                         text_unban="<fmt:message key="unban"/>"
@@ -45,5 +41,3 @@
     </table>
     <mt:pagination/>
 </div>
-
-<%--<%@ include file="/jsp/vue/vue-ban-button.jspf" %>--%>

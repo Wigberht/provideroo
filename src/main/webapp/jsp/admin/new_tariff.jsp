@@ -10,6 +10,7 @@
                     <h2><fmt:message key="new_tariff"/></h2>
                 </div>
                 <input type="hidden" name="command" value="add_tariff">
+                <input type="hidden" name="role" value="admin">
 
                 <mt:alert_box_error>
                     <c:if test="${not empty sessionScope.titleError}">

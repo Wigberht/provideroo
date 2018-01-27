@@ -15,11 +15,12 @@ public class SessionListener implements HttpSessionListener {
         SessionNumberHolder.getInstance().addSession();
         String baseLocale = httpSessionEvent.getSession()
                                             .getServletContext()
-                                            .getInitParameter("db_type");
+                                            .getInitParameter("default_locale");
         if (baseLocale == null || baseLocale.equals("")) {
             baseLocale = "ru_RU";
         }
         
+        LOGGER.info("SESSION LOCALE SET TO :" + baseLocale);
         httpSessionEvent.getSession().setAttribute("locale", baseLocale);
     }
     

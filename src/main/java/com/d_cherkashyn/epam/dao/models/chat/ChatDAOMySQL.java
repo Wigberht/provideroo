@@ -27,11 +27,11 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         + "  message.id,\n"
         + "  message.message,\n"
         + "  message.user_id,\n"
+        + "  message.chat_id,\n"
         + "  message.created_at,\n"
         + "  message.created_at\n"
         + "FROM message\n"
-        + "  INNER JOIN message_chat ON message.id = message_chat.message_id\n"
-        + "WHERE message_chat.chat_id = ?";
+        + "WHERE message.chat_id = ?";
     private static final String CREATE_CHAT = "INSERT INTO chat VALUES(DEFAULT, ?)";
     private static final String UPDATE_CHAT_BY_ID = "UPDATE chat "
         + "SET title = ? "
@@ -185,7 +185,8 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
             resultSet.getBoolean("read"),
             resultSet.getString("updated_at"),
             resultSet.getString("created_at"),
-            resultSet.getLong("user_id")
+            resultSet.getLong("user_id"),
+            resultSet.getLong("chat_id")
         );
     }
 }

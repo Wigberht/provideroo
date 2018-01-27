@@ -1,6 +1,8 @@
 package com.d_cherkashyn.epam.servlet;
 
 import com.d_cherkashyn.epam.helper.pdf.TariffListPdfService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +16,18 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet("/ServicesPDF")
 public class PDFGenerationController extends HttpServlet {
+    
+    Logger LOGGER = LoggerFactory.getLogger(PDFGenerationController.class);
+    
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        TariffListPdfService tariffListPdfService = new TariffListPdfService(
-            (String) req.getSession().getAttribute("locale"));
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse resp) throws ServletException, IOException {
+        
+        LOGGER.info("locale in pdf generation controller: " + req.getSession()
+                                                                 .getAttribute("locale"));
+        String locale = (String) req.getSession().getAttribute("locale");
+        LOGGER.info("Converted to string:: " + locale);
+        TariffListPdfService tariffListPdfService = new TariffListPdfService(locale);
         
         ByteArrayOutputStream output = tariffListPdfService.getOutput();
         
@@ -34,7 +44,8 @@ public class PDFGenerationController extends HttpServlet {
     }
     
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req,
+                          HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
     }
 }

@@ -42,19 +42,16 @@ public class ChatService extends ServiceHelper {
         return chat;
     }
     
-    public Message pushMessage(Message message, long chatId) {
+    public Message pushMessage(Message message) {
         message = FactoryGenerator.getFactory()
                                   .makeMessageDAO(connection)
                                   .create(message);
         
+        /* get new one because it has id, created_at and updated_at data */
         if (message.getId() > 0) {
             message = FactoryGenerator.getFactory()
                                       .makeMessageDAO(connection)
                                       .find(message.getId());
-            
-            FactoryGenerator.getFactory()
-                            .makeChatDAO(connection)
-                            .addMessage(chatId, message.getId());
         }
         
         return message;

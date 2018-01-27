@@ -39,9 +39,8 @@ public class TariffListPdfService {
     
     
     public TariffListPdfService(String locale) throws IOException {
-        String[] tmpLocale = locale.split("_");
-        Locale.setDefault(new Locale(tmpLocale[0], tmpLocale[1]));
-        resourceBundle = ResourceBundle.getBundle("messages");
+        String[] localeParts = locale.split("_");
+        resourceBundle = ResourceBundle.getBundle("messages", new Locale(localeParts[0]));
         
         ServiceService serviceService = new ServiceService();
         services = serviceService.getAllServices();
@@ -235,11 +234,7 @@ public class TariffListPdfService {
         float tableWidth = 530;
         float tableHeight;
         for (Service service : services) {
-            
-            LOGGER.info("table y: " + tableY);
             tableHeight = 50 * (service.getTariffs().size() + 1);
-            LOGGER.info("Table height: " + tableHeight);
-            LOGGER.info("Max row Y: " + maxRowY);
             if (tableHeight + 100 > maxRowY) {
                 addPage();
                 tableY = 740;

@@ -10,6 +10,39 @@
     <short-name>mt</short-name>
     <uri>http://taglib.com/my_tags</uri>
 
+    <!--custom tags with functional-->
+    <tag>
+        <name>jsonify</name>
+        <tag-class>com.d_cherkashyn.epam.tag.Jsonify</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>obj</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+
+        <name>fori</name>
+        <tag-class>com.d_cherkashyn.epam.tag.Fori</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>start</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>end</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+
+    <!--custom tags for templating-->
+
     <!--admin-->
     <tag-file>
         <name>admin_header</name>
@@ -57,6 +90,11 @@
     <tag-file>
         <name>header</name>
         <path>/WEB-INF/tags/general/header.tag</path>
+    </tag-file>
+
+    <tag-file>
+        <name>lang_selector</name>
+        <path>/WEB-INF/tags/general/lang_selector.tag</path>
     </tag-file>
 
     <tag-file>
