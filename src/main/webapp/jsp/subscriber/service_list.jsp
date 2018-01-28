@@ -12,15 +12,7 @@
         </div>
 
         <div class="right">
-            <fmt:message key="sort"/>:
-            <a href="${root}/${roleName}/service_list?sort=title"
-               class="btn">
-                <fmt:message key="sort_by_name"/>
-            </a>
-            <a href="${root}/${roleName}/service_list?sort=price"
-               class="btn">
-                <fmt:message key="sort_by_price"/>
-            </a>
+            <%@include file="/WEB-INF/jspf/service_sort_block.jspf"%>
         </div>
     </div>
 
