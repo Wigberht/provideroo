@@ -18,15 +18,12 @@ import java.util.ResourceBundle;
 public class SubscriptionJobTest {
     public static void main(String[] args) {
         
-        Connection connection = ConnectionPool.conn();
-        List<Tariff> tariffList = FactoryGenerator.getFactory()
-                                                  .makeTariffDAO(connection)
-                                                  .findByServiceSorted(15, "title",
-                                                                       "DESC");
+        long subs = 2;
+        long size = 10;
         
-        for (Tariff tariff : tariffList) {
-            System.out.println(tariff);
-        }
+        int pages = (int) Math.ceil((double) subs / size);
+        System.out.println(pages);
+        
     }
     
 }

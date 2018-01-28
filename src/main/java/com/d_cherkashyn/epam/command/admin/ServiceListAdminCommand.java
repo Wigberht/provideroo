@@ -34,9 +34,10 @@ public class ServiceListAdminCommand implements Command {
             
             services = serviceService.getSortedServices(sort, order);
         }
+    
+        request.setAttribute("services", services);
         
         serviceService.returnConnection();
-        request.setAttribute("services", services);
         
         return PagesResourceManager.getPage("service_list_jsp");
     }

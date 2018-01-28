@@ -1,28 +1,28 @@
 package com.d_cherkashyn.epam.helper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Pagination {
-    private List<Page> pages = new ArrayList<>();
+    private Map<Integer, String> pages = new HashMap<>();
     
-    Pagination() {}
+    public Pagination() {}
     
     public void addPage(String link, int number) {
-        pages.add(new Page(link, number));
+        pages.put(number, link);
     }
     
-    public List<Page> getPages() {
+    public Map<Integer, String> getPages() {
         return pages;
     }
     
-    public void setPages(List<Page> pages) {
+    public void setPages(Map<Integer, String> pages) {
         this.pages = pages;
     }
     
-    private class Page {
-        String link;
-        int number;
+    public class Page {
+        public String link;
+        public int number;
         
         public Page(String link, int number) {
             this.link = link;
@@ -44,5 +44,13 @@ public class Pagination {
         public void setNumber(int number) {
             this.number = number;
         }
+    }
+    
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Pagination{");
+        sb.append("pages=").append(pages);
+        sb.append('}');
+        return sb.toString();
     }
 }

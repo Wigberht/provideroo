@@ -51,12 +51,12 @@ public class Registration {
         Subscriber resultingSubscriber = null;
         SubscriberDAO subscriberDAO = FactoryGenerator.getFactory()
                                                       .makeSubscriberDAO(connection);
-        try {
-            resultingSubscriber = subscriberDAO.create(subscriber);
-            LOGGER.info("Subscriber created");
-        } catch (DAOException e) {
-            LOGGER.error("Subscriber not created");
-        }
+//        try {
+        resultingSubscriber = subscriberDAO.create(subscriber);
+//            LOGGER.info("Subscriber created");
+//        } catch (DAOException e) {
+//            LOGGER.error("Subscriber not created",e);
+//        }
         
         return resultingSubscriber;
     }

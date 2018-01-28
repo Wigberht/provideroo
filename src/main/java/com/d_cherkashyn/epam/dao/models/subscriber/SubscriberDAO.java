@@ -56,6 +56,15 @@ public interface SubscriberDAO {
      */
     Subscriber findByUserId(Long id) throws DAOException;
     
+    
+    /**
+     * Get total amount of subscribers in system
+     *
+     * @return
+     * @throws DAOException
+     */
+    long numberOfSubscribers() throws DAOException;
+    
     /**
      * Find subscriber by subscriber id
      *

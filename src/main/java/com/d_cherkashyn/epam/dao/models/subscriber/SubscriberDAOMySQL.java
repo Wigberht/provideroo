@@ -49,6 +49,10 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         "  WHERE end <= CURDATE() AND prolong = TRUE\n" +
         ");";
     
+    
+    private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SHOW TABLE STATUS\n" +
+        "WHERE Name = 'subscriber';";
+    
     private static final String CREATE_SUBSCRIBER =
         "INSERT INTO subscriber " +
             "VALUES(DEFAULT, ?, ?, ?, ?, ?)";
@@ -73,7 +77,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
     Connection connection;
     
-    private int limit = 15;
+    private int limit = 10;
     private int offset = 0;
     
     /**
@@ -105,6 +109,28 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         }
         
         return subscribers;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long numberOfSubscribers() throws DAOException {
+        long number = 0;
+        
+        try (Statement statement = connection.createStatement()) {
+            statement.executeQuery(FIND_NUMBER_OF_SUBSCRIBERS);
+            
+            ResultSet resultSet = statement.getResultSet();
+            
+            if (resultSet.next()) {
+                number = resultSet.getLong("Rows");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return number;
     }
     
     /**

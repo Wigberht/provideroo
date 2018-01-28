@@ -60,4 +60,15 @@ public class Account extends Entity {
     public void setCurrencySymbol(String currencySymbol) {
         this.currencySymbol = currencySymbol;
     }
+    
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Account{");
+        sb.append("balance=").append(balance);
+        sb.append(", currencyShortname='").append(currencyShortname).append('\'');
+        sb.append(", currencySymbol='").append(currencySymbol).append('\'');
+        sb.append(", id=").append(id);
+        sb.append('}');
+        return sb.toString();
+    }
 }

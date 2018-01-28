@@ -89,6 +89,12 @@ public class SubscriberService extends ServiceHelper {
                                .calculateDebt(subscriberId);
     }
     
+    public long getNumberOfSubscribers() {
+        return FactoryGenerator.getFactory()
+                               .makeSubscriberDAO(connection)
+                               .numberOfSubscribers();
+    }
+    
     public Subscriber findSubscriberByUserId(long userId) {
         return FactoryGenerator.getFactory()
                                .makeSubscriberDAO(connection)

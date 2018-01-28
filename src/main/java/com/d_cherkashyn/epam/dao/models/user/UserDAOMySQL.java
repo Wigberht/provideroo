@@ -42,7 +42,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE id=?";
     private static final String DELETE_BY_LOGIN = "DELETE FROM user WHERE login=?";
     
-    private static final String CREATE_USER = "INSERT INTO user VALUES(DEFAULT,?,?,?,?)";
+    private static final String CREATE_USER = "INSERT INTO user(id,login,password," +
+        "banned,role_id) VALUES(DEFAULT,?,?,?,?)";
     
     private static final String UPDATE_USER = "UPDATE user "
         + "SET login = ?, password = ?, banned = ?, role_id= ? ," +

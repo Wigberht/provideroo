@@ -32,30 +32,16 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
-    <!--Jersey REST servlet binding-->
-    <!--<servlet>-->
-    <!--<servlet-name>jersey-servlet</servlet-name>-->
-    <!--<servlet-class>-->
-    <!--com.sun.jersey.spi.container.servlet.ServletContainer-->
-    <!--</servlet-class>-->
-    <!--<init-param>-->
-    <!--<param-name>com.sun.jersey.config.property.packages</param-name>-->
-    <!--<param-value>com.d_cherkashyn.epam.rest</param-value>-->
-    <!--</init-param>-->
-    <!--<load-on-startup>1</load-on-startup>-->
-    <!--</servlet>-->
-
+    <!--REST api url binding-->
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
@@ -83,6 +69,16 @@
         <param-name>chat_websocket_url</param-name>
         <param-value>localhost:8081/socket/chat/</param-value>
     </context-param>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/general/error_404.jsp</location>
+    </error-page>
+
+    <!--<error-page>-->
+        <!--<error-code>500</error-code>-->
+        <!--<location>/jsp/general/error_500.jsp</location>-->
+    <!--</error-page>-->
 
     <session-config>
         <session-timeout>600</session-timeout>

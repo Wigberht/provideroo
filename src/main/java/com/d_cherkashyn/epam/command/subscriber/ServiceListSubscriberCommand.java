@@ -40,27 +40,21 @@ public class ServiceListSubscriberCommand implements Command {
     }
     
     private void fillServices(HttpServletRequest request, Connection connection) {
-        ServiceService serviceService = new ServiceService(connection);
+        ServiceService serviceService = new ServiceService();
         List<Service> services;
-        
-        Object sortField = request.getAttribute("sortField");
-        Object sortOrder = request.getAttribute("sortOrder");
-        
+    
+        Object sortField = request.getParameter("sortField");
+        Object sortOrder = request.getParameter("sortOrder");
+    
         if (sortOrder == null || sortField == null) {
             services = serviceService.getAllServices();
         } else {
             String sort = (String) sortField;
             String order = (String) sortOrder;
-            
+        
             services = serviceService.getSortedServices(sort, order);
         }
-        
-        LOGGER.info("Services in subscriber");
-        for (Service srvsc : services) {
-            LOGGER.info(srvsc.toString());
-        }
-        
-        
+    
         request.setAttribute("services", services);
     }
     
