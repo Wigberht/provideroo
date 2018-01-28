@@ -6,13 +6,10 @@ import com.d_cherkashyn.epam.dao.models.account.AccountDAOMySQL;
 import com.d_cherkashyn.epam.dao.models.user.UserDAOMySQL;
 import com.d_cherkashyn.epam.model.Account;
 import com.d_cherkashyn.epam.model.Subscriber;
+import com.d_cherkashyn.epam.model.Tariff;
 import com.d_cherkashyn.epam.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +49,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
     private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SHOW TABLE STATUS\n" +
         "WHERE Name = 'subscriber';";
+    
+    private static final String CALL_SEARCH_SUBSCRIBER = "{call search_subscriber_utf" +
+        "(?,?,?)}";
     
     private static final String CREATE_SUBSCRIBER =
         "INSERT INTO subscriber " +
@@ -332,6 +332,31 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         }
         
         return subscriber;
+    }
+    
+    
+    @Override
+    public List<Subscriber> search(String word1, String word2,
+                                   String word3) throws DAOException {
+        List<Subscriber> subscribers = new ArrayList<>();
+        try (
+            CallableStatement cstmt = connection.prepareCall(CALL_SEARCH_SUBSCRIBER)
+        ) {
+            cstmt.setString("str1", word1);
+            cstmt.setString("str2", word2);
+            cstmt.setString("str3", word3);
+            cstmt.execute();
+            
+            ResultSet rs = cstmt.getResultSet();
+            while (rs.next()) {
+                Subscriber subscriber = mapAll(rs);
+                subscribers.add(subscriber);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return subscribers;
     }
     
     private static Subscriber map(ResultSet resultset) throws SQLException {

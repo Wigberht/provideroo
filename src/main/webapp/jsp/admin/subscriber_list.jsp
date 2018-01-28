@@ -5,6 +5,8 @@
 
     <h2><fmt:message key="list_of_subscribers"/></h2>
 
+    <subscriber-search-block></subscriber-search-block>
+
     <mt:subscriber_table subscribers="${subscribers}"/>
 
     <div class="row">

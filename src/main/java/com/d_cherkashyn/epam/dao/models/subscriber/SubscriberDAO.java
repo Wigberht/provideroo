@@ -128,4 +128,7 @@ public interface SubscriberDAO {
      */
     Subscriber create(Subscriber subscriber) throws DAOException;
     
+    List<Subscriber> search(String word1, String word2,
+                            String word3) throws DAOException;
+    
 }

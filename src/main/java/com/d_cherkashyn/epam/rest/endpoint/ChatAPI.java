@@ -12,9 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/chat")
-public class ChatREST extends HttpServlet {
+public class ChatAPI extends HttpServlet {
     
-    Logger LOGGER = LoggerFactory.getLogger(ChatREST.class);
+    Logger LOGGER = LoggerFactory.getLogger(ChatAPI.class);
     
     @GET
     @Path("/test")

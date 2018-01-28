@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Path("/user")
-public class UserREST extends HttpServlet {
+public class UserAPI extends HttpServlet {
     
-    Logger LOGGER = LoggerFactory.getLogger(UserREST.class);
+    Logger LOGGER = LoggerFactory.getLogger(UserAPI.class);
     
     @GET
     @Path("/test")

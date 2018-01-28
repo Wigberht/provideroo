@@ -27,13 +27,13 @@
 
                     if (response.data.success) {
                         this.banned = !this.banned;
-                        Materialize.toast("Toggle success", this.toast.time)
+                        Materialize.toast(strings['ban_toggle_success'], this.toast.time)
                     } else {
-                        Materialize.toast("Toggle fail", this.toast.time)
+                        Materialize.toast(strings['ban_toggle_fail'], this.toast.time)
                     }
                 }).catch((error) => {
                     console.log(error);
-                    Materialize.toast("Toggle fail", this.toast.time);
+                    Materialize.toast(strings['ban_toggle_fail'], this.toast.time);
                 })
             },
         },

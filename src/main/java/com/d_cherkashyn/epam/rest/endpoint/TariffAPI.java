@@ -16,9 +16,9 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/tariff")
-public class TariffREST extends HttpServlet {
+public class TariffAPI extends HttpServlet {
     
-    Logger LOGGER = LoggerFactory.getLogger(TariffREST.class);
+    Logger LOGGER = LoggerFactory.getLogger(TariffAPI.class);
     
     @GET
     @Path("/test")

@@ -6,6 +6,7 @@
 <jsp:include page="/jsp/vue/components/profile/subscriber-profile-data.jsp"/>
 <jsp:include page="/jsp/vue/components/profile/subscriber-profile-balance.jsp"/>
 <jsp:include page="/jsp/vue/components/service/tariff-search-block.jsp"/>
+<jsp:include page="/jsp/vue/components/subscriber-search-block.jsp"/>
 <jsp:include page="/jsp/vue/components/chat/chat-dialogue.jsp"/>
 <jsp:include page="/jsp/vue/components/chat/chat-message.jsp"/>
 <jsp:include page="/jsp/vue/components/chat/chat-page.jsp"/>

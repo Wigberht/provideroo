@@ -61,9 +61,6 @@ public class TariffService extends ServiceHelper {
         String str1 = strings.length > 0 ? strings[0] : null;
         String str2 = strings.length > 1 ? strings[1] : null;
         String str3 = strings.length > 2 ? strings[2] : null;
-        LOGGER.info("Str1: " + str1);
-        LOGGER.info("Str2: " + str2);
-        LOGGER.info("Str3: " + str3);
         
         return FactoryGenerator.getFactory()
                                .makeTariffDAO(connection)

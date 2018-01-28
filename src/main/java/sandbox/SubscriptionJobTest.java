@@ -4,6 +4,7 @@ import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
 import com.d_cherkashyn.epam.manager.MessagesResourceManager;
 import com.d_cherkashyn.epam.manager.ResourceTypes;
+import com.d_cherkashyn.epam.model.Subscriber;
 import com.d_cherkashyn.epam.model.Tariff;
 
 import java.sql.Connection;
@@ -24,6 +25,11 @@ public class SubscriptionJobTest {
         int pages = (int) Math.ceil((double) subs / size);
         System.out.println(pages);
         
+        Connection connection = ConnectionPool.conn();
+        List<Subscriber> subscribers = FactoryGenerator.getFactory()
+                                                       .makeSubscriberDAO(connection)
+                                                       .search("yolo", "lel", "JO");
+        System.out.println(subscribers.size());
     }
     
 }

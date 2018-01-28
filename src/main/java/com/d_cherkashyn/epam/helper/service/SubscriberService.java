@@ -159,4 +159,15 @@ public class SubscriberService extends ServiceHelper {
     }
     
     
+    public List<Subscriber> search(String searchQ) {
+        String[] strings = searchQ.split(" ");
+        String str1 = strings.length > 0 ? strings[0] : null;
+        String str2 = strings.length > 1 ? strings[1] : null;
+        String str3 = strings.length > 2 ? strings[2] : null;
+        
+        return FactoryGenerator.getFactory()
+                               .makeSubscriberDAO(connection)
+                               .search(str1, str2, str3);
+    }
+    
 }
