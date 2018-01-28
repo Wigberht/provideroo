@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Testing class that can be used by developer to oversee the behaviour of functions in
+ * created system.
+ */
 public class SubscriptionJobTest {
     public static void main(String[] args) {
         

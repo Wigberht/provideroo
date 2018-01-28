@@ -11,6 +11,11 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Class that holds functionality to provide a persistent pool of connections to
+ * prevent creating new connection on each request. Greatly increases the speed of
+ * continuous DB requests
+ */
 public class ConnectionPool {
     
     static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
@@ -28,12 +33,10 @@ public class ConnectionPool {
         
         if (instance == null) {
             lock.lock();
-//            synchronized (ConnectionPool.class) {
             if (instance == null) {
                 instance = new ConnectionPool();
                 instance.initPool();
             }
-//            }
             lock.unlock();
         }
         return instance;

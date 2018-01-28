@@ -10,12 +10,19 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+/**
+ * Tag that shows a string based on session variable state. Then removes the variable
+ * from session
+ */
 public class DumpAndDispose extends TagSupport {
     private static final Logger LOGGER = LoggerFactory.getLogger(DumpAndDispose.class);
     
     private String key;
     private String messageKey;
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int doStartTag() throws JspException {
         

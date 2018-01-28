@@ -9,6 +9,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * Tag converts passed object to JSON string (so it can be used by JS on front-end
+ */
 public class Jsonify extends TagSupport {
     Logger LOGGER = LoggerFactory.getLogger(Jsonify.class);
     

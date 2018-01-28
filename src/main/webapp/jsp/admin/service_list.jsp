@@ -13,14 +13,38 @@
 
         <div class="right">
             <fmt:message key="sort"/>:
-            <a href="${root}/${roleName}/service_list?sort=title"
-               class="btn">
-                <fmt:message key="sort_by_name"/>
-            </a>
-            <a href="${root}/${roleName}/service_list?sort=price"
-               class="btn">
-                <fmt:message key="sort_by_price"/>
-            </a>
+
+            <div class="row">
+                <div class="col s6">
+                    <a href="${root}/${roleName}/service_list?sortField=title&sortOrder=ASC"
+                       class="btn btn-small">
+                        <fmt:message key="sort.title.asc"/>
+                    </a>
+                </div>
+                <div class="col s6">
+                    <a
+                        href="${root}/${roleName}/service_list?sortField=title&sortOrder=DESC"
+                        class="btn btn-small">
+                        <fmt:message key="sort.title.desc"/>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <a
+                        href="${root}/${roleName}/service_list?sortField=cost&sortOrder=ASC"
+                        class="btn btn-small">
+                        <fmt:message key="sort.cost.asc"/>
+                    </a>
+                </div>
+                <div class="col s6">
+                    <a
+                        href="${root}/${roleName}/service_list?sortField=cost&sortOrder=DESC"
+                        class="btn btn-small">
+                        <fmt:message key="sort.cost.desc"/>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

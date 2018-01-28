@@ -7,6 +7,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
+/**
+ * Tag that provides basic fori functionality ( from index to index )
+ */
 public class Fori extends SimpleTagSupport {
     
     Logger LOGGER = LoggerFactory.getLogger(Fori.class);

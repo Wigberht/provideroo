@@ -13,14 +13,14 @@
         <div class="card-panel red darken-2">
             <div class="row">
                 <div class="col l8 white-text">
-                    <h5>YOU ARE BANNED</h5>
-                    <h6>You can no longer use internet</h6>
+                    <h5><fmt:message key="you_are_banned"/></h5>
+                    <h6><fmt:message key="banned_description"/></h6>
                 </div>
                 <div class="col l4 right-align">
                     <br>
                     <a href="${root}/subscriber/profile"
                        class="waves-effect waves-light modal-trigger btn btn-large white black-text btn-flat">
-                        Replenish balance
+                        <fmt:message key="replenish_balance"/>
                     </a>
                 </div>
             </div>
