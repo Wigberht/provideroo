@@ -15,8 +15,7 @@ public class NewTariffCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         ServiceService serviceService = new ServiceService();
-        request.getSession().setAttribute(
-            "services", serviceService.getAllServices());
+        request.setAttribute("services", serviceService.getAllServices());
         serviceService.returnConnection();
         
         return PagesResourceManager.getPage("new_tariff_jsp");

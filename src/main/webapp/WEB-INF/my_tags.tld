@@ -23,7 +23,6 @@
     </tag>
 
     <tag>
-
         <name>fori</name>
         <tag-class>com.d_cherkashyn.epam.tag.Fori</tag-class>
         <body-content>scriptless</body-content>
@@ -32,13 +31,24 @@
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-
         <attribute>
             <name>end</name>
             <required>true</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+    </tag>
 
+    <tag>
+        <name>sdump</name>
+        <tag-class>com.d_cherkashyn.epam.tag.DumpAndDispose</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>key</name>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>messageKey</name>
+        </attribute>
     </tag>
 
     <!--custom tags for templating-->

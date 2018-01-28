@@ -40,9 +40,10 @@
                 }).then((response) => {
                     console.log(response);
                     if (response.data.success) {
-                        Materialize.toast("SUCCESS", 1500)
+                        Materialize.toast(strings['tariff.update.success'], 1500, "green darken-2")
                     } else {
-                        Materialize.toast("FAIL", 1500);
+                        Materialize.toast(strings['tariff.update.fail'],
+                            1500, "red darken-2");
                     }
                 }).catch((error) => {
                     Materialize.toast("FAIL", 1500);
@@ -57,10 +58,12 @@
                     if (response.data.success) {
                         $('.tooltipped').tooltip('remove');
                         this.show = false;
-                        Materialize.toast("DELETE SUCCESS", 1500, "green darken-2");
+                        Materialize.toast(strings['tariff.delete.success'], 1500,
+                            "green darken-2");
                     }
                 }).catch(error => {
-                    Materialize.toast("UNABLE TO DELETE, there may be subscribers", 1500, "red darken-2");
+                    Materialize.toast(strings['tariff.delete.fail'], 1500,
+                        "red darken-2");
                 })
             }
         },

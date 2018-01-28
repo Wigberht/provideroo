@@ -17,32 +17,31 @@ public class AddServiceCommand implements Command {
     
     @Override
     public String execute(HttpServletRequest request) {
-        String page = PagesResourceManager.getPage("add_service");
+        String page;
         String title = request.getParameter("title");
         HttpSession s = request.getSession();
         
-        LOGGER.info("Service title is: '" + title + "'");
-        LOGGER.info("Valid: " + MainValidator.simpleText(title));
         if (!MainValidator.simpleText(title)) {
             s.setAttribute("validationError", true);
             s.setAttribute("serviceError", true);
             
-            return page;
-        }
-        
-        ServiceService ss = new ServiceService();
-        
-        if (ss.createService(new Service(0, title)) != null) {
-            request.getSession().setAttribute("serviceSuccess", true);
+            page = PagesResourceManager.getPage("add_service");
         } else {
-            request.getSession().setAttribute("serviceSuccess", false);
+            
+            ServiceService ss = new ServiceService();
+            
+            if (ss.createService(new Service(0, title)) != null) {
+                request.getSession().setAttribute("serviceSuccess", true);
+            }
+            
+//            request.getSession()
+//                   .getServletContext()
+//                   .setAttribute("services", ss.getAllServices());
+            
+            ss.returnConnection();
+            
+            page = PagesResourceManager.getPage("service_list");
         }
-        
-        request.getSession()
-               .getServletContext()
-               .setAttribute("services", ss.getAllServices());
-        
-        ss.returnConnection();
         
         return page;
     }

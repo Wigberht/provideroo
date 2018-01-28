@@ -22,10 +22,10 @@ public class AddTariffCommand implements Command {
         
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        int days = Integer.parseInt(request.getParameter("days"));
-        double cost = Double.parseDouble(request.getParameter("cost"));
+        String days = request.getParameter("days");
+        String cost = request.getParameter("cost");
         String currency = request.getParameter("currency");
-        long serviceId = Long.parseLong(request.getParameter("service_id"));
+        String serviceId = request.getParameter("service_id");
         
         boolean validationError = false;
         if (!MainValidator.simpleText(title)) {
@@ -60,8 +60,13 @@ public class AddTariffCommand implements Command {
         
         
         TariffService ts = new TariffService();
-        Tariff newTariff = new Tariff(0, title, description, days, cost, currency,
-                                      serviceId);
+        Tariff newTariff = new Tariff(0,
+                                      title,
+                                      description,
+                                      Integer.parseInt(days),
+                                      Double.parseDouble(cost),
+                                      currency,
+                                      Long.parseLong(serviceId));
         
         if (ts.createTariff(newTariff) != null) {
             page = PagesResourceManager.getPage("service_list");

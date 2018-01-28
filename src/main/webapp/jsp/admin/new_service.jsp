@@ -12,7 +12,10 @@
             <input type="hidden" name="command" value="add_service">
             <input type="hidden" name="role" value="admin">
 
-            <%@include file="/WEB-INF/jspf/new_service_error_alert.jspf" %>
+            <mt:alert_box_error>
+                <mt:sdump key="serviceError"
+                          messageKey="validation.error.service_title"/>
+            </mt:alert_box_error>
 
             <div class="row">
                 <div class="input-field col s12">

@@ -11,8 +11,8 @@ public class Fori extends SimpleTagSupport {
     
     Logger LOGGER = LoggerFactory.getLogger(Fori.class);
     
-    int start;
-    int end;
+    private int start;
+    private int end;
     
     @Override
     public void doTag() throws JspException, IOException {

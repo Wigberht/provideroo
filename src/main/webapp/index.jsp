@@ -15,13 +15,9 @@
             </div>
             <input type="hidden" name="command" value="login">
 
+
             <mt:alert_box_error>
-                <c:if test="${not empty sessionScope.authError}">
-                    <p><fmt:message key="validation.error.auth"/></p>
-                </c:if>
-
-                <c:remove var="authError" scope="session"/>
-
+                <mt:sdump key="authError" messageKey="validation.error.auth"/>
             </mt:alert_box_error>
             <div class="row">
                 <div class="input-field col s12">
