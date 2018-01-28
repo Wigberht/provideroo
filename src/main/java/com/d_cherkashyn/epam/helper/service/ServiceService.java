@@ -3,7 +3,11 @@ package com.d_cherkashyn.epam.helper.service;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
 import com.d_cherkashyn.epam.dao.models.service.ServiceDAO;
+import com.d_cherkashyn.epam.helper.SortOrders;
 import com.d_cherkashyn.epam.model.Service;
+import com.d_cherkashyn.epam.model.Tariff;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceService extends ServiceHelper {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceService.class);
     
     public ServiceService() {
         super();
@@ -22,66 +28,64 @@ public class ServiceService extends ServiceHelper {
     }
     
     public Service createService(Service service) {
+        Service createdService = null;
         ServiceDAO serviceDAO = FactoryGenerator.getFactory()
                                                 .makeServiceDAO(connection);
         try {
-            return serviceDAO.create(service);
+            createdService = serviceDAO.create(service);
         } catch (DAOException ex) {
-            return null;
+            LOGGER.info("Unable to create service", ex);
         }
+        
+        return createdService;
     }
     
     public List<Service> getAllServices() {
-        return FactoryGenerator.getFactory()
-                               .makeServiceDAO(connection)
-                               .all();
+        List<Service> services = FactoryGenerator.getFactory()
+                                                 .makeServiceDAO(connection)
+                                                 .all();
+        for (Service service : services) {
+            List<Tariff> tariffs = FactoryGenerator.getFactory()
+                                                   .makeTariffDAO(connection)
+                                                   .findByService(service.getId());
+            service.setTariffs(tariffs);
+        }
         
+        return services;
     }
     
-    public List<Service> getAllServices(String sort, boolean ascOrder) {
-        if (sort == null) {
+    public List<Service> getAllServices(String sortField, String sortOrder) {
+        List<Service> services = FactoryGenerator.getFactory()
+                                                 .makeServiceDAO(connection)
+                                                 .all();
+        for (Service service : services) {
+            List<Tariff> tariffs = FactoryGenerator.getFactory()
+                                                   .makeTariffDAO(connection)
+                                                   .findByServiceSorted(service.getId(),
+                                                                        sortField,
+                                                                        sortOrder);
+            service.setTariffs(tariffs);
+        }
+        
+        return services;
+    }
+    
+    public List<Service> getSortedServices(String field, String order) {
+        boolean fieldValid = false;
+        boolean orderValid = false;
+        for (ServiceSortFields sortFields : ServiceSortFields.values()) {
+            if (sortFields.name().equalsIgnoreCase(field)) fieldValid = true;
+        }
+        
+        for (SortOrders sortOrders : SortOrders.values()) {
+            if (sortOrders.name().equalsIgnoreCase(order)) orderValid = true;
+        }
+        
+        /*return standard set of services in case of invalid sorting request parameters*/
+        if (!(orderValid && fieldValid)) {
             return getAllServices();
         } else {
-            return getSortedServices(sort, ascOrder);
+            return getAllServices(field, order);
         }
-    }
-    
-    public String getSortType(HttpServletRequest request) {
-        HttpSession s = request.getSession();
-        
-        if (request.getParameter("sort") != null) {
-            s.setAttribute("sort", request.getParameter("sort"));
-        }
-        
-        return s.getAttribute("sort") == null
-            ? ""
-            : s.getAttribute("sort").toString();
-    }
-    
-    private List<Service> getSortedServices(String sort, boolean ascOrder) {
-        ServiceDAO serviceDAO = FactoryGenerator.getFactory()
-                                                .makeServiceDAO(connection);
-        List<Service> sortedServices = new ArrayList<>();
-        
-        for (Service service : serviceDAO.all()) {
-            service.getTariffs().sort((t1, t2) -> {
-                switch (sort) {
-                    case "title":
-                        return ascOrder
-                            ? t1.getTitle().compareTo(t2.getTitle())
-                            : t2.getTitle().compareTo(t1.getTitle());
-                    case "price":
-                        return ascOrder
-                            ? (int) t1.getCost() - (int) t2.getCost()
-                            : (int) t2.getCost() - (int) t1.getCost();
-                    
-                    default:
-                        return 0;
-                }
-            });
-            sortedServices.add(service);
-        }
-        
-        return sortedServices;
     }
 }

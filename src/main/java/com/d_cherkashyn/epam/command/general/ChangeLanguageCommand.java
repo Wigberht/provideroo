@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * The Class LoginCommand.
+ * The Class ChangeLanguageCommand provides functionality to change the display
+ * language of current session.
  */
 public class ChangeLanguageCommand implements Command {
     

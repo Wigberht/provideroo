@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command that fetches all required data used to show on a user's profile page
+ */
 public class SubscriberProfileCommand implements Command {
     Logger LOGGER = LoggerFactory.getLogger(SubscriberProfileCommand.class);
     

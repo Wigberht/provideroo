@@ -5,11 +5,12 @@ import com.d_cherkashyn.epam.command.admin.*;
 import com.d_cherkashyn.epam.command.general.*;
 
 /**
- * The Enum CommandsGeneral.
+ * Enumeration that provides a list of all commands
+ * that are available to user with role "ADMIN"
  */
 public enum CommandsAdmin {
     /**
-     * CommandsGeneral that are available
+     * Commands that are available
      */
     REGISTRATION(new RegistrationCommand()),
     SUBSCRIBER_LIST(new SubscriberListCommand()),
@@ -21,6 +22,12 @@ public enum CommandsAdmin {
     
     private Command command;
     
+    /**
+     * Constructor that are used to initialize a object that enumeration element
+     * represents
+     *
+     * @param command object to initialize element with
+     */
     CommandsAdmin(Command command) {
         this.command = command;
     }

@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//@WebFilter(urlPatterns = {"*"})
+
+/**
+ * Filter that makes urls more user-friendly
+ */
 public class UrlRewriteFilter implements Filter {
     Logger LOGGER = LoggerFactory.getLogger(UrlRewriteFilter.class);
     
@@ -42,7 +45,6 @@ public class UrlRewriteFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         Matcher matcher = pattern.matcher(request.getRequestURI());
         if (matcher.find()) {
-//            LOGGER.info("Find 1: " + matcher.group(1) + " : " + matcher.group(2));
             String roleName = matcher.group(1).toUpperCase();
             
             boolean isUser = false;
@@ -69,14 +71,6 @@ public class UrlRewriteFilter implements Filter {
         
         String user = matcher.group(1);
         String matchPage = matcher.group(2);
-
-
-//        for (CommandsGeneral command : CommandsGeneral.values()) {
-//            if (command.name().equalsIgnoreCase(matchPage)) {
-//                isCommand = true;
-//                break;
-//            }
-//        }
         
         boolean isCommand = isCommand(matchPage);
         StringBuilder sb = new StringBuilder();

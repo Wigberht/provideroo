@@ -11,6 +11,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+/**
+ * Localization helper ,converts bundle to JSON
+ */
 public class Localization {
     private static Logger LOGGER = LoggerFactory.getLogger(Localization.class);
     

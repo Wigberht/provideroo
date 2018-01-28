@@ -8,8 +8,18 @@ import com.d_cherkashyn.epam.model.User;
 
 import java.sql.Connection;
 
+/**
+ * Helper class that provides functionality to authenticate user
+ */
 public class Auth {
     
+    /**
+     * Log-ins the user
+     *
+     * @param login
+     * @param password
+     * @return
+     */
     public static User login(String login, String password) {
         User user = null;
         

@@ -9,15 +9,15 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The Class CommandDispatcher provides method for commands management.
+ * The Class CommandDispatcher used to determine a specific user's dispatcher that
+ * should return required command.
  */
 public class CommandDispatcher {
     
     /**
      * The Constant LOGGER.
      */
-    static final Logger LOGGER = LoggerFactory
-        .getLogger(CommandDispatcher.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(CommandDispatcher.class);
     
     /**
      * Gets the command by name.
@@ -37,19 +37,16 @@ public class CommandDispatcher {
         Roles roleType = Roles.valueOf(roleParam);
         switch (roleType) {
             case ADMIN:
-                LOGGER.info("ADMIN DISPATCHER");
                 CommandDispatcherAdmin cda = new CommandDispatcherAdmin();
                 command = cda.getCommand(request);
                 break;
             
             case SUBSCRIBER:
-                LOGGER.info("SUBSCRIBER DISPATCHER");
                 CommandDispatcherSubscriber cds = new CommandDispatcherSubscriber();
                 command = cds.getCommand(request);
                 break;
             
             default:
-                LOGGER.info("DEFAULT DISPATCHER");
                 CommandDispatcherGeneral cdg = new CommandDispatcherGeneral();
                 command = cdg.getCommand(request);
         }

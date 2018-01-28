@@ -10,6 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Command that fetches and shows data about list of subscribers available to system
+ */
 public class SubscriberListCommand implements Command {
     
     Logger LOGGER = LoggerFactory.getLogger(SubscriberListCommand.class);
@@ -18,8 +21,7 @@ public class SubscriberListCommand implements Command {
     public String execute(HttpServletRequest request) {
         int page = 0;
         int limit = 8;
-
-//        default list size
+        
         request.getSession()
                .setAttribute("subscriber.limit", limit);
         

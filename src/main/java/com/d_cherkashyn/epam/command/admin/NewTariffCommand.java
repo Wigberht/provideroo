@@ -8,10 +8,17 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Command that fetches all required data to be used
+ * on a page for creating new tariff
+ */
 public class NewTariffCommand implements Command {
     
     Logger LOGGER = LoggerFactory.getLogger(NewTariffCommand.class);
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String execute(HttpServletRequest request) {
         ServiceService serviceService = new ServiceService();

@@ -34,9 +34,7 @@ public class LocalizationFilter implements Filter {
         
         HttpSession s = ((HttpServletRequest) req).getSession();
         String locale = (String) s.getAttribute("locale");
-        LOGGER.info("REQUESTED LOCALE " + locale);
         req.setAttribute("JSONMessages", Localization.getBundleString(locale));
-        s.setAttribute("test", "test");
         
         chain.doFilter(req, res);
     }

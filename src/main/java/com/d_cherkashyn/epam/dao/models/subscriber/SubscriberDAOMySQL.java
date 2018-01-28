@@ -16,6 +16,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of ServiceDAO for MYSQL RDBMS
+ */
 public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     
     private static final String FIND_ALL = "SELECT\n"
@@ -73,10 +76,18 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     private int limit = 15;
     private int offset = 0;
     
+    /**
+     * Creates instance of SubscriberDAO
+     *
+     * @param connection to be connected with db
+     */
     public SubscriberDAOMySQL(Connection connection) {
         this.connection = connection;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Subscriber> all() throws DAOException {
         List<Subscriber> subscribers = new ArrayList<>();
@@ -96,6 +107,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return subscribers;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Subscriber> all(boolean limited) throws DAOException {
         if (!limited) {
@@ -120,6 +134,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return subscribers;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Subscriber> all(int limit) throws DAOException {
         this.limit = limit;
@@ -127,6 +144,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return all(true);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Subscriber> all(int limit, int offset) throws DAOException {
         this.limit = limit;
@@ -135,11 +155,17 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return all(true);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Subscriber find(Long id) throws DAOException {
         return findSubscriber(FIND_BY_ID, id);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Subscriber findByUserId(Long id) throws DAOException {
         return findSubscriber(FIND_BY_USER_ID, id);
@@ -173,6 +199,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return new AccountDAOMySQL(connection).find(accountId);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Subscriber> findSubscriptionExpirers() throws DAOException {
         List<Subscriber> subscribers = new ArrayList<>();
@@ -192,6 +221,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return subscribers;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double calculateDebt(long id) throws DAOException {
         double debt = 0;
@@ -211,16 +243,25 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return debt;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Subscriber find(String firstName, String lastName) throws DAOException {
         return null;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean delete(Long id) throws DAOException {
         return false;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean update(Subscriber subscriber) throws DAOException {
         try (
@@ -239,6 +280,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Subscriber create(Subscriber subscriber) throws DAOException {
         try (

@@ -6,7 +6,8 @@ import com.d_cherkashyn.epam.command.subscriber.ServiceListSubscriberCommand;
 import com.d_cherkashyn.epam.command.subscriber.SubscriberProfileCommand;
 
 /**
- * The Enum CommandsGeneral.
+ * Enumeration that provides a list of all commands
+ * that are available to user with role "SUBSCRIBER"
  */
 public enum CommandsSubscriber {
     /**
@@ -18,6 +19,12 @@ public enum CommandsSubscriber {
     
     private Command command;
     
+    /**
+     * Constructor that are used to initialize a object that enumeration element
+     * represents
+     *
+     * @param command object to initialize element with
+     */
     CommandsSubscriber(Command command) {
         this.command = command;
     }

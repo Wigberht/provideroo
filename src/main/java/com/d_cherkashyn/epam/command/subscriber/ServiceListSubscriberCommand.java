@@ -17,8 +17,12 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Connection;
+import java.util.Collections;
 import java.util.List;
 
+/**
+ * Command that fetches all required data used to show on a page with list of tariffs
+ */
 public class ServiceListSubscriberCommand implements Command {
     
     Logger LOGGER = LoggerFactory.getLogger(ServiceListSubscriberCommand.class);
@@ -39,22 +43,23 @@ public class ServiceListSubscriberCommand implements Command {
         ServiceService serviceService = new ServiceService(connection);
         List<Service> services;
         
-        HttpSession s = request.getSession();
-        Object sortParam = request.getParameter("sort");
-        LOGGER.info("filling services");
-        if (sortParam != null) {
-            s.setAttribute("sort", sortParam);
-        }
+        Object sortField = request.getAttribute("sortField");
+        Object sortOrder = request.getAttribute("sortOrder");
         
-        sortParam = s.getAttribute("sort");
-        
-        
-        if (sortParam != null) {
-            String sort = (String) sortParam;
-            services = serviceService.getAllServices(sort, true);
-        } else {
+        if (sortOrder == null || sortField == null) {
             services = serviceService.getAllServices();
+        } else {
+            String sort = (String) sortField;
+            String order = (String) sortOrder;
+            
+            services = serviceService.getSortedServices(sort, order);
         }
+        
+        LOGGER.info("Services in subscriber");
+        for (Service srvsc : services) {
+            LOGGER.info(srvsc.toString());
+        }
+        
         
         request.setAttribute("services", services);
     }
@@ -62,7 +67,6 @@ public class ServiceListSubscriberCommand implements Command {
     private void fillSubscriptions(HttpServletRequest request, Connection connection) {
         SubscriberService subscriberService = new SubscriberService(connection);
         SubscriptionService subscriptionService = new SubscriptionService(connection);
-        JSONService jsonService = new JSONService();
         Subscriber subscriber;
         List<Subscription> subscriptions;
         
@@ -73,10 +77,7 @@ public class ServiceListSubscriberCommand implements Command {
             subscriber = subscriberService.findSubscriberByUserId(user.getId());
             subscriptions = subscriptionService.getSubscriptions(subscriber.getId());
             
-//            String jsonSubscriptions = jsonService.toJSON(subscriptions);
-            
             request.setAttribute("subscriptions", subscriptions);
-//            request.setAttribute("subscriptions", jsonSubscriptions);
         }
     }
     

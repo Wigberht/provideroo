@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * The Class LoginCommand.
+ * The Class MissingCommand provides functionality to redirect user in case he tried to
+ * call unknown command.
  */
 public class MissingCommand implements Command {
     

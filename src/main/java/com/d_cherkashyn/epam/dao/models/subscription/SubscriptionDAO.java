@@ -13,8 +13,6 @@ public interface SubscriptionDAO {
     
     List<Subscription> findBySubscriber(long id) throws DAOException;
     
-    List<Subscription> findTodaysSubscriptions() throws DAOException;
-    
     boolean delete(Long id) throws DAOException;
     
     boolean update(Subscription subscription) throws DAOException;

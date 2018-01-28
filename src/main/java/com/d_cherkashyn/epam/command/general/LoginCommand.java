@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 /**
- * The Class LoginCommand.
+ * The Class LoginCommand provides functionality to authenticate user.
  */
 public class LoginCommand implements Command {
     

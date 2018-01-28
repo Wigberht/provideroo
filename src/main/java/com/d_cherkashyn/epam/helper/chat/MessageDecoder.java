@@ -9,6 +9,9 @@ import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
+/**
+ * Decoder for messages that websocket acquires
+ */
 public class MessageDecoder implements Decoder.Text<Message> {
     Logger LOGGER = LoggerFactory.getLogger(MessageDecoder.class);
     

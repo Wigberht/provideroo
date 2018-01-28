@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Class helper for PDF generation
+ */
 public class TariffListPdfService {
     
     Logger LOGGER = LoggerFactory.getLogger(TariffListPdfService.class);

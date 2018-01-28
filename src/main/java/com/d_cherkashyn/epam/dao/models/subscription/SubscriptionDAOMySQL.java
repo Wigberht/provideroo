@@ -112,12 +112,6 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
     }
     
     @Override
-    public List<Subscription> findTodaysSubscriptions() throws DAOException {
-        
-        return null;
-    }
-    
-    @Override
     public boolean delete(Long id) throws DAOException {
         return false;
     }

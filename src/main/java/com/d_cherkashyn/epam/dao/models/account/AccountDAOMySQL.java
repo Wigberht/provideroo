@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Implementation of accountDAO for MYSQL RDBMS
+ */
 public class AccountDAOMySQL extends DAOModel implements AccountDAO {
     
     private static final String FIND_BY_ID = "SELECT * FROM account WHERE id = ?";
@@ -20,10 +23,18 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
     
     Connection connection;
     
+    /**
+     * Creates instance of AccountDAO
+     *
+     * @param connection to be connected with db
+     */
     public AccountDAOMySQL(Connection connection) {
         this.connection = connection;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Account find(Long id) throws DAOException {
         
@@ -44,6 +55,9 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
         return account;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean delete(Long id) throws DAOException {
         boolean success;
@@ -62,6 +76,9 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
         return success;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean update(Account account) throws DAOException {
         
@@ -80,6 +97,9 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Account create(Account account) throws DAOException {
         try (Statement statement = connection.createStatement()) {

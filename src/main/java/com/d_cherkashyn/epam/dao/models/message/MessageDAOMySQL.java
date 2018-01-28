@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of MessageDAO for MYSQL RDBMS
+ */
 public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     
     private static final String FIND_BY_ID = "SELECT * FROM message where id=?";
@@ -31,10 +34,19 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     
     Connection connection;
     
+    /**
+     * Creates instance of MessageDAO
+     *
+     * @param connection to be connected with db
+     */
     public MessageDAOMySQL(Connection connection) {
         this.connection = connection;
     }
     
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Message find(long id) {
         Message message = null;
@@ -55,6 +67,9 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
         return message;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public List<Message> getMessages(long chatId) {
         List<Message> messages = new ArrayList<>();
         try (
@@ -74,11 +89,17 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
         return messages;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteMessage(long id) {
         return false;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Message create(Message message) {
         

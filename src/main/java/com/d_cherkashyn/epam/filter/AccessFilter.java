@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-//@WebFilter(urlPatterns = {"*"})
+/**
+ * Filter to determine if user is allowed to enter requested page
+ */
 public class AccessFilter implements Filter {
     Logger LOGGER = LoggerFactory.getLogger(AccessFilter.class);
     
@@ -22,7 +24,7 @@ public class AccessFilter implements Filter {
     }
     
     /**
-     * Encoding filter. Changes encoding of every request and response
+     * Access filter. Checks if user is allowed to access page
      *
      * @param req
      * @param res

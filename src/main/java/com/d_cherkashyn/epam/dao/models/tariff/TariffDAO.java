@@ -9,7 +9,10 @@ public interface TariffDAO {
     
     Tariff find(Long id) throws DAOException;
     
-    List<Tariff> findByService(Long serviceId) throws DAOException;
+    List<Tariff> findByService(long serviceId) throws DAOException;
+    
+    List<Tariff> findByServiceSorted(long serviceId,
+                                     String field, String order) throws DAOException;
     
     List<Tariff> search(String word1, String word2, String word3) throws DAOException;
     

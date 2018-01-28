@@ -18,11 +18,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Context listener. Watches over context events
+ */
 public class ContextListener implements ServletContextListener {
     Logger LOGGER = LoggerFactory.getLogger(ContextListener.class);
     
     private ScheduledExecutorService scheduler;
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         

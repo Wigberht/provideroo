@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Helper class used to determine if access for user is allowed
+ */
 public class AccessHelper {
     private static Logger LOGGER = LoggerFactory.getLogger(AccessHelper.class);
     
@@ -17,18 +20,6 @@ public class AccessHelper {
     
     public static boolean isAccessAllowed(HttpServletRequest request) {
         String url = request.getRequestURI();
-        if (false) {
-            LOGGER.info("Url: " + url);
-            LOGGER.info("is user: " + isUser(request));
-            LOGGER.info("is admin uri: " + getUriRole(request)
-                .equalsIgnoreCase("admin"));
-            
-            if (getRequestUser(request) != null) {
-                LOGGER.info("is request user admin: " +
-                    getRequestUser(request).isAdmin());
-            }
-        }
-        
         
         if (!isUser(request)) {
             return true;

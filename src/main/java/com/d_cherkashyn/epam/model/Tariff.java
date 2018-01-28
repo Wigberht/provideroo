@@ -103,4 +103,20 @@ public class Tariff extends Entity {
     public void setServiceTitle(String serviceTitle) {
         this.serviceTitle = serviceTitle;
     }
+    
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Tariff{");
+        sb.append("title='").append(title).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", numberOfDays=").append(numberOfDays);
+        sb.append(", cost=").append(cost);
+        sb.append(", currencyShortname='").append(currencyShortname).append('\'');
+        sb.append(", serviceId=").append(serviceId);
+        sb.append(", subscriberAmount=").append(subscriberAmount);
+        sb.append(", serviceTitle='").append(serviceTitle).append('\'');
+        sb.append(", id=").append(id);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -21,48 +21,78 @@ import com.d_cherkashyn.epam.dao.models.user.UserDAOMySQL;
 
 import java.sql.Connection;
 
+/**
+ * Implementation of Abstract factory to provide support for MySQL database
+ */
 public class MySQLDAOFactory implements DAOAbstractFactory {
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MessageDAO makeMessageDAO(Connection connection) {
         return new MessageDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDAO makeUserDAO(Connection connection) {
         return new UserDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AccountDAO makeAccountDAO(Connection connection) {
         return new AccountDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SubscriberDAO makeSubscriberDAO(Connection connection) {
         return new SubscriberDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ChatDAO makeChatDAO(Connection connection) {
         return new ChatDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TariffDAO makeTariffDAO(Connection connection) {
         return new TariffDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ServiceDAO makeServiceDAO(Connection connection) {
         return new ServiceDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RoleDAO makeRoleDAO(Connection connection) {
         return new RoleDAOMySQL(connection);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SubscriptionDAO makeSubscriptionDAO(Connection connection) {
         return new SubscriptionDAOMySQL(connection);

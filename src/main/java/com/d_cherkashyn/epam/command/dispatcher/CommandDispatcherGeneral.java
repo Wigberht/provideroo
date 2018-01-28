@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The Class CommandDispatcher provides method for commands management.
+ * The Class CommandDispatcherGeneral provides functionality
+ * to dispatch general(used by anyone) commands.
  */
 public class CommandDispatcherGeneral {
     

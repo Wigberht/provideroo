@@ -14,6 +14,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of ServiceDAO for MYSQL RDBMS
+ */
 public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
     
     private static final String FIND_ALL = "SELECT * FROM service";
@@ -27,18 +30,21 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
     
     private Connection connection;
     
+    /**
+     * Creates instance of ServiceDAO
+     *
+     * @param connection to be connected with db
+     */
     public ServiceDAOMySQL(Connection connection) {
         this.connection = connection;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Service> all() throws DAOException {
         return findAllServices(FIND_ALL);
-    }
-    
-    @Override
-    public List<Service> all(String sort) throws DAOException {
-        return null;
     }
     
     private List<Service> findAllServices(String sql) {
@@ -49,9 +55,7 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
             
             ResultSet resultSet = statement.getResultSet();
             while (resultSet.next()) {
-                Service service = map(resultSet);
-                service.setTariffs(getTariffs(service.getId()));
-                services.add(service);
+                services.add(map(resultSet));
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -60,12 +64,9 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
         return services;
     }
     
-    private List<Tariff> getTariffs(long serviceId) {
-        return FactoryGenerator.getFactory()
-                               .makeTariffDAO(connection)
-                               .findByService(serviceId);
-    }
-    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Service find(Long id) throws DAOException {
         Service service = null;
@@ -85,16 +86,25 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
         return service;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean delete(Long id) throws DAOException {
         return false;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Service update(Service service) throws DAOException {
         return null;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Service create(Service service) throws DAOException {
         try (

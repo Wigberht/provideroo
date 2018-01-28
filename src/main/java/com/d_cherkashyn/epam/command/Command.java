@@ -3,7 +3,8 @@ package com.d_cherkashyn.epam.command;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The Interface Command.
+ * Command interface.
+ * basics for implementation command pattern
  */
 public interface Command {
 

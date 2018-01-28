@@ -11,10 +11,17 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
+/**
+ * Command that processes new service addition to system
+ */
 public class AddServiceCommand implements Command {
     
     private Logger LOGGER = LoggerFactory.getLogger(AddServiceCommand.class);
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String execute(HttpServletRequest request) {
         String page;
@@ -33,10 +40,6 @@ public class AddServiceCommand implements Command {
             if (ss.createService(new Service(0, title)) != null) {
                 request.getSession().setAttribute("serviceSuccess", true);
             }
-            
-//            request.getSession()
-//                   .getServletContext()
-//                   .setAttribute("services", ss.getAllServices());
             
             ss.returnConnection();
             

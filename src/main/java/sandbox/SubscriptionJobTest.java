@@ -1,18 +1,28 @@
 package sandbox;
 
+import com.d_cherkashyn.epam.ConnectionPool;
+import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
 import com.d_cherkashyn.epam.manager.MessagesResourceManager;
 import com.d_cherkashyn.epam.manager.ResourceTypes;
+import com.d_cherkashyn.epam.model.Tariff;
 
+import java.sql.Connection;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class SubscriptionJobTest {
     public static void main(String[] args) {
-        String lang = "ru_RU";
         
-        ResourceBundle rb = ResourceBundle.getBundle(ResourceTypes.messages.name(),
-                                                     Locale.forLanguageTag(lang));
-        System.out.println(rb.getString("login"));
+        Connection connection = ConnectionPool.conn();
+        List<Tariff> tariffList = FactoryGenerator.getFactory()
+                                                  .makeTariffDAO(connection)
+                                                  .findByServiceSorted(15, "title",
+                                                                       "DESC");
+        
+        for (Tariff tariff : tariffList) {
+            System.out.println(tariff);
+        }
     }
     
 }

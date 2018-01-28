@@ -17,21 +17,36 @@ import java.sql.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class for registration of new users
+ */
 public class Registration {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(Registration.class);
     
     private Connection connection;
     
+    /**
+     * Creates instance of the class and creates connection for managing users
+     */
     public Registration() {
         this.connection = ConnectionPool.getInstance()
                                         .getConnection();
     }
     
+    /**
+     * Closes the connection that was used in this class
+     */
     public void closeConnection() {
         ConnectionPool.returnConn(this.connection);
     }
     
+    /**
+     * Creates a subscriber
+     *
+     * @param subscriber
+     * @return
+     */
     public Subscriber registerSubscriber(Subscriber subscriber) {
         Subscriber resultingSubscriber = null;
         SubscriberDAO subscriberDAO = FactoryGenerator.getFactory()
@@ -46,6 +61,11 @@ public class Registration {
         return resultingSubscriber;
     }
     
+    /**
+     * Registers account for subscriber
+     *
+     * @return
+     */
     public Account registerAccount() {
         Account resultingAccount = null;
         AccountDAO accountDAO = FactoryGenerator.getFactory().makeAccountDAO(connection);
@@ -59,6 +79,12 @@ public class Registration {
         return resultingAccount;
     }
     
+    /**
+     * Register user for general use in system
+     *
+     * @param user
+     * @return
+     */
     public User registerUser(User user) {
         UserDAO userDAO = FactoryGenerator.getFactory()
                                           .makeUserDAO(connection);

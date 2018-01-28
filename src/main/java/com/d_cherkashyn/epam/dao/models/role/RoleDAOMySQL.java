@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Implementation of RoleDAO for MYSQL RDBMS
+ */
 public class RoleDAOMySQL extends DAOModel implements RoleDAO {
     
     private static final String FIND_BY_NAME =
@@ -16,10 +19,18 @@ public class RoleDAOMySQL extends DAOModel implements RoleDAO {
     
     private Connection connection;
     
+    /**
+     * Creates instance of RoleDAO
+     *
+     * @param connection to be connected with db
+     */
     public RoleDAOMySQL(Connection connection) {
         this.connection = connection;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Role find(String name) throws DAOException {
         Role role = null;

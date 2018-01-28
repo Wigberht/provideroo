@@ -23,11 +23,14 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
     private static final String COUNT_SUBSCRIBERS = "SELECT COUNT(DISTINCT subscriber_id) AS subscribers\n" +
         "FROM tariff_subscriber\n" +
-//        "WHERE tariff_id = ? AND prolong = TRUE";
         "WHERE tariff_id = ?";
     
     private static final String FIND_BY_SERVICE_ID = "SELECT * FROM tariff WHERE service_id = ?";
-    //    private static final String FIND_BY_SERVICE_ID = "";
+    private static final String FIND_BY_SERVICE_ID_SORTED = "SELECT *\n" +
+        "FROM tariff\n" +
+        "WHERE service_id = ?\n" +
+        "ORDER BY ? ?;";
+    
     private static final String CREATE_TARIFF = "INSERT INTO tariff VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_TARIFF = "UPDATE tariff "
         + "SET title = ?, description = ?, number_of_days = ?, cost = ?, currency_shortname = ? "
@@ -42,13 +45,43 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     }
     
     @Override
-    public List<Tariff> findByService(Long serviceId) throws DAOException {
+    public List<Tariff> findByService(long serviceId) throws DAOException {
         List<Tariff> tariffs = new ArrayList<>();
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_SERVICE_ID,
                                                            false,
                                                            serviceId);
             ResultSet resultSet = statement.executeQuery()
+        ) {
+            while (resultSet.next()) {
+                Tariff tariff = map(resultSet);
+                tariff.setSubscriberAmount(countSubscribers(tariff.getId()));
+                tariffs.add(tariff);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return tariffs;
+    }
+    
+    @Override
+    public List<Tariff> findByServiceSorted(long serviceId,
+                                            String field,
+                                            String order) throws DAOException {
+        List<Tariff> tariffs = new ArrayList<>();
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM tariff WHERE service_id =")
+          .append(serviceId)
+          .append(" ORDER BY ")
+          .append(field)
+          .append(" ")
+          .append(order);
+        LOGGER.info("Constructed SQL: {}", sb.toString());
+        try (
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sb.toString())
         ) {
             while (resultSet.next()) {
                 Tariff tariff = map(resultSet);

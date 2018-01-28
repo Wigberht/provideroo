@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Class MissingCommand provides functionality to register new user.
+ */
 public class RegistrationCommand implements Command {
     
     private static final Logger LOGGER = LoggerFactory

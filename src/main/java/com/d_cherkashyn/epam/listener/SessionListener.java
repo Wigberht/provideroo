@@ -7,9 +7,15 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+/**
+ * Session listener. Watches over event on session (creted/invalidated)
+ */
 public class SessionListener implements HttpSessionListener {
     Logger LOGGER = LoggerFactory.getLogger(SessionListener.class);
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
         SessionNumberHolder.getInstance().addSession();
@@ -20,10 +26,12 @@ public class SessionListener implements HttpSessionListener {
             baseLocale = "ru_RU";
         }
         
-        LOGGER.info("SESSION LOCALE SET TO :" + baseLocale);
         httpSessionEvent.getSession().setAttribute("locale", baseLocale);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
         SessionNumberHolder.getInstance().removeSession();

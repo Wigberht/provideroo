@@ -11,10 +11,16 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command that processes addition of a new tariff to system
+ */
 public class AddTariffCommand implements Command {
     
     Logger LOGGER = LoggerFactory.getLogger(AddTariffCommand.class);
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String execute(HttpServletRequest request) {
         String page;

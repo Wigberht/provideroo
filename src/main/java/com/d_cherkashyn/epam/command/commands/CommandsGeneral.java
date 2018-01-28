@@ -4,7 +4,8 @@ import com.d_cherkashyn.epam.command.Command;
 import com.d_cherkashyn.epam.command.general.*;
 
 /**
- * The Enum CommandsGeneral.
+ * Enumeration that provides a list of all commands
+ * that are available to any user
  */
 public enum CommandsGeneral {
     /**
@@ -18,6 +19,12 @@ public enum CommandsGeneral {
     
     private Command command;
     
+    /**
+     * Constructor that are used to initialize a object that enumeration element
+     * represents
+     *
+     * @param command object to initialize element with
+     */
     CommandsGeneral(Command command) {
         this.command = command;
     }
