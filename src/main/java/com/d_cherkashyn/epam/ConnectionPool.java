@@ -72,8 +72,9 @@ public class ConnectionPool {
         if (available) {
             try {
                 connection = pool.take();
-                LOGGER.info("Connection taken. Remaining: {}",
-                            pool.size() - pool.remainingCapacity());
+                StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+                LOGGER.info("Connection taken. Remaining: {}, {}",
+                            pool.size() - pool.remainingCapacity(), stackTrace[3]);
             } catch (InterruptedException e) {
             
             }
@@ -89,8 +90,9 @@ public class ConnectionPool {
     public void returnConnection(Connection connection) {
         if (connection != null) {
             pool.offer(connection);
-            LOGGER.info("Connection returned. Remaining: {}",
-                        pool.size() - pool.remainingCapacity());
+            StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+            LOGGER.info("Connection returned. Remaining: {}, {}",
+                        pool.size() - pool.remainingCapacity(), stackTrace[3]);
         }
     }
     

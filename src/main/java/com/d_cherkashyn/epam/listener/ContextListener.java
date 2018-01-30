@@ -41,7 +41,6 @@ public class ContextListener implements ServletContextListener {
         DAOFactory.getFactory();
         
         /* fetch role ids from DB */
-        Connection connection = ConnectionPool.conn();
         RoleDAO roleDAO = DAOFactory.getFactory().makeRoleDAO();
         long adminId = roleDAO.find("admin").getId();
         long subscriberId = roleDAO.find("subscriber").getId();
@@ -50,8 +49,6 @@ public class ContextListener implements ServletContextListener {
                            .setAttribute("admin_role_id", adminId);
         servletContextEvent.getServletContext()
                            .setAttribute("subscriber_role_id", subscriberId);
-        
-        ConnectionPool.returnConn(connection);
         
         /* start scheduled tasks */
         scheduler = Executors.newScheduledThreadPool(4);

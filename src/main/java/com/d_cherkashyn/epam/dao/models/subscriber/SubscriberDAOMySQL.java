@@ -432,6 +432,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return amount;

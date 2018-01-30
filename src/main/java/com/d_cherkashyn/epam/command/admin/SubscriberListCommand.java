@@ -43,7 +43,7 @@ public class SubscriberListCommand implements Command {
         
         SubscriberService ss = new SubscriberService(page, limit);
         
-        request.setAttribute("subscribers", ss.getSubscribers());
+        request.setAttribute("subscribers", ss.getSubscribers(limit, page));
         
         long numberOfSubscribers = ss.getNumberOfSubscribers();
         int pages = (int) Math.ceil((double) numberOfSubscribers / 10);

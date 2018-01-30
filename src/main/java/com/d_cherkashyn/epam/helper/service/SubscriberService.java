@@ -62,8 +62,9 @@ public class SubscriberService extends ServiceHelper {
                          .update(subscriber);
     }
     
-    public List<Subscriber> getSubscribers() {
-        int page = (this.page == 0) ? 0 : this.page - 1;
+    public List<Subscriber> getSubscribers(int limit, int page) {
+        page = (page == 0) ? 0 : page - 1;
+        LOGGER.info("Get subscribers : {}, {}", limit, page);
         int offset = page * limit;
         
         return DAOFactory.getFactory()
