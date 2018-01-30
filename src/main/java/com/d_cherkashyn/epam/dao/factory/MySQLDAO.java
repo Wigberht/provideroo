@@ -24,12 +24,34 @@ import com.d_cherkashyn.epam.dao.models.user.UserDAOMySQL;
  */
 public class MySQLDAO implements AbstractDAO {
     
+    private AccountDAOMySQL accountDAOMySQL;
+    private ChatDAOMySQL chatDAOMySQL;
+    private MessageDAOMySQL messageDAOMySQL;
+    private RoleDAOMySQL roleDAOMySQL;
+    private ServiceDAOMySQL serviceDAOMySQL;
+    private SubscriberDAOMySQL subscriberDAOMySQL;
+    private SubscriptionDAOMySQL subscriptionDAOMySQL;
+    private TariffDAOMySQL tariffDAOMySQL;
+    private UserDAOMySQL userDAOMySQL;
+    
+    MySQLDAO() {
+        accountDAOMySQL = new AccountDAOMySQL();
+        chatDAOMySQL = new ChatDAOMySQL();
+        messageDAOMySQL = new MessageDAOMySQL();
+        roleDAOMySQL = new RoleDAOMySQL();
+        serviceDAOMySQL = new ServiceDAOMySQL();
+        subscriberDAOMySQL = new SubscriberDAOMySQL();
+        subscriptionDAOMySQL = new SubscriptionDAOMySQL();
+        tariffDAOMySQL = new TariffDAOMySQL();
+        userDAOMySQL = new UserDAOMySQL();
+    }
+    
     /**
      * {@inheritDoc}
      */
     @Override
     public MessageDAO makeMessageDAO() {
-        return new MessageDAOMySQL();
+        return this.messageDAOMySQL;
     }
     
     /**
@@ -37,7 +59,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public UserDAO makeUserDAO() {
-        return new UserDAOMySQL();
+        return this.userDAOMySQL;
     }
     
     /**
@@ -45,7 +67,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public AccountDAO makeAccountDAO() {
-        return new AccountDAOMySQL();
+        return this.accountDAOMySQL;
     }
     
     /**
@@ -53,7 +75,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public SubscriberDAO makeSubscriberDAO() {
-        return new SubscriberDAOMySQL();
+        return this.subscriberDAOMySQL;
     }
     
     /**
@@ -61,7 +83,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public ChatDAO makeChatDAO() {
-        return new ChatDAOMySQL();
+        return this.chatDAOMySQL;
     }
     
     /**
@@ -69,7 +91,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public TariffDAO makeTariffDAO() {
-        return new TariffDAOMySQL();
+        return this.tariffDAOMySQL;
     }
     
     /**
@@ -77,7 +99,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public ServiceDAO makeServiceDAO() {
-        return new ServiceDAOMySQL();
+        return this.serviceDAOMySQL;
     }
     
     /**
@@ -85,7 +107,7 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public RoleDAO makeRoleDAO() {
-        return new RoleDAOMySQL();
+        return this.roleDAOMySQL;
     }
     
     /**
@@ -93,6 +115,6 @@ public class MySQLDAO implements AbstractDAO {
      */
     @Override
     public SubscriptionDAO makeSubscriptionDAO() {
-        return new SubscriptionDAOMySQL();
+        return this.subscriptionDAOMySQL;
     }
 }

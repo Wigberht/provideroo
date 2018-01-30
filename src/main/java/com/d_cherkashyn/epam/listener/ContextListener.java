@@ -37,6 +37,9 @@ public class ContextListener implements ServletContextListener {
                                            .getInitParameter("db_type");
         DAOFactory.setDbType(dbType);
         
+        /*init DAO implementation*/
+        DAOFactory.getFactory();
+        
         /* fetch role ids from DB */
         Connection connection = ConnectionPool.conn();
         RoleDAO roleDAO = DAOFactory.getFactory().makeRoleDAO();

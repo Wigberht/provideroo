@@ -68,9 +68,12 @@ public class ConnectionPool {
     public Connection getConnection() {
         Connection connection = null;
         
+        
         if (available) {
             try {
                 connection = pool.take();
+                LOGGER.info("Connection taken. Remaining: {}",
+                            pool.size() - pool.remainingCapacity());
             } catch (InterruptedException e) {
             
             }
@@ -86,6 +89,8 @@ public class ConnectionPool {
     public void returnConnection(Connection connection) {
         if (connection != null) {
             pool.offer(connection);
+            LOGGER.info("Connection returned. Remaining: {}",
+                        pool.size() - pool.remainingCapacity());
         }
     }
     
