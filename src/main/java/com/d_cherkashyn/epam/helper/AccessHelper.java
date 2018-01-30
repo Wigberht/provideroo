@@ -19,25 +19,29 @@ public class AccessHelper {
     private static final Pattern pattern = Pattern.compile(regex);
     
     public static boolean isAccessAllowed(HttpServletRequest request) {
-        String url = request.getRequestURI();
         
+        /*always allow css/js*/
         if (!isUser(request)) {
             return true;
         }
         
+        /*disallow anon users anywhere*/
         if (getRequestUser(request) == null) {
             return false;
         }
         
+        /*disallow if uri is of admin but current user is not admin*/
         if (getUriRole(request).equalsIgnoreCase(Roles.ADMIN.name()) &&
             !getRequestUser(request).isAdmin()) {
             return false;
         }
         
+        /*disallow if uri is of subscriber but current user is not admin*/
         if (getUriRole(request).equalsIgnoreCase(Roles.SUBSCRIBER.name()) &&
             getRequestUser(request).isAdmin()) {
             return false;
         }
+    
         
         return true;
     }
@@ -48,6 +52,9 @@ public class AccessHelper {
         return matcher.find() ? matcher.group(1).replace("/", "") : "";
     }
     
+    /**
+     * Checks if uri contains valid user role
+     */
     private static boolean isUser(HttpServletRequest request) {
         Matcher matcher = pattern.matcher(request.getRequestURI());
         boolean find = matcher.find();
@@ -64,6 +71,7 @@ public class AccessHelper {
         return isUser;
     }
     
+    /*get user from current session*/
     private static User getRequestUser(HttpServletRequest request) {
         User requestUser = null;
         if (null != request.getSession().getAttribute("user")) {

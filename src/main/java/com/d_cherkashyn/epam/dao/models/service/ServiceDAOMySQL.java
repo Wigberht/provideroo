@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.service;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
@@ -27,17 +28,10 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
         + "WHERE id = ?";
     private static final String DELETE_SERVICE_BY_ID = "DELETE FROM service WHERE id = ?";
     
-    
-    private Connection connection;
-    
     /**
      * Creates instance of ServiceDAO
-     *
-     * @param connection to be connected with db
      */
-    public ServiceDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public ServiceDAOMySQL() {}
     
     /**
      * {@inheritDoc}
@@ -50,6 +44,7 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
     private List<Service> findAllServices(String sql) {
         List<Service> services = new ArrayList<>();
         
+        Connection connection = ConnectionPool.conn();
         try (Statement statement = connection.createStatement()) {
             statement.executeQuery(sql);
             
@@ -59,6 +54,8 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return services;
@@ -70,7 +67,7 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
     @Override
     public Service find(Long id) throws DAOException {
         Service service = null;
-        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
                                                            id);
@@ -81,6 +78,8 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return service;
@@ -107,6 +106,7 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
      */
     @Override
     public Service create(Service service) throws DAOException {
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_SERVICE, true,
@@ -121,6 +121,8 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return service;

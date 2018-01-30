@@ -17,7 +17,7 @@ public class SubscriberDAOMySQLTest {
         Connection connection = ConnectionPool.conn();
         
         assertThat(FactoryGenerator.getFactory()
-                                   .makeSubscriberDAO(connection)
+                                   .makeSubscriberDAO()
                                    .calculateDebt(subscriberId),
                    CoreMatchers.instanceOf(Double.class)
         );
@@ -32,7 +32,7 @@ public class SubscriberDAOMySQLTest {
         Connection connection = ConnectionPool.conn();
         
         assertTrue(FactoryGenerator.getFactory()
-                                   .makeSubscriberDAO(connection)
+                                   .makeSubscriberDAO()
                                    .calculateDebt(subscriberId) >= 0);
         
         ConnectionPool.returnConn(connection);

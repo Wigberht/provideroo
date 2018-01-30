@@ -25,7 +25,7 @@ public class Auth {
         
         Connection conn = ConnectionPool.conn();
         UserDAO userDAO = FactoryGenerator.getFactory()
-                                          .makeUserDAO(conn);
+                                          .makeUserDAO();
         
         User DBUser = userDAO.find(login);
         

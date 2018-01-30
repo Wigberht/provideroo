@@ -39,7 +39,7 @@ public class ContextListener implements ServletContextListener {
         
         /* fetch role ids from DB */
         Connection connection = ConnectionPool.conn();
-        RoleDAO roleDAO = FactoryGenerator.getFactory().makeRoleDAO(connection);
+        RoleDAO roleDAO = FactoryGenerator.getFactory().makeRoleDAO();
         long adminId = roleDAO.find("admin").getId();
         long subscriberId = roleDAO.find("subscriber").getId();
         

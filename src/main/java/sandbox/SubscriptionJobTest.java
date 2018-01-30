@@ -27,7 +27,7 @@ public class SubscriptionJobTest {
         
         Connection connection = ConnectionPool.conn();
         List<Subscriber> subscribers = FactoryGenerator.getFactory()
-                                                       .makeSubscriberDAO(connection)
+                                                       .makeSubscriberDAO()
                                                        .all();
         System.out.println(subscribers.size());
         

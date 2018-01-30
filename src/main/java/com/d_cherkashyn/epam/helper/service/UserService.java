@@ -18,26 +18,26 @@ public class UserService extends ServiceHelper {
     
     public boolean setBanned(long userId, boolean banned) {
         return FactoryGenerator.getFactory()
-                               .makeUserDAO(connection)
+                               .makeUserDAO()
                                .setBanned(userId, banned);
     }
     
     public List<User> getAllUsers() {
         return FactoryGenerator.getFactory()
-                               .makeUserDAO(connection)
+                               .makeUserDAO()
                                .all();
     }
     
     
     public String getUserUpdatedTime(long id) {
         return FactoryGenerator.getFactory()
-                               .makeUserDAO(connection)
+                               .makeUserDAO()
                                .getUpdateTime(id);
     }
     
     public User getUser(long id) {
         return FactoryGenerator.getFactory()
-                               .makeUserDAO(connection)
+                               .makeUserDAO()
                                .find(id);
     }
 }

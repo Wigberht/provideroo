@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.user;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Roles;
@@ -62,11 +63,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     private static final String UPDATE_PASSWORD_WHERE_ID = "UPDATE user SET password=? WHERE id=?";
     private static final String UPDATE_PASSWORD_WHERE_LOGIN = "UPDATE user SET password=? WHERE login=?";
     
-    Connection connection;
-    
-    public UserDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public UserDAOMySQL() {}
     
     @Override
     public List<User> all() throws DAOException {
@@ -108,6 +105,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     public String getUpdateTime(long id) throws DAOException {
         String updateTime = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement stmt = prepareStatement(connection, GET_UPDATE_TIME,
                                                       false, id);
@@ -118,6 +116,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return updateTime;
@@ -125,6 +125,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     
     @Override
     public boolean update(User user) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, UPDATE_USER, true,
@@ -139,12 +141,16 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
     @Override
     public boolean setBanned(long userId, boolean banned) throws DAOException {
         boolean success;
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, SET_BANNED_WHERE_ID, true,
@@ -155,6 +161,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return success;
@@ -163,6 +171,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     @Override
     public User create(User user) throws DAOException {
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_USER, true,
@@ -177,6 +186,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return user;
@@ -185,6 +196,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     private User findUser(String sql, Object... values) throws DAOException {
         User user = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement stmt = prepareStatement(connection, sql, false, values);
             ResultSet resultSet = stmt.executeQuery()
@@ -194,6 +206,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return user;
@@ -202,6 +216,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     private List<User> findUsers(String sql, Object... values) throws DAOException {
         List<User> users = new ArrayList<>();
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement stmt = prepareStatement(connection, sql, false, values);
             ResultSet resultSet = stmt.executeQuery()
@@ -211,6 +226,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return users;

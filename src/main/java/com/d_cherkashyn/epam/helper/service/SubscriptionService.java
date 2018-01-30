@@ -59,13 +59,13 @@ public class SubscriptionService extends ServiceHelper {
     
     public Subscription createSubscription(Subscription subscription) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO(connection)
+                               .makeSubscriptionDAO()
                                .create(subscription);
     }
     
     public List<Subscription> getSubscriptions(long subscriberId) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO(connection)
+                               .makeSubscriptionDAO()
                                .findBySubscriber(subscriberId);
     }
     
@@ -75,19 +75,19 @@ public class SubscriptionService extends ServiceHelper {
         
         LOGGER.info("setSubscriptionProlong " + subscription.isProlong());
         return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO(connection)
+                               .makeSubscriptionDAO()
                                .update(subscription);
     }
     
     public Subscription findSubscription(long tariffId, long subscriberId) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO(connection)
+                               .makeSubscriptionDAO()
                                .find(tariffId, subscriberId);
     }
     
     public boolean prolongSubscriptions(long subscriberId) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO(connection)
+                               .makeSubscriptionDAO()
                                .prolongSubscriptions(subscriberId);
     }
 }

@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.subscription;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Subscription;
@@ -52,18 +53,12 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             "FROM tariff_subscriber " +
             "WHERE id = ?";
     
-    
-    Connection connection;
-    
-    public SubscriptionDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public SubscriptionDAOMySQL() {}
     
     @Override
     public Subscription find(long id) throws DAOException {
         return findSubscription(FIND_BY_ID, id);
     }
-    
     
     @Override
     public Subscription find(long tariffId, long subscriberId) throws DAOException {
@@ -75,6 +70,7 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
         
         Subscription subscription = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, sql, false, values);
@@ -85,6 +81,8 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscription;
@@ -95,6 +93,7 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
     public List<Subscription> findBySubscriber(long id) throws DAOException {
         List<Subscription> subscriptions = new ArrayList<>();
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, FIND_BY_SUBSCRIBER_ID, false, id);
@@ -106,6 +105,8 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscriptions;
@@ -118,6 +119,8 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
     
     @Override
     public boolean update(Subscription subscription) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, UPDATE_SUBSCRIPTION, true,
@@ -131,11 +134,15 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
     @Override
     public boolean prolongSubscriptions(long subscriberId) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, PROLONG_SUBSCRIPTIONS, true,
@@ -148,11 +155,15 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
     @Override
     public Subscription create(Subscription subscription) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_SUBSCRIPTION, true,
@@ -172,6 +183,8 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
         } catch (SQLException e) {
             LOGGER.error("failed to create subscription");
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscription;

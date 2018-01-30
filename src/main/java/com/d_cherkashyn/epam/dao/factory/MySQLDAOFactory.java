@@ -30,71 +30,71 @@ public class MySQLDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public MessageDAO makeMessageDAO(Connection connection) {
-        return new MessageDAOMySQL(connection);
+    public MessageDAO makeMessageDAO() {
+        return new MessageDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public UserDAO makeUserDAO(Connection connection) {
-        return new UserDAOMySQL(connection);
+    public UserDAO makeUserDAO() {
+        return new UserDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public AccountDAO makeAccountDAO(Connection connection) {
-        return new AccountDAOMySQL(connection);
+    public AccountDAO makeAccountDAO() {
+        return new AccountDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public SubscriberDAO makeSubscriberDAO(Connection connection) {
-        return new SubscriberDAOMySQL(connection);
+    public SubscriberDAO makeSubscriberDAO() {
+        return new SubscriberDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public ChatDAO makeChatDAO(Connection connection) {
-        return new ChatDAOMySQL(connection);
+    public ChatDAO makeChatDAO() {
+        return new ChatDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public TariffDAO makeTariffDAO(Connection connection) {
-        return new TariffDAOMySQL(connection);
+    public TariffDAO makeTariffDAO() {
+        return new TariffDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public ServiceDAO makeServiceDAO(Connection connection) {
-        return new ServiceDAOMySQL(connection);
+    public ServiceDAO makeServiceDAO() {
+        return new ServiceDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public RoleDAO makeRoleDAO(Connection connection) {
-        return new RoleDAOMySQL(connection);
+    public RoleDAO makeRoleDAO() {
+        return new RoleDAOMySQL();
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public SubscriptionDAO makeSubscriptionDAO(Connection connection) {
-        return new SubscriptionDAOMySQL(connection);
+    public SubscriptionDAO makeSubscriptionDAO() {
+        return new SubscriptionDAOMySQL();
     }
 }

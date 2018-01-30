@@ -31,10 +31,6 @@ public class FactoryGenerator {
                             factory = new MySQLDAOFactory();
                             break;
                         
-                        case ORACLE:
-                            factory = new OracleDAOFactory();
-                            break;
-                        
                         case POSTGRES:
                             factory = new PostgresDAOFactory();
                             break;

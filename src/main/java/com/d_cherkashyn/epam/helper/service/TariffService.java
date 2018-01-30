@@ -24,7 +24,7 @@ public class TariffService extends ServiceHelper {
     public Tariff createTariff(Tariff tariff) {
         Tariff resultingTariff = null;
         TariffDAO tariffDAO = FactoryGenerator.getFactory()
-                                              .makeTariffDAO(connection);
+                                              .makeTariffDAO();
         
         try {
             resultingTariff = tariffDAO.create(tariff);
@@ -38,19 +38,19 @@ public class TariffService extends ServiceHelper {
     
     public Tariff getTariff(long id) {
         return FactoryGenerator.getFactory()
-                               .makeTariffDAO(connection)
+                               .makeTariffDAO()
                                .find(id);
     }
     
     public boolean updateTariff(Tariff tariff) {
         return FactoryGenerator.getFactory()
-                               .makeTariffDAO(connection)
+                               .makeTariffDAO()
                                .update(tariff);
     }
     
     public boolean deleteTariff(long id) {
         return FactoryGenerator.getFactory()
-                               .makeTariffDAO(connection)
+                               .makeTariffDAO()
                                .delete(id);
     }
     
@@ -63,7 +63,7 @@ public class TariffService extends ServiceHelper {
         String str3 = strings.length > 2 ? strings[2] : null;
         
         return FactoryGenerator.getFactory()
-                               .makeTariffDAO(connection)
+                               .makeTariffDAO()
                                .search(str1, str2, str3);
     }
 }

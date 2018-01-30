@@ -50,7 +50,7 @@ public class Registration {
     public Subscriber registerSubscriber(Subscriber subscriber) {
         Subscriber resultingSubscriber = null;
         SubscriberDAO subscriberDAO = FactoryGenerator.getFactory()
-                                                      .makeSubscriberDAO(connection);
+                                                      .makeSubscriberDAO();
 //        try {
         resultingSubscriber = subscriberDAO.create(subscriber);
 //            LOGGER.info("Subscriber created");
@@ -68,7 +68,7 @@ public class Registration {
      */
     public Account registerAccount() {
         Account resultingAccount = null;
-        AccountDAO accountDAO = FactoryGenerator.getFactory().makeAccountDAO(connection);
+        AccountDAO accountDAO = FactoryGenerator.getFactory().makeAccountDAO();
         try {
             resultingAccount = accountDAO.create(new Account());
             LOGGER.info("User account created successfully");
@@ -87,7 +87,7 @@ public class Registration {
      */
     public User registerUser(User user) {
         UserDAO userDAO = FactoryGenerator.getFactory()
-                                          .makeUserDAO(connection);
+                                          .makeUserDAO();
         
         user.setPassword(Passwords.getPasswordHash(user.getPassword()));
         user.setBanned(false);

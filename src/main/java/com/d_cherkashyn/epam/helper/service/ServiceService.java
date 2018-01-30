@@ -30,7 +30,7 @@ public class ServiceService extends ServiceHelper {
     public Service createService(Service service) {
         Service createdService = null;
         ServiceDAO serviceDAO = FactoryGenerator.getFactory()
-                                                .makeServiceDAO(connection);
+                                                .makeServiceDAO();
         try {
             createdService = serviceDAO.create(service);
         } catch (DAOException ex) {
@@ -42,11 +42,11 @@ public class ServiceService extends ServiceHelper {
     
     public List<Service> getAllServices() {
         List<Service> services = FactoryGenerator.getFactory()
-                                                 .makeServiceDAO(connection)
+                                                 .makeServiceDAO()
                                                  .all();
         for (Service service : services) {
             List<Tariff> tariffs = FactoryGenerator.getFactory()
-                                                   .makeTariffDAO(connection)
+                                                   .makeTariffDAO()
                                                    .findByService(service.getId());
             service.setTariffs(tariffs);
         }
@@ -56,11 +56,11 @@ public class ServiceService extends ServiceHelper {
     
     public List<Service> getAllServices(String sortField, String sortOrder) {
         List<Service> services = FactoryGenerator.getFactory()
-                                                 .makeServiceDAO(connection)
+                                                 .makeServiceDAO()
                                                  .all();
         for (Service service : services) {
             List<Tariff> tariffs = FactoryGenerator.getFactory()
-                                                   .makeTariffDAO(connection)
+                                                   .makeTariffDAO()
                                                    .findByServiceSorted(service.getId(),
                                                                         sortField,
                                                                         sortOrder);

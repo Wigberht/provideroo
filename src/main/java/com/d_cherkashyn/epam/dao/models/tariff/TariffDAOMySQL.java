@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.tariff;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Tariff;
@@ -38,15 +39,13 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     private static final String DELETE_TARIFF_BY_ID = "DELETE FROM tariff WHERE id = ?";
     
     
-    Connection connection;
-    
-    public TariffDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public TariffDAOMySQL() {}
     
     @Override
     public List<Tariff> findByService(long serviceId) throws DAOException {
         List<Tariff> tariffs = new ArrayList<>();
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_SERVICE_ID,
                                                            false,
@@ -60,6 +59,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return tariffs;
@@ -79,6 +80,7 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
           .append(" ")
           .append(order);
         
+        Connection connection = ConnectionPool.conn();
         try (
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sb.toString())
@@ -90,6 +92,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return tariffs;
@@ -98,6 +102,7 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     private int countSubscribers(long tariffId) throws DAOException {
         int subscribers = 0;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection, COUNT_SUBSCRIBERS,
                                                            false,
@@ -109,6 +114,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscribers;
@@ -118,6 +125,7 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     public Tariff find(Long id) throws DAOException {
         Tariff tariff = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement pstmt = prepareStatement(connection, FIND_BY_ID, false,
                                                        id, id);
@@ -128,6 +136,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return tariff;
@@ -137,6 +147,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     public List<Tariff> search(String word1, String word2,
                                String word3) throws DAOException {
         List<Tariff> tariffs = new ArrayList<>();
+        
+        Connection connection = ConnectionPool.conn();
         try (
             CallableStatement cstmt = connection.prepareCall(CALL_SEARCH_TARIFF)
         ) {
@@ -154,6 +166,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return tariffs;
@@ -162,6 +176,7 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, DELETE_TARIFF_BY_ID, true,
@@ -174,11 +189,15 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
     @Override
     public boolean update(Tariff tariff) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, UPDATE_TARIFF, true,
@@ -193,11 +212,15 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
     @Override
     public Tariff create(Tariff tariff) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_TARIFF, true,
@@ -217,6 +240,8 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return tariff;

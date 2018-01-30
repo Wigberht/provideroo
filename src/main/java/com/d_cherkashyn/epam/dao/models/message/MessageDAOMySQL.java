@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.message;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Message;
@@ -32,16 +33,10 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     private static final String CREATE_MESSAGE = "INSERT INTO message" +
         " VALUES(DEFAULT,?,DEFAULT,DEFAULT,DEFAULT,?,?)";
     
-    Connection connection;
-    
     /**
      * Creates instance of MessageDAO
-     *
-     * @param connection to be connected with db
      */
-    public MessageDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public MessageDAOMySQL() {}
     
     
     /**
@@ -51,6 +46,7 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     public Message find(long id) {
         Message message = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
                                                            id);
@@ -62,6 +58,8 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return message;
@@ -72,6 +70,7 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
      */
     public List<Message> getMessages(long chatId) {
         List<Message> messages = new ArrayList<>();
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection,
                                                            GET_MESSAGES_BY_CHAT_ID,
@@ -84,6 +83,8 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return messages;
@@ -103,6 +104,7 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
     @Override
     public Message create(Message message) {
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_MESSAGE, true,
@@ -117,6 +119,8 @@ public class MessageDAOMySQL extends DAOModel implements MessageDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return message;

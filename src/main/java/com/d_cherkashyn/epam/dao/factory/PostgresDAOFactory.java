@@ -21,7 +21,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public MessageDAO makeMessageDAO(Connection connection) {
+    public MessageDAO makeMessageDAO() {
         return null;
     }
     
@@ -29,7 +29,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public UserDAO makeUserDAO(Connection connection) {
+    public UserDAO makeUserDAO() {
         return null;
     }
     
@@ -37,7 +37,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public AccountDAO makeAccountDAO(Connection connection) {
+    public AccountDAO makeAccountDAO() {
         return null;
     }
     
@@ -45,7 +45,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public SubscriberDAO makeSubscriberDAO(Connection connection) {
+    public SubscriberDAO makeSubscriberDAO() {
         return null;
     }
     
@@ -53,7 +53,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public ChatDAO makeChatDAO(Connection connection) {
+    public ChatDAO makeChatDAO() {
         return null;
     }
     
@@ -61,7 +61,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public TariffDAO makeTariffDAO(Connection connection) {
+    public TariffDAO makeTariffDAO() {
         return null;
     }
     
@@ -69,7 +69,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public ServiceDAO makeServiceDAO(Connection connection) {
+    public ServiceDAO makeServiceDAO() {
         return null;
     }
     
@@ -77,7 +77,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public RoleDAO makeRoleDAO(Connection connection) {
+    public RoleDAO makeRoleDAO() {
         return null;
     }
     
@@ -85,7 +85,7 @@ public class PostgresDAOFactory implements DAOAbstractFactory {
      * {@inheritDoc}
      */
     @Override
-    public SubscriptionDAO makeSubscriptionDAO(Connection connection) {
+    public SubscriptionDAO makeSubscriptionDAO() {
         return null;
     }
 }

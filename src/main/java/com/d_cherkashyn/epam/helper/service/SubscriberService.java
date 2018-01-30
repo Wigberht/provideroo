@@ -46,19 +46,19 @@ public class SubscriberService extends ServiceHelper {
     
     public boolean updateAccount(Account account) {
         return FactoryGenerator.getFactory()
-                               .makeAccountDAO(connection)
+                               .makeAccountDAO()
                                .update(account);
     }
     
     public boolean updateUser(User user) {
         return FactoryGenerator.getFactory()
-                               .makeUserDAO(connection)
+                               .makeUserDAO()
                                .update(user);
     }
     
     public boolean updateSubscriber(Subscriber subscriber) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .update(subscriber);
     }
     
@@ -67,43 +67,43 @@ public class SubscriberService extends ServiceHelper {
         int offset = page * limit;
         
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .all(limit, offset);
     }
     
     public Subscriber findSubscriber(long id) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .find(id);
     }
     
     public List<Subscriber> expiredSubscriptionSubscribers() {
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .findSubscriptionExpirers();
     }
     
     public double calculateDebt(long subscriberId) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .calculateDebt(subscriberId);
     }
     
     public long getNumberOfSubscribers() {
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .numberOfSubscribers();
     }
     
     public Subscriber findSubscriberByUserId(long userId) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .findByUserId(userId);
     }
     
     public List<Subscription> findSubscriptions(long id) {
         return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO(connection)
+                               .makeSubscriptionDAO()
                                .findBySubscriber(id);
     }
     
@@ -166,7 +166,7 @@ public class SubscriberService extends ServiceHelper {
         String str3 = strings.length > 2 ? strings[2] : null;
         
         return FactoryGenerator.getFactory()
-                               .makeSubscriberDAO(connection)
+                               .makeSubscriberDAO()
                                .search(str1, str2, str3);
     }
     

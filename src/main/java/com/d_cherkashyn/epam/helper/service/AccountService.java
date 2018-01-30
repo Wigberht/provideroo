@@ -23,7 +23,7 @@ public class AccountService extends ServiceHelper {
     public boolean withdrawMoney(Account account, double amount) {
         if (account.withdraw(amount)) {
             return FactoryGenerator.getFactory()
-                                   .makeAccountDAO(connection)
+                                   .makeAccountDAO()
                                    .update(account);
         } else {
             return false;

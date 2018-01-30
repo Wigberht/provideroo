@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.chat;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Chat;
@@ -43,17 +44,10 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
     
     private static final String DELETE_CHAT_BY_ID = "DELETE FROM chat WHERE id = ?";
     
-    Connection connection;
-    
     /**
      * Creates instance of ChatDAO
-     *
-     * @param connection to be connected with db
      */
-    public ChatDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
-    
+    public ChatDAOMySQL() {}
     
     /**
      * {@inheritDoc}
@@ -62,6 +56,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
     public Chat find(Long id) throws DAOException {
         Chat chat = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
                                                            id);
@@ -73,6 +68,8 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return chat;
@@ -84,6 +81,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
      */
     @Override
     public boolean addUserToChat(long userId, long chatId) throws DAOException {
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, ADD_USER_TO_CHAT, true,
@@ -95,6 +93,8 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
@@ -103,6 +103,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
      */
     public List<Chat> findByUser(long userId) {
         List<Chat> chats = new ArrayList<>();
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement stmt = prepareStatement(connection, FIND_CHATS_BY_USER,
                                                       false,
@@ -114,6 +115,8 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return chats;
@@ -126,6 +129,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
     @Override
     public List<Message> findMessages(long chatId) {
         List<Message> messages = new ArrayList<>();
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement stmt = prepareStatement(connection, FIND_MESSAGES,
                                                       false,
@@ -137,6 +141,8 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return messages;
@@ -163,6 +169,7 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
      */
     @Override
     public Chat create(Chat chat) throws DAOException {
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_CHAT, true,
@@ -177,6 +184,8 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return chat;

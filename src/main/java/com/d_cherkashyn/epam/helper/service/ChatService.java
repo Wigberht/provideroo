@@ -20,20 +20,20 @@ public class ChatService extends ServiceHelper {
     
     public List<Chat> getUserChats(long userId) {
         return FactoryGenerator.getFactory()
-                               .makeChatDAO(connection)
+                               .makeChatDAO()
                                .findByUser(userId);
     }
     
     public Chat getChat(long chatId) {
         Chat chat = FactoryGenerator.getFactory()
-                                    .makeChatDAO(connection)
+                                    .makeChatDAO()
                                     .find(chatId);
         List<Message> messages = FactoryGenerator.getFactory()
-                                                 .makeMessageDAO(connection)
+                                                 .makeMessageDAO()
                                                  .getMessages(chatId);
         
         List<User> members = FactoryGenerator.getFactory()
-                                             .makeUserDAO(connection)
+                                             .makeUserDAO()
                                              .findChatMembers(chatId);
         
         chat.setMessages(messages);
@@ -44,13 +44,13 @@ public class ChatService extends ServiceHelper {
     
     public Message pushMessage(Message message) {
         message = FactoryGenerator.getFactory()
-                                  .makeMessageDAO(connection)
+                                  .makeMessageDAO()
                                   .create(message);
         
         /* get new one because it has id, created_at and updated_at data */
         if (message.getId() > 0) {
             message = FactoryGenerator.getFactory()
-                                      .makeMessageDAO(connection)
+                                      .makeMessageDAO()
                                       .find(message.getId());
         }
         
@@ -73,7 +73,7 @@ public class ChatService extends ServiceHelper {
         
         Chat chat = new Chat(0, chatTitle);
         chat = FactoryGenerator.getFactory()
-                               .makeChatDAO(connection)
+                               .makeChatDAO()
                                .create(chat);
         
         boolean creatorAdded;
@@ -82,15 +82,15 @@ public class ChatService extends ServiceHelper {
         
         if (receiverId == creatorId) {
             success = FactoryGenerator.getFactory()
-                                      .makeChatDAO(connection)
+                                      .makeChatDAO()
                                       .addUserToChat(creatorId, chat.getId());
         } else if (chat.getId() != 0) {
             creatorAdded = FactoryGenerator.getFactory()
-                                           .makeChatDAO(connection)
+                                           .makeChatDAO()
                                            .addUserToChat(creatorId, chat.getId());
             
             receiverAdded = FactoryGenerator.getFactory()
-                                            .makeChatDAO(connection)
+                                            .makeChatDAO()
                                             .addUserToChat(receiverId, chat.getId());
             success = creatorAdded && receiverAdded;
         }
@@ -104,11 +104,11 @@ public class ChatService extends ServiceHelper {
     
     public Chat findCommonChat(long creatorId, long receiverId) {
         List<Chat> creatorChats = FactoryGenerator.getFactory()
-                                                  .makeChatDAO(connection)
+                                                  .makeChatDAO()
                                                   .findByUser(creatorId);
         
         List<Chat> receiverChats = FactoryGenerator.getFactory()
-                                                   .makeChatDAO(connection)
+                                                   .makeChatDAO()
                                                    .findByUser(receiverId);
         
         Chat commonChat = null;

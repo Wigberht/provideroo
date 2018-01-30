@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.account;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Account;
@@ -20,17 +21,10 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
     private static final String UPDATE_ACCOUNT = "UPDATE account SET balance = ? WHERE id = ?";
     private static final String DELETE_ACCOUNT = "DELETE FROM account WHERE id = ?";
     
-    
-    Connection connection;
-    
     /**
      * Creates instance of AccountDAO
-     *
-     * @param connection to be connected with db
      */
-    public AccountDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public AccountDAOMySQL() { }
     
     /**
      * {@inheritDoc}
@@ -39,7 +33,7 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
     public Account find(Long id) throws DAOException {
         
         Account account = null;
-        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection, FIND_BY_ID, false,
                                                            id);
@@ -50,6 +44,8 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return account;
@@ -61,6 +57,7 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         boolean success;
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, DELETE_ACCOUNT, false,
@@ -71,6 +68,8 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return success;
@@ -82,6 +81,7 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
     @Override
     public boolean update(Account account) throws DAOException {
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, UPDATE_ACCOUNT, true,
@@ -94,6 +94,8 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
@@ -102,6 +104,7 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
      */
     @Override
     public Account create(Account account) throws DAOException {
+        Connection connection = ConnectionPool.conn();
         try (Statement statement = connection.createStatement()) {
             statement
                 .executeUpdate(CREATE_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
@@ -112,6 +115,8 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return account;

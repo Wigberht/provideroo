@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.role;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Role;
@@ -14,19 +15,12 @@ import java.sql.SQLException;
  */
 public class RoleDAOMySQL extends DAOModel implements RoleDAO {
     
-    private static final String FIND_BY_NAME =
-        "SELECT * FROM role WHERE name = ?";
-    
-    private Connection connection;
+    private static final String FIND_BY_NAME = "SELECT * FROM role WHERE name = ?";
     
     /**
      * Creates instance of RoleDAO
-     *
-     * @param connection to be connected with db
      */
-    public RoleDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public RoleDAOMySQL() {}
     
     /**
      * {@inheritDoc}
@@ -35,9 +29,10 @@ public class RoleDAOMySQL extends DAOModel implements RoleDAO {
     public Role find(String name) throws DAOException {
         Role role = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection,
-                FIND_BY_NAME, false, name);
+                                                           FIND_BY_NAME, false, name);
             ResultSet resultSet = statement.executeQuery()
         ) {
             if (resultSet.next()) {
@@ -45,6 +40,8 @@ public class RoleDAOMySQL extends DAOModel implements RoleDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return role;

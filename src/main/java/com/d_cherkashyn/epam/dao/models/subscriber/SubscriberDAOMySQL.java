@@ -1,5 +1,6 @@
 package com.d_cherkashyn.epam.dao.models.subscriber;
 
+import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.dao.models.account.AccountDAOMySQL;
@@ -53,9 +54,6 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         "  WHERE end <= CURDATE() AND prolong = TRUE\n" +
         ");";
     
-    
-    //    private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SHOW TABLE STATUS\n" +
-//        "WHERE Name = 'subscriber';";
     private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SELECT count(*) as " +
         "subscribers from subscriber;";
     
@@ -84,19 +82,13 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         "  WHERE subscriber_id = ? AND end <= CURDATE() AND prolong = TRUE\n" +
         ");";
     
-    Connection connection;
-    
     private int limit = 10;
     private int offset = 0;
     
     /**
      * Creates instance of SubscriberDAO
-     *
-     * @param connection to be connected with db
      */
-    public SubscriberDAOMySQL(Connection connection) {
-        this.connection = connection;
-    }
+    public SubscriberDAOMySQL() { }
     
     /**
      * {@inheritDoc}
@@ -105,9 +97,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     public List<Subscriber> all() throws DAOException {
         List<Subscriber> subscribers = new ArrayList<>();
         
+        Connection connection = ConnectionPool.conn();
         try (Statement statement = connection.createStatement()) {
             statement.executeQuery(FIND_ALL);
-            
             ResultSet resultSet = statement.getResultSet();
             
             while (resultSet.next()) {
@@ -115,6 +107,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscribers;
@@ -127,6 +121,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     public long numberOfSubscribers() throws DAOException {
         long number = 0;
         
+        Connection connection = ConnectionPool.conn();
         try (Statement statement = connection.createStatement()) {
             statement.executeQuery(FIND_NUMBER_OF_SUBSCRIBERS);
             
@@ -137,6 +132,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return number;
@@ -153,6 +150,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         
         List<Subscriber> subscribers = new ArrayList<>();
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection,
                                                            FIND_ALL_LIMIT_OFFSET, false,
@@ -166,6 +164,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscribers;
@@ -213,6 +213,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         
         Subscriber subscriber = null;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, sql, false, objects);
@@ -223,17 +224,11 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscriber;
-    }
-    
-    private User findUser(long userId) {
-        return new UserDAOMySQL(connection).find(userId);
-    }
-    
-    private Account findAccount(long accountId) {
-        return new AccountDAOMySQL(connection).find(accountId);
     }
     
     /**
@@ -242,6 +237,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     @Override
     public List<Subscriber> findSubscriptionExpirers() throws DAOException {
         List<Subscriber> subscribers = new ArrayList<>();
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(connection,
                                                            FIND_SUBSCRIPTION_EXPIRERS,
@@ -253,6 +250,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscribers;
@@ -265,6 +264,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     public double calculateDebt(long id) throws DAOException {
         double debt = 0;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CALCULATE_DEBT, false, id);
@@ -275,6 +275,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return debt;
@@ -301,6 +303,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
      */
     @Override
     public boolean update(Subscriber subscriber) throws DAOException {
+        
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, UPDATE_SUBSCRIBER, true,
@@ -314,6 +318,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
     }
     
@@ -322,6 +328,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
      */
     @Override
     public Subscriber create(Subscriber subscriber) throws DAOException {
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, CREATE_SUBSCRIBER, true,
@@ -340,6 +347,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscriber;
@@ -350,6 +359,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     public List<Subscriber> search(String word1, String word2,
                                    String word3) throws DAOException {
         List<Subscriber> subscribers = new ArrayList<>();
+        Connection connection = ConnectionPool.conn();
         try (
             CallableStatement cstmt = connection.prepareCall(CALL_SEARCH_SUBSCRIBER)
         ) {
@@ -365,6 +375,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             }
         } catch (SQLException e) {
             throw new DAOException(e);
+        } finally {
+            ConnectionPool.returnConn(connection);
         }
         
         return subscribers;
@@ -373,6 +385,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
     private int findInternets(long subId) {
         int amount = 0;
         
+        Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
                 connection, FIND_INTERNETS, false, subId);
@@ -415,7 +428,8 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             ""
         );
         
-        Subscriber subscriber = new Subscriber(
+        
+        return new Subscriber(
             resultSet.getLong("subscriber_id"),
             resultSet.getString("first_name"),
             resultSet.getString("last_name"),
@@ -425,7 +439,5 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             user,
             account
         );
-        
-        return subscriber;
     }
 }

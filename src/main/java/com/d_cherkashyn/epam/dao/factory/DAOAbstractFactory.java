@@ -20,73 +20,64 @@ public interface DAOAbstractFactory {
     /**
      * Creates MessageDAO
      *
-     * @param connection
      * @return MessageDAO instance
      */
-    MessageDAO makeMessageDAO(Connection connection);
+    MessageDAO makeMessageDAO();
     
     /**
      * Creates UserDAO
      *
-     * @param connection
      * @return UserDAO instance
      */
-    UserDAO makeUserDAO(Connection connection);
+    UserDAO makeUserDAO();
     
     /**
      * Creates AccoutnDAO
      *
-     * @param connection
      * @return AccountDAO instance
      */
-    AccountDAO makeAccountDAO(Connection connection);
+    AccountDAO makeAccountDAO();
     
     /**
      * Creates SubscriberDAO
      *
-     * @param connection
      * @return MessageDAO instance
      */
-    SubscriberDAO makeSubscriberDAO(Connection connection);
+    SubscriberDAO makeSubscriberDAO();
     
     /**
      * Creates ChatDAO
      *
-     * @param connection
      * @return ChatDAO instance
      */
-    ChatDAO makeChatDAO(Connection connection);
+    ChatDAO makeChatDAO();
     
     /**
      * Creates TariffDAO
      *
-     * @param connection
      * @return TariffDAO instance
      */
-    TariffDAO makeTariffDAO(Connection connection);
+    TariffDAO makeTariffDAO();
     
     /**
      * Creates ServiceDAO
      *
-     * @param connection
      * @return ServiceDAO instance
      */
-    ServiceDAO makeServiceDAO(Connection connection);
+    ServiceDAO makeServiceDAO();
     
     /**
      * Creates RoleDAO
      *
-     * @param connection
      * @return RoleDAO instance
      */
-    RoleDAO makeRoleDAO(Connection connection);
+    RoleDAO makeRoleDAO();
     
     /**
      * Creates SubscriptionDAO
      *
-     * @param connection
      * @return SubscriptionDAO instance
      */
-    SubscriptionDAO makeSubscriptionDAO(Connection connection);
+    SubscriptionDAO makeSubscriptionDAO();
     
 }
