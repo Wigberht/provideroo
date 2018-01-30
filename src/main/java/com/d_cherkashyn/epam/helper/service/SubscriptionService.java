@@ -1,6 +1,6 @@
 package com.d_cherkashyn.epam.helper.service;
 
-import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
 import com.d_cherkashyn.epam.helper.TimeHelper;
 import com.d_cherkashyn.epam.model.Account;
 import com.d_cherkashyn.epam.model.Subscriber;
@@ -58,15 +58,15 @@ public class SubscriptionService extends ServiceHelper {
     }
     
     public Subscription createSubscription(Subscription subscription) {
-        return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO()
-                               .create(subscription);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeSubscriptionDAO()
+                                  .create(subscription);
     }
     
     public List<Subscription> getSubscriptions(long subscriberId) {
-        return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO()
-                               .findBySubscriber(subscriberId);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeSubscriptionDAO()
+                                  .findBySubscriber(subscriberId);
     }
     
     public boolean setSubscriptionProlong(Subscription subscription,
@@ -74,20 +74,20 @@ public class SubscriptionService extends ServiceHelper {
         subscription.setProlong(prolong);
         
         LOGGER.info("setSubscriptionProlong " + subscription.isProlong());
-        return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO()
-                               .update(subscription);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeSubscriptionDAO()
+                                  .update(subscription);
     }
     
     public Subscription findSubscription(long tariffId, long subscriberId) {
-        return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO()
-                               .find(tariffId, subscriberId);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeSubscriptionDAO()
+                                  .find(tariffId, subscriberId);
     }
     
     public boolean prolongSubscriptions(long subscriberId) {
-        return FactoryGenerator.getFactory()
-                               .makeSubscriptionDAO()
-                               .prolongSubscriptions(subscriberId);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeSubscriptionDAO()
+                                  .prolongSubscriptions(subscriberId);
     }
 }

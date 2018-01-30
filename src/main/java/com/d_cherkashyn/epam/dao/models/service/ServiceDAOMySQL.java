@@ -2,10 +2,8 @@ package com.d_cherkashyn.epam.dao.models.service;
 
 import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
-import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Service;
-import com.d_cherkashyn.epam.model.Tariff;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

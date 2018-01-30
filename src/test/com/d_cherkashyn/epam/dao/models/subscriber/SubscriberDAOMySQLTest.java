@@ -1,7 +1,7 @@
 package com.d_cherkashyn.epam.dao.models.subscriber;
 
 import com.d_cherkashyn.epam.ConnectionPool;
-import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -16,9 +16,9 @@ public class SubscriberDAOMySQLTest {
         long subscriberId = 24;
         Connection connection = ConnectionPool.conn();
         
-        assertThat(FactoryGenerator.getFactory()
-                                   .makeSubscriberDAO()
-                                   .calculateDebt(subscriberId),
+        assertThat(DAOFactoryGenerator.getFactory()
+                                      .makeSubscriberDAO()
+                                      .calculateDebt(subscriberId),
                    CoreMatchers.instanceOf(Double.class)
         );
         
@@ -31,9 +31,9 @@ public class SubscriberDAOMySQLTest {
         long subscriberId = 24;
         Connection connection = ConnectionPool.conn();
         
-        assertTrue(FactoryGenerator.getFactory()
-                                   .makeSubscriberDAO()
-                                   .calculateDebt(subscriberId) >= 0);
+        assertTrue(DAOFactoryGenerator.getFactory()
+                                      .makeSubscriberDAO()
+                                      .calculateDebt(subscriberId) >= 0);
         
         ConnectionPool.returnConn(connection);
         

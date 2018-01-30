@@ -1,6 +1,6 @@
 package com.d_cherkashyn.epam.helper.service;
 
-import com.d_cherkashyn.epam.dao.factory.FactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
 import com.d_cherkashyn.epam.model.User;
 
 import java.sql.Connection;
@@ -17,27 +17,27 @@ public class UserService extends ServiceHelper {
     }
     
     public boolean setBanned(long userId, boolean banned) {
-        return FactoryGenerator.getFactory()
-                               .makeUserDAO()
-                               .setBanned(userId, banned);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeUserDAO()
+                                  .setBanned(userId, banned);
     }
     
     public List<User> getAllUsers() {
-        return FactoryGenerator.getFactory()
-                               .makeUserDAO()
-                               .all();
+        return DAOFactoryGenerator.getFactory()
+                                  .makeUserDAO()
+                                  .all();
     }
     
     
     public String getUserUpdatedTime(long id) {
-        return FactoryGenerator.getFactory()
-                               .makeUserDAO()
-                               .getUpdateTime(id);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeUserDAO()
+                                  .getUpdateTime(id);
     }
     
     public User getUser(long id) {
-        return FactoryGenerator.getFactory()
-                               .makeUserDAO()
-                               .find(id);
+        return DAOFactoryGenerator.getFactory()
+                                  .makeUserDAO()
+                                  .find(id);
     }
 }

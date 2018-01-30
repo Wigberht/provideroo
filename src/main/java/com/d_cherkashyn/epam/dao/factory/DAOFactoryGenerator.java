@@ -6,7 +6,7 @@ import com.d_cherkashyn.epam.manager.DBResourceManager;
 /**
  * Generates a factory of DAO. Singleton
  */
-public class FactoryGenerator {
+public class DAOFactoryGenerator {
     
     private static DAOAbstractFactory factory;
     
@@ -19,7 +19,7 @@ public class FactoryGenerator {
      */
     public static DAOAbstractFactory getFactory() {
         if (factory == null) {
-            synchronized (FactoryGenerator.class) {
+            synchronized (DAOFactoryGenerator.class) {
                 if (factory == null) {
                     if (dbType == null) {
                         dbType = DBResourceManager.getInstance()
@@ -56,5 +56,5 @@ public class FactoryGenerator {
     /**
      * private constructor to stay in shape of a singleton
      */
-    private FactoryGenerator() { }
+    private DAOFactoryGenerator() { }
 }
