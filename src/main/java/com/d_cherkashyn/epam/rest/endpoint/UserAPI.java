@@ -132,23 +132,31 @@ public class UserAPI extends HttpServlet {
     @Path("/profile/update")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProfile(String data) {
-        JSONService jsonService = new JSONService();
+        
         SubscriberService subscriberService = new SubscriberService();
+        boolean success;
         
-        long userId = jsonService.get(data, "userId").asLong();
-        String firstName = jsonService.get(data, "firstName").asText();
-        String lastName = jsonService.get(data, "lastName").asText();
-        String login = jsonService.get(data, "login").asText();
+        long userId = JSONService.get(data, "userId").asLong();
+        String firstName = JSONService.get(data, "firstName").asText();
+        String lastName = JSONService.get(data, "lastName").asText();
+        String login = JSONService.get(data, "login").asText();
         
-        Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
-        subscriber.setFirstName(firstName);
-        subscriber.setLastName(lastName);
-        subscriber.getUser().setLogin(login);
+        if (!MainValidator.simpleText(firstName)
+            || !MainValidator.simpleText(lastName)
+            || !MainValidator.login(login)) {
+            success = false;
+        } else {
+            
+            Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
+            subscriber.setFirstName(firstName);
+            subscriber.setLastName(lastName);
+            subscriber.getUser().setLogin(login);
+            
+            success = subscriberService.updateSubscriberProfile(subscriber);
+            subscriberService.returnConnection();
+        }
         
-        boolean success = subscriberService.updateSubscriberProfile(subscriber);
-        subscriberService.returnConnection();
-        
-        String response = jsonService.toJSON(new SimpleResponse(success));
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(200).entity(response).build();
     }

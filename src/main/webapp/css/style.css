@@ -96,3 +96,8 @@ main {
 .small-padding {
     padding: 10px !important;
 }
+
+.message-under-time {
+    font-size: 8px;
+    margin-top: -15px
+}

@@ -14,6 +14,7 @@
             <td><fmt:message key="login"/></td>
             <td><fmt:message key="balance"/></td>
             <td><fmt:message key="birth_date"/></td>
+            <td><fmt:message key="internets"/></td>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
                         ${subscriber.account.currencyShortname}
                 </td>
                 <td class="col s2">${subscriber.birthDate}</td>
+                <td class="col s2">${subscriber.internetSubscriptions}</td>
                 <td class="col s2">
                     <ban-button
                         text_ban="<fmt:message key="ban"/>"

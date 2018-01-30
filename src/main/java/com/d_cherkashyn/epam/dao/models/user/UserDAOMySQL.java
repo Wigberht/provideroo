@@ -26,6 +26,7 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     private static final String FIND_BY_ROLE = ""
         + "SELECT * FROM user WHERE role_id = ?";
     
+    private static final String GET_UPDATE_TIME = "SELECT updated_at from user where id=?";
     private static final String FIND_ALL = "SELECT * from user";
     
     private static final String FIND_CHAT_MEMBERS = "SELECT u.id,\n" +
@@ -101,6 +102,25 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
     @Override
     public boolean delete(String login) throws DAOException {
         return false;
+    }
+    
+    @Override
+    public String getUpdateTime(long id) throws DAOException {
+        String updateTime = null;
+        
+        try (
+            PreparedStatement stmt = prepareStatement(connection, GET_UPDATE_TIME,
+                                                      false, id);
+            ResultSet resultSet = stmt.executeQuery()
+        ) {
+            if (resultSet.next()) {
+                updateTime = resultSet.getString("updated_at");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return updateTime;
     }
     
     @Override

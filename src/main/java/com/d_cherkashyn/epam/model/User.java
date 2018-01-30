@@ -9,6 +9,7 @@ public class User extends Entity {
     private String updatedAt;
     private String createdAt;
     
+    
     public User() {
     }
     

@@ -36,6 +36,13 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         + "  INNER JOIN account ON subscriber.account_id = account.id\n"
         + "  INNER JOIN user ON subscriber.user_id = user.id ";
     
+    private static final String FIND_INTERNETS = "SELECT count(*) as internets from subscriber as sub\n" +
+        "    INNER JOIN tariff_subscriber as ts ON sub.id = ts.subscriber_id\n" +
+        "    INNER JOIN tariff as t ON ts.tariff_id = t.id\n" +
+        "    INNER JOIN service ON t.service_id = service.id\n" +
+        "  WHERE sub.id=?\n" +
+        "AND service.title LIKE '%intern%'";
+    
     private static final String FIND_BY_ID = FIND_ALL + " WHERE id = ?";
     private static final String FIND_BY_USER_ID = FIND_ALL + " WHERE user_id = ?;";
     private static final String FIND_ALL_LIMIT_OFFSET = FIND_ALL + " LIMIT ? OFFSET ?";
@@ -47,8 +54,10 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         ");";
     
     
-    private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SHOW TABLE STATUS\n" +
-        "WHERE Name = 'subscriber';";
+    //    private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SHOW TABLE STATUS\n" +
+//        "WHERE Name = 'subscriber';";
+    private static final String FIND_NUMBER_OF_SUBSCRIBERS = "SELECT count(*) as " +
+        "subscribers from subscriber;";
     
     private static final String CALL_SEARCH_SUBSCRIBER = "{call search_subscriber_utf" +
         "(?,?,?)}";
@@ -124,7 +133,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             ResultSet resultSet = statement.getResultSet();
             
             if (resultSet.next()) {
-                number = resultSet.getLong("Rows");
+                number = resultSet.getLong("subscribers");
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -151,7 +160,9 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
-                subscribers.add(mapAll(resultSet));
+                Subscriber subscriber = mapAll(resultSet);
+                subscriber.setInternetSubscriptions(findInternets(subscriber.getId()));
+                subscribers.add(subscriber);
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -359,6 +370,24 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return subscribers;
     }
     
+    private int findInternets(long subId) {
+        int amount = 0;
+        
+        try (
+            PreparedStatement statement = prepareStatement(
+                connection, FIND_INTERNETS, false, subId);
+            ResultSet resultSet = statement.executeQuery()
+        ) {
+            if (resultSet.next()) {
+                amount = resultSet.getInt("internets");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        
+        return amount;
+    }
+    
     private static Subscriber map(ResultSet resultset) throws SQLException {
         return new Subscriber(
             resultset.getLong("id"),
@@ -386,7 +415,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             ""
         );
         
-        return new Subscriber(
+        Subscriber subscriber = new Subscriber(
             resultSet.getLong("subscriber_id"),
             resultSet.getString("first_name"),
             resultSet.getString("last_name"),
@@ -396,5 +425,7 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
             user,
             account
         );
+        
+        return subscriber;
     }
 }

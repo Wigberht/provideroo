@@ -33,12 +33,12 @@ public class AccessFilter implements Filter {
      * @throws IOException
      */
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
+    public void doFilter(ServletRequest req, ServletResponse res,
+                         FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         
         if (!AccessHelper.isAccessAllowed(request)) {
-            String errorPage = PagesResourceManager
-                .getPage("access_denied_jsp");
+            String errorPage = PagesResourceManager.getPage("access_denied_jsp");
             
             RequestDispatcher rd = req.getRequestDispatcher(errorPage);
             

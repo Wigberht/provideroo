@@ -70,7 +70,11 @@
                     'login': this.d_subscriber.user.login
                 }).then((response) => {
                     console.log(response);
-                    Materialize.toast(strings['update_success'], 1500, "green darken-2")
+                    if (response.data.success) {
+                        Materialize.toast(strings['update_success'], 1500, "green darken-2")
+                    } else {
+                        Materialize.toast(strings['update_fail'], 1500, "red darken-2");
+                    }
                 }).catch((error) => {
                     console.log(error);
                     Materialize.toast(strings['update_fail'], 1500, "red darken-2");

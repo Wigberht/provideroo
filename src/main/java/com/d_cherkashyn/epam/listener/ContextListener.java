@@ -56,10 +56,10 @@ public class ContextListener implements ServletContextListener {
         LocalDateTime startOfDay = LocalDate.now().plusDays(1).atStartOfDay();
         long initialDelayInMinutes = LocalDateTime.now()
                                                   .until(startOfDay, ChronoUnit.MINUTES);
-        initialDelayInMinutes = 1;
+        initialDelayInMinutes = 5;
         
         long continuousDelayInMinutes = TimeUnit.DAYS.toMinutes(1);
-        continuousDelayInMinutes = 1;
+        continuousDelayInMinutes = 5;
         
         
         scheduler.scheduleAtFixedRate(new UpdateSubscriptionsJob(),

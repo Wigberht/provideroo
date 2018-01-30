@@ -6,7 +6,7 @@
                     <input type="text" v-model="searchQ" @keyup.enter="search">
                 </div>
                 <div @click="search" class="btn col s2">
-                    search
+                    {{searchText}}
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             </div>
 
             <template v-if="noResults">
-                <h5>No results</h5>
+                <h5>{{noResultsText}}</h5>
                 <br>
             </template>
 
@@ -69,6 +69,10 @@
                 subscribers: [],
                 searchQ: "",
                 noResults: false,
+
+                noResultsText: strings['no_results'],
+
+                searchText: strings['search'],
 
                 first_name_text: strings['first_name'],
                 last_name_text: strings['last_name'],

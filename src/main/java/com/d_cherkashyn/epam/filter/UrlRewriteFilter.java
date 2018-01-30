@@ -89,8 +89,6 @@ public class UrlRewriteFilter implements Filter {
         
         page = sb.toString();
         
-        LOGGER.info("Accessing page: " + page);
-        
         return page;
     }
     

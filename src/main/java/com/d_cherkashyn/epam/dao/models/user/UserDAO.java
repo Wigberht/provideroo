@@ -10,6 +10,8 @@ public interface UserDAO {
     
     List<User> all() throws DAOException;
     
+    String getUpdateTime(long id) throws DAOException;
+    
     User find(Long id) throws DAOException;
     
     User find(String login) throws DAOException;

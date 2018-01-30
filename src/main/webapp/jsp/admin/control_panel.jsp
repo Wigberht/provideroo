@@ -5,10 +5,11 @@
 
 
         <div class="row">
-            <form class="col s8 offset-s2" action="/MainController"
-                  method="post">
-                <h1>WELCOME <c:out value="${sessionScope.user.login}"/></h1>
-            </form>
+            <div class="col s8 offset-s2">
+                <h1><fmt:message key="welcome"/>
+                    <c:out value="${sessionScope.user.login}"/>
+                </h1>
+            </div>
         </div>
 
 </mt:admin_layout>

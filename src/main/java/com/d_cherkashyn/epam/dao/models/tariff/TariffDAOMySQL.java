@@ -78,7 +78,7 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
           .append(field)
           .append(" ")
           .append(order);
-        LOGGER.info("Constructed SQL: {}", sb.toString());
+        
         try (
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sb.toString())

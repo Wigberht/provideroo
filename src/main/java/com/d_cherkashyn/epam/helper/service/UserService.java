@@ -28,4 +28,16 @@ public class UserService extends ServiceHelper {
                                .all();
     }
     
+    
+    public String getUserUpdatedTime(long id) {
+        return FactoryGenerator.getFactory()
+                               .makeUserDAO(connection)
+                               .getUpdateTime(id);
+    }
+    
+    public User getUser(long id) {
+        return FactoryGenerator.getFactory()
+                               .makeUserDAO(connection)
+                               .find(id);
+    }
 }

@@ -1,15 +1,17 @@
 <script type="text/x-template" id="chat-message-template">
     <div>
         <template v-if="isMine">
-            <p class="right message-right message-block word-wrap">
-                {{message.message}}
-            </p>
+            <div class="right message-right message-block word-wrap">
+                <p>{{message.message}}</p>
+                <p class="message-under-time">{{message.createdAt}}</p>
+            </div>
         </template>
 
         <template v-if="!isMine">
-            <p class="left message-left message-block word-wrap">
-                <b>{{messageAuthor.login}}</b> : {{message.message}}
-            </p>
+            <div class="left message-left message-block word-wrap">
+                <p><b>{{messageAuthor.login}}</b> : {{message.message}}</p>
+                <p class="message-under-time">{{message.createdAt}}</p>
+            </div>
         </template>
     </div>
 </script>

@@ -17,7 +17,6 @@ public class Jsonify extends TagSupport {
     
     private Object obj;
     
-    
     @Override
     public int doStartTag() throws JspException {
         

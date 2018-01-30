@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class MainValidator {
     
-    private static final String LOGIN_REGEX = "^(\\w)(?=\\S+$).{6,}$";
+    private static final String LOGIN_REGEX = "^(\\w)(?=\\S+$).{5,}$";
     private static final Pattern LOGIN_PATTERN = Pattern.compile(LOGIN_REGEX);
     
     private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";

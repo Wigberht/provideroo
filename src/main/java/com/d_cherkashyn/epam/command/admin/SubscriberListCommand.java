@@ -32,8 +32,7 @@ public class SubscriberListCommand implements Command {
         boolean containsLimit = request.getParameterMap()
                                        .containsKey("limit");
         boolean limitNumeric = StringUtils.isNumeric(request.getParameter("limit"));
-
-//        handle limit for list
+        
         if (containsLimit && limitNumeric) {
             limit = Integer.parseInt(request.getParameter("limit"));
             request.getSession()
@@ -58,6 +57,7 @@ public class SubscriberListCommand implements Command {
             pagination.addPage(PagesResourceManager.getPage("subscriber_list"), i + 1);
         }
         request.setAttribute("pagination", pagination);
+        LOGGER.info("pages: {}, users :{}", pages, numberOfSubscribers);
         
         ss.returnConnection();
         

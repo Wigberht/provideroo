@@ -11,7 +11,7 @@
         template: "#ban-button-template",
         data() {
             return {
-                banned: false,
+                banned: this.banned_state == 'true',
                 toast: {
                     time: 2000,
                 }
@@ -37,10 +37,7 @@
                 })
             },
         },
-        mounted: function () {
-            this.banned = this.banned_state == 'true';
-            console.log(strings['access_denied_description']);
-        },
+        mounted: function () { },
         computed: {
             buttonText() {
                 return this.banned ? strings['unban'] : strings['ban'];
