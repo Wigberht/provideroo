@@ -20,6 +20,14 @@ public class Pagination {
         this.pages = pages;
     }
     
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Pagination{");
+        sb.append("pages=").append(pages);
+        sb.append('}');
+        return sb.toString();
+    }
+    
     public class Page {
         public String link;
         public int number;
@@ -44,13 +52,5 @@ public class Pagination {
         public void setNumber(int number) {
             this.number = number;
         }
-    }
-    
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Pagination{");
-        sb.append("pages=").append(pages);
-        sb.append('}');
-        return sb.toString();
     }
 }

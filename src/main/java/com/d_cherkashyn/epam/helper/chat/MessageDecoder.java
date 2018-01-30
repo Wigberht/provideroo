@@ -28,11 +28,11 @@ public class MessageDecoder implements Decoder.Text<Message> {
     
     @Override
     public void init(EndpointConfig endpointConfig) {
-    
+
     }
     
     @Override
     public void destroy() {
-    
+
     }
 }

@@ -49,6 +49,25 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
      */
     public ChatDAOMySQL() {}
     
+    private static Chat map(ResultSet resultset) throws SQLException {
+        return new Chat(
+            resultset.getLong("id"),
+            resultset.getString("title")
+        );
+    }
+    
+    private static Message mapMessage(ResultSet resultSet) throws SQLException {
+        return new Message(
+            resultSet.getLong("id"),
+            resultSet.getString("message"),
+            resultSet.getBoolean("read"),
+            resultSet.getString("updated_at"),
+            resultSet.getString("created_at"),
+            resultSet.getLong("user_id"),
+            resultSet.getLong("chat_id")
+        );
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -74,7 +93,6 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         
         return chat;
     }
-    
     
     /**
      * {@inheritDoc}
@@ -121,7 +139,6 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         
         return chats;
     }
-    
     
     /**
      * {@inheritDoc}
@@ -189,24 +206,5 @@ public class ChatDAOMySQL extends DAOModel implements ChatDAO {
         }
         
         return chat;
-    }
-    
-    private static Chat map(ResultSet resultset) throws SQLException {
-        return new Chat(
-            resultset.getLong("id"),
-            resultset.getString("title")
-        );
-    }
-    
-    private static Message mapMessage(ResultSet resultSet) throws SQLException {
-        return new Message(
-            resultSet.getLong("id"),
-            resultSet.getString("message"),
-            resultSet.getBoolean("read"),
-            resultSet.getString("updated_at"),
-            resultSet.getString("created_at"),
-            resultSet.getLong("user_id"),
-            resultSet.getLong("chat_id")
-        );
     }
 }

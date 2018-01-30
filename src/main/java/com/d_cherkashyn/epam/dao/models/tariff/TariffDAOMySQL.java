@@ -41,6 +41,18 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     
     public TariffDAOMySQL() {}
     
+    private static Tariff map(ResultSet resultset) throws SQLException {
+        return new Tariff(
+            resultset.getLong("id"),
+            resultset.getString("title"),
+            resultset.getString("description"),
+            resultset.getInt("number_of_days"),
+            resultset.getDouble("cost"),
+            resultset.getString("currency_shortname"),
+            resultset.getLong("service_id")
+        );
+    }
+    
     @Override
     public List<Tariff> findByService(long serviceId) throws DAOException {
         List<Tariff> tariffs = new ArrayList<>();
@@ -245,17 +257,5 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         }
         
         return tariff;
-    }
-    
-    private static Tariff map(ResultSet resultset) throws SQLException {
-        return new Tariff(
-            resultset.getLong("id"),
-            resultset.getString("title"),
-            resultset.getString("description"),
-            resultset.getInt("number_of_days"),
-            resultset.getDouble("cost"),
-            resultset.getString("currency_shortname"),
-            resultset.getLong("service_id")
-        );
     }
 }

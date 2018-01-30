@@ -118,7 +118,7 @@ public class MainValidatorTest {
     public void testSearchTextValid() {
         String text = "русский текст вместе с english text";
         
-        assertEquals(true,MainValidator.searchText(text));
+        assertEquals(true, MainValidator.searchText(text));
     }
     
 }

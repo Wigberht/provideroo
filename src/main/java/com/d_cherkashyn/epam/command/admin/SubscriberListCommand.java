@@ -4,15 +4,11 @@ import com.d_cherkashyn.epam.command.Command;
 import com.d_cherkashyn.epam.helper.Pagination;
 import com.d_cherkashyn.epam.helper.service.SubscriberService;
 import com.d_cherkashyn.epam.manager.PagesResourceManager;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Command that fetches and shows data about list of subscribers available to system

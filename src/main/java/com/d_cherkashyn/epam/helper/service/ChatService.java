@@ -1,6 +1,6 @@
 package com.d_cherkashyn.epam.helper.service;
 
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.model.Chat;
 import com.d_cherkashyn.epam.model.Message;
 import com.d_cherkashyn.epam.model.User;
@@ -19,22 +19,22 @@ public class ChatService extends ServiceHelper {
     }
     
     public List<Chat> getUserChats(long userId) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeChatDAO()
-                                  .findByUser(userId);
+        return DAOFactory.getFactory()
+                         .makeChatDAO()
+                         .findByUser(userId);
     }
     
     public Chat getChat(long chatId) {
-        Chat chat = DAOFactoryGenerator.getFactory()
-                                       .makeChatDAO()
-                                       .find(chatId);
-        List<Message> messages = DAOFactoryGenerator.getFactory()
-                                                    .makeMessageDAO()
-                                                    .getMessages(chatId);
+        Chat chat = DAOFactory.getFactory()
+                              .makeChatDAO()
+                              .find(chatId);
+        List<Message> messages = DAOFactory.getFactory()
+                                           .makeMessageDAO()
+                                           .getMessages(chatId);
         
-        List<User> members = DAOFactoryGenerator.getFactory()
-                                                .makeUserDAO()
-                                                .findChatMembers(chatId);
+        List<User> members = DAOFactory.getFactory()
+                                       .makeUserDAO()
+                                       .findChatMembers(chatId);
         
         chat.setMessages(messages);
         chat.setUsers(members);
@@ -43,15 +43,15 @@ public class ChatService extends ServiceHelper {
     }
     
     public Message pushMessage(Message message) {
-        message = DAOFactoryGenerator.getFactory()
-                                     .makeMessageDAO()
-                                     .create(message);
+        message = DAOFactory.getFactory()
+                            .makeMessageDAO()
+                            .create(message);
         
         /* get new one because it has id, created_at and updated_at data */
         if (message.getId() > 0) {
-            message = DAOFactoryGenerator.getFactory()
-                                         .makeMessageDAO()
-                                         .find(message.getId());
+            message = DAOFactory.getFactory()
+                                .makeMessageDAO()
+                                .find(message.getId());
         }
         
         return message;
@@ -72,26 +72,26 @@ public class ChatService extends ServiceHelper {
         }
         
         Chat chat = new Chat(0, chatTitle);
-        chat = DAOFactoryGenerator.getFactory()
-                                  .makeChatDAO()
-                                  .create(chat);
+        chat = DAOFactory.getFactory()
+                         .makeChatDAO()
+                         .create(chat);
         
         boolean creatorAdded;
         boolean receiverAdded;
         boolean success = false;
         
         if (receiverId == creatorId) {
-            success = DAOFactoryGenerator.getFactory()
-                                         .makeChatDAO()
-                                         .addUserToChat(creatorId, chat.getId());
+            success = DAOFactory.getFactory()
+                                .makeChatDAO()
+                                .addUserToChat(creatorId, chat.getId());
         } else if (chat.getId() != 0) {
-            creatorAdded = DAOFactoryGenerator.getFactory()
-                                              .makeChatDAO()
-                                              .addUserToChat(creatorId, chat.getId());
+            creatorAdded = DAOFactory.getFactory()
+                                     .makeChatDAO()
+                                     .addUserToChat(creatorId, chat.getId());
             
-            receiverAdded = DAOFactoryGenerator.getFactory()
-                                               .makeChatDAO()
-                                               .addUserToChat(receiverId, chat.getId());
+            receiverAdded = DAOFactory.getFactory()
+                                      .makeChatDAO()
+                                      .addUserToChat(receiverId, chat.getId());
             success = creatorAdded && receiverAdded;
         }
         
@@ -103,13 +103,13 @@ public class ChatService extends ServiceHelper {
     }
     
     public Chat findCommonChat(long creatorId, long receiverId) {
-        List<Chat> creatorChats = DAOFactoryGenerator.getFactory()
-                                                     .makeChatDAO()
-                                                     .findByUser(creatorId);
+        List<Chat> creatorChats = DAOFactory.getFactory()
+                                            .makeChatDAO()
+                                            .findByUser(creatorId);
         
-        List<Chat> receiverChats = DAOFactoryGenerator.getFactory()
-                                                      .makeChatDAO()
-                                                      .findByUser(receiverId);
+        List<Chat> receiverChats = DAOFactory.getFactory()
+                                             .makeChatDAO()
+                                             .findByUser(receiverId);
         
         Chat commonChat = null;
         

@@ -10,14 +10,11 @@ import com.d_cherkashyn.epam.model.Service;
 import com.d_cherkashyn.epam.model.Subscriber;
 import com.d_cherkashyn.epam.model.Subscription;
 import com.d_cherkashyn.epam.model.User;
-import com.d_cherkashyn.epam.rest.JSONService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.Connection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,19 +39,19 @@ public class ServiceListSubscriberCommand implements Command {
     private void fillServices(HttpServletRequest request, Connection connection) {
         ServiceService serviceService = new ServiceService();
         List<Service> services;
-    
+        
         Object sortField = request.getParameter("sortField");
         Object sortOrder = request.getParameter("sortOrder");
-    
+        
         if (sortOrder == null || sortField == null) {
             services = serviceService.getAllServices();
         } else {
             String sort = (String) sortField;
             String order = (String) sortOrder;
-        
+            
             services = serviceService.getSortedServices(sort, order);
         }
-    
+        
         request.setAttribute("services", services);
     }
     

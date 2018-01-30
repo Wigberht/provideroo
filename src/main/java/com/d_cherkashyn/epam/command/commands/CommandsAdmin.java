@@ -2,7 +2,8 @@ package com.d_cherkashyn.epam.command.commands;
 
 import com.d_cherkashyn.epam.command.Command;
 import com.d_cherkashyn.epam.command.admin.*;
-import com.d_cherkashyn.epam.command.general.*;
+import com.d_cherkashyn.epam.command.general.ChatListCommand;
+import com.d_cherkashyn.epam.command.general.RegistrationCommand;
 
 /**
  * Enumeration that provides a list of all commands

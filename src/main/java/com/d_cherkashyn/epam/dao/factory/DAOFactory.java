@@ -6,20 +6,25 @@ import com.d_cherkashyn.epam.manager.DBResourceManager;
 /**
  * Generates a factory of DAO. Singleton
  */
-public class DAOFactoryGenerator {
+public class DAOFactory {
     
-    private static DAOAbstractFactory factory;
+    private static AbstractDAO factory;
     
     private static String dbType;
+    
+    /**
+     * private constructor to stay in shape of a singleton
+     */
+    private DAOFactory() { }
     
     /**
      * Gets a factory
      *
      * @return instance of factory for database currently in use by system
      */
-    public static DAOAbstractFactory getFactory() {
+    public static AbstractDAO getFactory() {
         if (factory == null) {
-            synchronized (DAOFactoryGenerator.class) {
+            synchronized (DAOFactory.class) {
                 if (factory == null) {
                     if (dbType == null) {
                         dbType = DBResourceManager.getInstance()
@@ -28,11 +33,11 @@ public class DAOFactoryGenerator {
                     
                     switch (SupportedDB.valueOf(dbType.toUpperCase())) {
                         case MYSQL:
-                            factory = new MySQLDAOFactory();
+                            factory = new MySQLDAO();
                             break;
                         
                         case POSTGRES:
-                            factory = new PostgresDAOFactory();
+                            factory = new PostgresDAO();
                             break;
                         
                         default:
@@ -52,9 +57,4 @@ public class DAOFactoryGenerator {
     public static void setDbType(String _dbType) {
         dbType = _dbType;
     }
-    
-    /**
-     * private constructor to stay in shape of a singleton
-     */
-    private DAOFactoryGenerator() { }
 }

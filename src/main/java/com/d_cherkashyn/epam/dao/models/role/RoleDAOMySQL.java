@@ -22,6 +22,13 @@ public class RoleDAOMySQL extends DAOModel implements RoleDAO {
      */
     public RoleDAOMySQL() {}
     
+    private static Role map(ResultSet resultset) throws SQLException {
+        return new Role(
+            resultset.getLong("id"),
+            resultset.getString("name")
+        );
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -45,12 +52,5 @@ public class RoleDAOMySQL extends DAOModel implements RoleDAO {
         }
         
         return role;
-    }
-    
-    private static Role map(ResultSet resultset) throws SQLException {
-        return new Role(
-            resultset.getLong("id"),
-            resultset.getString("name")
-        );
     }
 }

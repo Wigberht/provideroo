@@ -12,7 +12,7 @@
         </div>
 
         <div class="right">
-            <%@include file="/WEB-INF/jspf/service_sort_block.jspf"%>
+            <%@include file="/WEB-INF/jspf/service_sort_block.jspf" %>
         </div>
     </div>
 

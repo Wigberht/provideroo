@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
  * basics for implementation command pattern
  */
 public interface Command {
-
+    
     /**
      * Execute command.
      *
@@ -15,5 +15,5 @@ public interface Command {
      * @return name of jsp
      */
     String execute(HttpServletRequest request);
-
+    
 }

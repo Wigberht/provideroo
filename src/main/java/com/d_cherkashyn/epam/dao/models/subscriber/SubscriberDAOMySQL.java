@@ -3,11 +3,8 @@ package com.d_cherkashyn.epam.dao.models.subscriber;
 import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
-import com.d_cherkashyn.epam.dao.models.account.AccountDAOMySQL;
-import com.d_cherkashyn.epam.dao.models.user.UserDAOMySQL;
 import com.d_cherkashyn.epam.model.Account;
 import com.d_cherkashyn.epam.model.Subscriber;
-import com.d_cherkashyn.epam.model.Tariff;
 import com.d_cherkashyn.epam.model.User;
 
 import java.sql.*;
@@ -89,6 +86,46 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
      * Creates instance of SubscriberDAO
      */
     public SubscriberDAOMySQL() { }
+    
+    private static Subscriber map(ResultSet resultset) throws SQLException {
+        return new Subscriber(
+            resultset.getLong("id"),
+            resultset.getString("first_name"),
+            resultset.getString("last_name"),
+            resultset.getString("birth_date"),
+            resultset.getLong("user_id"),
+            resultset.getLong("account_id")
+        );
+    }
+    
+    private static Subscriber mapAll(ResultSet resultSet) throws SQLException {
+        User user = new User(
+            resultSet.getLong("user_id"),
+            resultSet.getString("login"),
+            resultSet.getString("password"),
+            resultSet.getBoolean("banned"),
+            resultSet.getLong("role_id")
+        );
+        
+        Account account = new Account(
+            resultSet.getLong("account_id"),
+            resultSet.getDouble("balance"),
+            resultSet.getString("currency_shortname"),
+            ""
+        );
+        
+        
+        return new Subscriber(
+            resultSet.getLong("subscriber_id"),
+            resultSet.getString("first_name"),
+            resultSet.getString("last_name"),
+            resultSet.getString("birth_date"),
+            resultSet.getLong("user_id"),
+            resultSet.getLong("account_id"),
+            user,
+            account
+        );
+    }
     
     /**
      * {@inheritDoc}
@@ -354,7 +391,6 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         return subscriber;
     }
     
-    
     @Override
     public List<Subscriber> search(String word1, String word2,
                                    String word3) throws DAOException {
@@ -399,45 +435,5 @@ public class SubscriberDAOMySQL extends DAOModel implements SubscriberDAO {
         }
         
         return amount;
-    }
-    
-    private static Subscriber map(ResultSet resultset) throws SQLException {
-        return new Subscriber(
-            resultset.getLong("id"),
-            resultset.getString("first_name"),
-            resultset.getString("last_name"),
-            resultset.getString("birth_date"),
-            resultset.getLong("user_id"),
-            resultset.getLong("account_id")
-        );
-    }
-    
-    private static Subscriber mapAll(ResultSet resultSet) throws SQLException {
-        User user = new User(
-            resultSet.getLong("user_id"),
-            resultSet.getString("login"),
-            resultSet.getString("password"),
-            resultSet.getBoolean("banned"),
-            resultSet.getLong("role_id")
-        );
-        
-        Account account = new Account(
-            resultSet.getLong("account_id"),
-            resultSet.getDouble("balance"),
-            resultSet.getString("currency_shortname"),
-            ""
-        );
-        
-        
-        return new Subscriber(
-            resultSet.getLong("subscriber_id"),
-            resultSet.getString("first_name"),
-            resultSet.getString("last_name"),
-            resultSet.getString("birth_date"),
-            resultSet.getLong("user_id"),
-            resultSet.getLong("account_id"),
-            user,
-            account
-        );
     }
 }

@@ -3,14 +3,14 @@
 
 <mt:general>
     <jsp:attribute name="head">
-        <title><fmt:message key="page_not_found" /></title>
+        <title><fmt:message key="page_not_found"/></title>
       <mt:head/>
     </jsp:attribute>
 
     <jsp:body>
         <div class="container">
-            <h1><fmt:message key="page_not_found" /></h1>
-            <p><fmt:message key="404_description" /></p>
+            <h1><fmt:message key="page_not_found"/></h1>
+            <p><fmt:message key="404_description"/></p>
             <c:if test="${isAdmin}">
                 <a href="${root}/admin/control_panel">
                     <fmt:message key="back"/>

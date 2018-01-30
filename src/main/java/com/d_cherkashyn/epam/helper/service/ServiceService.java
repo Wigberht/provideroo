@@ -1,7 +1,7 @@
 package com.d_cherkashyn.epam.helper.service;
 
 import com.d_cherkashyn.epam.dao.DAOException;
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.dao.models.service.ServiceDAO;
 import com.d_cherkashyn.epam.helper.SortOrders;
 import com.d_cherkashyn.epam.model.Service;
@@ -26,8 +26,8 @@ public class ServiceService extends ServiceHelper {
     
     public Service createService(Service service) {
         Service createdService = null;
-        ServiceDAO serviceDAO = DAOFactoryGenerator.getFactory()
-                                                   .makeServiceDAO();
+        ServiceDAO serviceDAO = DAOFactory.getFactory()
+                                          .makeServiceDAO();
         try {
             createdService = serviceDAO.create(service);
         } catch (DAOException ex) {
@@ -38,13 +38,13 @@ public class ServiceService extends ServiceHelper {
     }
     
     public List<Service> getAllServices() {
-        List<Service> services = DAOFactoryGenerator.getFactory()
-                                                    .makeServiceDAO()
-                                                    .all();
+        List<Service> services = DAOFactory.getFactory()
+                                           .makeServiceDAO()
+                                           .all();
         for (Service service : services) {
-            List<Tariff> tariffs = DAOFactoryGenerator.getFactory()
-                                                      .makeTariffDAO()
-                                                      .findByService(service.getId());
+            List<Tariff> tariffs = DAOFactory.getFactory()
+                                             .makeTariffDAO()
+                                             .findByService(service.getId());
             service.setTariffs(tariffs);
         }
         
@@ -52,15 +52,15 @@ public class ServiceService extends ServiceHelper {
     }
     
     public List<Service> getAllServices(String sortField, String sortOrder) {
-        List<Service> services = DAOFactoryGenerator.getFactory()
-                                                    .makeServiceDAO()
-                                                    .all();
+        List<Service> services = DAOFactory.getFactory()
+                                           .makeServiceDAO()
+                                           .all();
         for (Service service : services) {
-            List<Tariff> tariffs = DAOFactoryGenerator.getFactory()
-                                                      .makeTariffDAO()
-                                                      .findByServiceSorted(service.getId(),
-                                                                        sortField,
-                                                                        sortOrder);
+            List<Tariff> tariffs = DAOFactory.getFactory()
+                                             .makeTariffDAO()
+                                             .findByServiceSorted(service.getId(),
+                                                                  sortField,
+                                                                  sortOrder);
             service.setTariffs(tariffs);
         }
         

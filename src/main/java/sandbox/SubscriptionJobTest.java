@@ -1,7 +1,7 @@
 package sandbox;
 
 import com.d_cherkashyn.epam.ConnectionPool;
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.model.Subscriber;
 
 import java.sql.Connection;
@@ -21,9 +21,9 @@ public class SubscriptionJobTest {
         System.out.println(pages);
         
         Connection connection = ConnectionPool.conn();
-        List<Subscriber> subscribers = DAOFactoryGenerator.getFactory()
-                                                          .makeSubscriberDAO()
-                                                          .all();
+        List<Subscriber> subscribers = DAOFactory.getFactory()
+                                                 .makeSubscriberDAO()
+                                                 .all();
         System.out.println(subscribers.size());
         
     }

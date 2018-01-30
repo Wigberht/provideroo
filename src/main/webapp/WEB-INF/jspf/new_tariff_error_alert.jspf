@@ -1,4 +1,3 @@
-
 <c:if test="${not empty sessionScope.validationError}">
     <div class="row" id="alert_box">
         <div class="col s12 m12">

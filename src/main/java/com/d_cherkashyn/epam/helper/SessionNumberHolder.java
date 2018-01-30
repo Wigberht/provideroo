@@ -4,21 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SessionNumberHolder {
-    Logger LOGGER = LoggerFactory.getLogger(SessionNumberHolder.class);
-    
     private static long sessions = 0;
-    
     private static SessionNumberHolder ourInstance = new SessionNumberHolder();
-    
-    public static SessionNumberHolder getInstance() {
-        return ourInstance;
-    }
+    Logger LOGGER = LoggerFactory.getLogger(SessionNumberHolder.class);
     
     private SessionNumberHolder() {
     }
     
-    public void setSessions(int amount) {
-        sessions = amount;
+    public static SessionNumberHolder getInstance() {
+        return ourInstance;
     }
     
     public void addSession() {
@@ -29,6 +23,10 @@ public class SessionNumberHolder {
     public long getSessions() {
         LOGGER.info("Session amount now :" + sessions);
         return sessions;
+    }
+    
+    public void setSessions(int amount) {
+        sessions = amount;
     }
     
     public void removeSession() {

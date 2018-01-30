@@ -1,7 +1,7 @@
 package com.d_cherkashyn.epam.listener;
 
 import com.d_cherkashyn.epam.ConnectionPool;
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.dao.models.role.RoleDAO;
 import com.d_cherkashyn.epam.helper.SessionNumberHolder;
 import com.d_cherkashyn.epam.helper.schedule.UpdateSubscriptionsJob;
@@ -35,11 +35,11 @@ public class ContextListener implements ServletContextListener {
         // init database type
         String dbType = servletContextEvent.getServletContext()
                                            .getInitParameter("db_type");
-        DAOFactoryGenerator.setDbType(dbType);
+        DAOFactory.setDbType(dbType);
         
         /* fetch role ids from DB */
         Connection connection = ConnectionPool.conn();
-        RoleDAO roleDAO = DAOFactoryGenerator.getFactory().makeRoleDAO();
+        RoleDAO roleDAO = DAOFactory.getFactory().makeRoleDAO();
         long adminId = roleDAO.find("admin").getId();
         long subscriberId = roleDAO.find("subscriber").getId();
         

@@ -26,8 +26,8 @@ import java.util.ResourceBundle;
  */
 public class TariffListPdfService {
     
+    private static final int WRAP_LENGTH = 25;
     Logger LOGGER = LoggerFactory.getLogger(TariffListPdfService.class);
-    
     private List<Service> services;
     private PDDocument document;
     private PDPageContentStream contentStream;
@@ -35,9 +35,7 @@ public class TariffListPdfService {
     private PDType0Font titleFont;
     private PDType0Font mainFont;
     private PDImageXObject logoImage;
-    
     private float maxRowY;
-    private static final int WRAP_LENGTH = 25;
     private ResourceBundle resourceBundle;
     
     

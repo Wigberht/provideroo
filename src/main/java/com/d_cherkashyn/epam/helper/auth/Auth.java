@@ -1,7 +1,7 @@
 package com.d_cherkashyn.epam.helper.auth;
 
 import com.d_cherkashyn.epam.ConnectionPool;
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.dao.models.user.UserDAO;
 import com.d_cherkashyn.epam.helper.Passwords;
 import com.d_cherkashyn.epam.model.User;
@@ -24,8 +24,8 @@ public class Auth {
         User user = null;
         
         Connection conn = ConnectionPool.conn();
-        UserDAO userDAO = DAOFactoryGenerator.getFactory()
-                                             .makeUserDAO();
+        UserDAO userDAO = DAOFactory.getFactory()
+                                    .makeUserDAO();
         
         User DBUser = userDAO.find(login);
         

@@ -9,9 +9,8 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Endpoint for chat sockets
@@ -22,10 +21,24 @@ import java.util.concurrent.CopyOnWriteArraySet;
 )
 public class ChatServerEndpoint {
     
-    private static Logger LOGGER = LoggerFactory.getLogger(ChatServerEndpoint.class);
-    
     private static final List<Session> sessions = new ArrayList<>();
+    private static Logger LOGGER = LoggerFactory.getLogger(ChatServerEndpoint.class);
     private long chatId;
+    
+    /**
+     * Broadcasts the message to all chat users
+     *
+     * @param message
+     * @throws IOException
+     * @throws EncodeException
+     */
+    private static void broadcast(Message message) throws IOException, EncodeException {
+        for (Session s : sessions) {
+            if (s.isOpen()) {
+                s.getBasicRemote().sendObject(message);
+            }
+        }
+    }
     
     /**
      * Handler for OPEN event
@@ -77,20 +90,5 @@ public class ChatServerEndpoint {
     @OnError
     public void onError(Throwable t) {
         LOGGER.error("Chat endpoint encountered an error", t);
-    }
-    
-    /**
-     * Broadcasts the message to all chat users
-     *
-     * @param message
-     * @throws IOException
-     * @throws EncodeException
-     */
-    private static void broadcast(Message message) throws IOException, EncodeException {
-        for (Session s : sessions) {
-            if (s.isOpen()) {
-                s.getBasicRemote().sendObject(message);
-            }
-        }
     }
 }

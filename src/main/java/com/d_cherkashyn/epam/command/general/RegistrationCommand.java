@@ -7,12 +7,11 @@ import com.d_cherkashyn.epam.manager.PagesResourceManager;
 import com.d_cherkashyn.epam.model.Account;
 import com.d_cherkashyn.epam.model.Subscriber;
 import com.d_cherkashyn.epam.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The Class MissingCommand provides functionality to register new user.

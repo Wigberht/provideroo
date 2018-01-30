@@ -5,7 +5,6 @@ import com.d_cherkashyn.epam.helper.service.SubscriberService;
 import com.d_cherkashyn.epam.manager.PagesResourceManager;
 import com.d_cherkashyn.epam.model.Subscriber;
 import com.d_cherkashyn.epam.model.User;
-import com.d_cherkashyn.epam.rest.JSONService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
 package com.d_cherkashyn.epam.rest.endpoint;
 
-import com.d_cherkashyn.epam.helper.service.*;
-import com.d_cherkashyn.epam.model.*;
+import com.d_cherkashyn.epam.helper.service.ChatService;
+import com.d_cherkashyn.epam.model.Chat;
 import com.d_cherkashyn.epam.rest.JSONService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

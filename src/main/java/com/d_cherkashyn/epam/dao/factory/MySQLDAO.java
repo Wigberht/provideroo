@@ -19,12 +19,10 @@ import com.d_cherkashyn.epam.dao.models.tariff.TariffDAOMySQL;
 import com.d_cherkashyn.epam.dao.models.user.UserDAO;
 import com.d_cherkashyn.epam.dao.models.user.UserDAOMySQL;
 
-import java.sql.Connection;
-
 /**
  * Implementation of Abstract factory to provide support for MySQL database
  */
-public class MySQLDAOFactory implements DAOAbstractFactory {
+public class MySQLDAO implements AbstractDAO {
     
     /**
      * {@inheritDoc}

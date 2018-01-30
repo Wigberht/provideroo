@@ -10,12 +10,10 @@ import com.d_cherkashyn.epam.dao.models.subscription.SubscriptionDAO;
 import com.d_cherkashyn.epam.dao.models.tariff.TariffDAO;
 import com.d_cherkashyn.epam.dao.models.user.UserDAO;
 
-import java.sql.Connection;
-
 /**
  * Abstract class required to create a Factory of DAO objects
  */
-public interface DAOAbstractFactory {
+public interface AbstractDAO {
     
     /**
      * Creates MessageDAO

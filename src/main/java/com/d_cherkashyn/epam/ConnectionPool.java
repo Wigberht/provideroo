@@ -19,12 +19,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConnectionPool {
     
     static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
-    
-    private final int DEFAULT_POOL_SIZE = 10;
     private static ConnectionPool instance = null;
     private static ReentrantLock lock = new ReentrantLock();
-    private BlockingQueue<Connection> pool;
     private static boolean available;
+    private final int DEFAULT_POOL_SIZE = 10;
+    private BlockingQueue<Connection> pool;
     
     private ConnectionPool() {
     }
@@ -40,6 +39,25 @@ public class ConnectionPool {
             lock.unlock();
         }
         return instance;
+    }
+    
+    /**
+     * Shortcut for ConnectionPool.getInstance().getConnection()
+     *
+     * @return Connection
+     */
+    public static Connection conn() {
+        return ConnectionPool.getInstance()
+                             .getConnection();
+    }
+    
+    /**
+     * Shortcut for getInstance().returnConnection(connection)
+     *
+     * @param connection Connection to return
+     */
+    public static void returnConn(Connection connection) {
+        getInstance().returnConnection(connection);
     }
     
     /**
@@ -61,16 +79,6 @@ public class ConnectionPool {
     }
     
     /**
-     * Shortcut for ConnectionPool.getInstance().getConnection()
-     *
-     * @return Connection
-     */
-    public static Connection conn() {
-        return ConnectionPool.getInstance()
-                             .getConnection();
-    }
-    
-    /**
      * Returns connection.
      *
      * @param connection the connection to return
@@ -79,15 +87,6 @@ public class ConnectionPool {
         if (connection != null) {
             pool.offer(connection);
         }
-    }
-    
-    /**
-     * Shortcut for getInstance().returnConnection(connection)
-     *
-     * @param connection Connection to return
-     */
-    public static void returnConn(Connection connection) {
-        getInstance().returnConnection(connection);
     }
     
     /**

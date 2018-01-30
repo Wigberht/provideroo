@@ -5,11 +5,7 @@ import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Account;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Implementation of accountDAO for MYSQL RDBMS
@@ -25,6 +21,15 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
      * Creates instance of AccountDAO
      */
     public AccountDAOMySQL() { }
+    
+    private static Account map(ResultSet resultset) throws SQLException {
+        return new Account(
+            resultset.getLong("id"),
+            resultset.getDouble("balance"),
+            resultset.getString("currency_shortname"),
+            resultset.getString("currency_symbol")
+        );
+    }
     
     /**
      * {@inheritDoc}
@@ -120,14 +125,5 @@ public class AccountDAOMySQL extends DAOModel implements AccountDAO {
         }
         
         return account;
-    }
-    
-    private static Account map(ResultSet resultset) throws SQLException {
-        return new Account(
-            resultset.getLong("id"),
-            resultset.getDouble("balance"),
-            resultset.getString("currency_shortname"),
-            resultset.getString("currency_symbol")
-        );
     }
 }

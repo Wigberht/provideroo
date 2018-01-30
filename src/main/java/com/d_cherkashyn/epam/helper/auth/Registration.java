@@ -2,7 +2,7 @@ package com.d_cherkashyn.epam.helper.auth;
 
 import com.d_cherkashyn.epam.ConnectionPool;
 import com.d_cherkashyn.epam.dao.DAOException;
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.dao.models.account.AccountDAO;
 import com.d_cherkashyn.epam.dao.models.subscriber.SubscriberDAO;
 import com.d_cherkashyn.epam.dao.models.user.UserDAO;
@@ -11,11 +11,10 @@ import com.d_cherkashyn.epam.model.Account;
 import com.d_cherkashyn.epam.model.Roles;
 import com.d_cherkashyn.epam.model.Subscriber;
 import com.d_cherkashyn.epam.model.User;
-
-import java.sql.Connection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.Connection;
 
 /**
  * Class for registration of new users
@@ -49,8 +48,8 @@ public class Registration {
      */
     public Subscriber registerSubscriber(Subscriber subscriber) {
         Subscriber resultingSubscriber = null;
-        SubscriberDAO subscriberDAO = DAOFactoryGenerator.getFactory()
-                                                         .makeSubscriberDAO();
+        SubscriberDAO subscriberDAO = DAOFactory.getFactory()
+                                                .makeSubscriberDAO();
 //        try {
         resultingSubscriber = subscriberDAO.create(subscriber);
 //            LOGGER.info("Subscriber created");
@@ -68,7 +67,7 @@ public class Registration {
      */
     public Account registerAccount() {
         Account resultingAccount = null;
-        AccountDAO accountDAO = DAOFactoryGenerator.getFactory().makeAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getFactory().makeAccountDAO();
         try {
             resultingAccount = accountDAO.create(new Account());
             LOGGER.info("User account created successfully");
@@ -86,8 +85,8 @@ public class Registration {
      * @return
      */
     public User registerUser(User user) {
-        UserDAO userDAO = DAOFactoryGenerator.getFactory()
-                                             .makeUserDAO();
+        UserDAO userDAO = DAOFactory.getFactory()
+                                    .makeUserDAO();
         
         user.setPassword(Passwords.getPasswordHash(user.getPassword()));
         user.setBanned(false);

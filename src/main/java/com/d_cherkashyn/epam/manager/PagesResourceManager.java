@@ -28,6 +28,15 @@ public final class PagesResourceManager implements ResourceManager {
     }
     
     /**
+     * Shortcut for PagesResourceManager.getInstance().getParameter(key);
+     *
+     * @return String jsp path
+     */
+    public static String getPage(String pageKey) {
+        return PagesResourceManager.getInstance().getParameter(pageKey);
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public String getParameter(String key) {
@@ -39,14 +48,5 @@ public final class PagesResourceManager implements ResourceManager {
      */
     public boolean parameterExists(String key) {
         return resourceBundle.containsKey(key);
-    }
-    
-    /**
-     * Shortcut for PagesResourceManager.getInstance().getParameter(key);
-     *
-     * @return String jsp path
-     */
-    public static String getPage(String pageKey) {
-        return PagesResourceManager.getInstance().getParameter(pageKey);
     }
 }

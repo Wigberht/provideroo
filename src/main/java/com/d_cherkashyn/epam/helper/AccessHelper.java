@@ -13,10 +13,9 @@ import java.util.regex.Pattern;
  * Helper class used to determine if access for user is allowed
  */
 public class AccessHelper {
-    private static Logger LOGGER = LoggerFactory.getLogger(AccessHelper.class);
-    
     private static final String regex = "(.*)/(.*)";
     private static final Pattern pattern = Pattern.compile(regex);
+    private static Logger LOGGER = LoggerFactory.getLogger(AccessHelper.class);
     
     public static boolean isAccessAllowed(HttpServletRequest request) {
         
@@ -41,7 +40,7 @@ public class AccessHelper {
             getRequestUser(request).isAdmin()) {
             return false;
         }
-    
+
         
         return true;
     }

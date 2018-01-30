@@ -10,12 +10,10 @@ import com.d_cherkashyn.epam.dao.models.subscription.SubscriptionDAO;
 import com.d_cherkashyn.epam.dao.models.tariff.TariffDAO;
 import com.d_cherkashyn.epam.dao.models.user.UserDAO;
 
-import java.sql.Connection;
-
 /**
  * Implementation of Abstract factory to provide support for PostgreSQL database
  */
-public class PostgresDAOFactory implements DAOAbstractFactory {
+public class PostgresDAO implements AbstractDAO {
     
     /**
      * {@inheritDoc}

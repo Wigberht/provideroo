@@ -34,7 +34,7 @@ public class ServiceListAdminCommand implements Command {
             
             services = serviceService.getSortedServices(sort, order);
         }
-    
+        
         request.setAttribute("services", services);
         
         serviceService.returnConnection();

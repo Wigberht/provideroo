@@ -1,6 +1,6 @@
 package com.d_cherkashyn.epam.helper.service;
 
-import com.d_cherkashyn.epam.dao.factory.DAOFactoryGenerator;
+import com.d_cherkashyn.epam.dao.factory.DAOFactory;
 import com.d_cherkashyn.epam.model.Account;
 import com.d_cherkashyn.epam.model.Subscriber;
 import com.d_cherkashyn.epam.model.Subscription;
@@ -45,66 +45,66 @@ public class SubscriberService extends ServiceHelper {
     }
     
     public boolean updateAccount(Account account) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeAccountDAO()
-                                  .update(account);
+        return DAOFactory.getFactory()
+                         .makeAccountDAO()
+                         .update(account);
     }
     
     public boolean updateUser(User user) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeUserDAO()
-                                  .update(user);
+        return DAOFactory.getFactory()
+                         .makeUserDAO()
+                         .update(user);
     }
     
     public boolean updateSubscriber(Subscriber subscriber) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .update(subscriber);
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .update(subscriber);
     }
     
     public List<Subscriber> getSubscribers() {
         int page = (this.page == 0) ? 0 : this.page - 1;
         int offset = page * limit;
         
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .all(limit, offset);
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .all(limit, offset);
     }
     
     public Subscriber findSubscriber(long id) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .find(id);
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .find(id);
     }
     
     public List<Subscriber> expiredSubscriptionSubscribers() {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .findSubscriptionExpirers();
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .findSubscriptionExpirers();
     }
     
     public double calculateDebt(long subscriberId) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .calculateDebt(subscriberId);
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .calculateDebt(subscriberId);
     }
     
     public long getNumberOfSubscribers() {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .numberOfSubscribers();
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .numberOfSubscribers();
     }
     
     public Subscriber findSubscriberByUserId(long userId) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .findByUserId(userId);
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .findByUserId(userId);
     }
     
     public List<Subscription> findSubscriptions(long id) {
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriptionDAO()
-                                  .findBySubscriber(id);
+        return DAOFactory.getFactory()
+                         .makeSubscriptionDAO()
+                         .findBySubscriber(id);
     }
     
     public double collectSubscriptionFees() {
@@ -165,9 +165,9 @@ public class SubscriberService extends ServiceHelper {
         String str2 = strings.length > 1 ? strings[1] : null;
         String str3 = strings.length > 2 ? strings[2] : null;
         
-        return DAOFactoryGenerator.getFactory()
-                                  .makeSubscriberDAO()
-                                  .search(str1, str2, str3);
+        return DAOFactory.getFactory()
+                         .makeSubscriberDAO()
+                         .search(str1, str2, str3);
     }
     
 }

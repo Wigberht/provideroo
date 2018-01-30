@@ -55,6 +55,17 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
     
     public SubscriptionDAOMySQL() {}
     
+    private static Subscription map(ResultSet resultset) throws SQLException {
+        return new Subscription(
+            resultset.getLong("id"),
+            resultset.getString("start"),
+            resultset.getString("end"),
+            resultset.getBoolean("prolong"),
+            resultset.getLong("tariff_id"),
+            resultset.getLong("subscriber_id")
+        );
+    }
+    
     @Override
     public Subscription find(long id) throws DAOException {
         return findSubscription(FIND_BY_ID, id);
@@ -188,16 +199,5 @@ public class SubscriptionDAOMySQL extends DAOModel implements SubscriptionDAO {
         }
         
         return subscription;
-    }
-    
-    private static Subscription map(ResultSet resultset) throws SQLException {
-        return new Subscription(
-            resultset.getLong("id"),
-            resultset.getString("start"),
-            resultset.getString("end"),
-            resultset.getBoolean("prolong"),
-            resultset.getLong("tariff_id"),
-            resultset.getLong("subscriber_id")
-        );
     }
 }

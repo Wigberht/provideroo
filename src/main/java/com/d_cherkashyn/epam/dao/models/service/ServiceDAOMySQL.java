@@ -5,11 +5,7 @@ import com.d_cherkashyn.epam.dao.DAOException;
 import com.d_cherkashyn.epam.dao.models.DAOModel;
 import com.d_cherkashyn.epam.model.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +26,13 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
      * Creates instance of ServiceDAO
      */
     public ServiceDAOMySQL() {}
+    
+    private static Service map(ResultSet resultset) throws SQLException {
+        return new Service(
+            resultset.getLong("id"),
+            resultset.getString("title")
+        );
+    }
     
     /**
      * {@inheritDoc}
@@ -124,12 +127,5 @@ public class ServiceDAOMySQL extends DAOModel implements ServiceDAO {
         }
         
         return service;
-    }
-    
-    private static Service map(ResultSet resultset) throws SQLException {
-        return new Service(
-            resultset.getLong("id"),
-            resultset.getString("title")
-        );
     }
 }

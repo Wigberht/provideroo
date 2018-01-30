@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOMySQL extends DAOModel implements UserDAO {
-    Logger LOGGER = LoggerFactory.getLogger(UserDAOMySQL.class);
-    
     private static final String FIND_BY_ID =
         "SELECT * FROM user WHERE id = ?";
     private static final String FIND_BY_LOGIN =
@@ -26,10 +24,8 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         "SELECT * FROM user WHERE login = ? AND password = ?";
     private static final String FIND_BY_ROLE = ""
         + "SELECT * FROM user WHERE role_id = ?";
-    
     private static final String GET_UPDATE_TIME = "SELECT updated_at from user where id=?";
     private static final String FIND_ALL = "SELECT * from user";
-    
     private static final String FIND_CHAT_MEMBERS = "SELECT u.id,\n" +
         "  u.login,\n" +
         "  u.password,\n" +
@@ -40,18 +36,14 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         "FROM user as u\n" +
         "  INNER JOIN chat_user ON u.id = chat_user.user_id\n" +
         "WHERE chat_id=?";
-    
     private static final String DELETE_BY_ID = "DELETE FROM user WHERE id=?";
     private static final String DELETE_BY_LOGIN = "DELETE FROM user WHERE login=?";
-    
     private static final String CREATE_USER = "INSERT INTO user(id,login,password," +
         "banned,role_id) VALUES(DEFAULT,?,?,?,?)";
-    
     private static final String UPDATE_USER = "UPDATE user "
         + "SET login = ?, password = ?, banned = ?, role_id= ? ," +
         "updated_at=current_timestamp()"
         + "WHERE id = ?";
-    
     private static final String UPDATE_LOGIN_WHERE_ID = "UPDATE user SET login=? WHERE id=?";
     private static final String SET_BANNED_WHERE_ID = "UPDATE user SET banned=?," +
         " updated_at=current_timestamp()" +
@@ -62,8 +54,21 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         "WHERE login=?";
     private static final String UPDATE_PASSWORD_WHERE_ID = "UPDATE user SET password=? WHERE id=?";
     private static final String UPDATE_PASSWORD_WHERE_LOGIN = "UPDATE user SET password=? WHERE login=?";
+    Logger LOGGER = LoggerFactory.getLogger(UserDAOMySQL.class);
     
     public UserDAOMySQL() {}
+    
+    private static User map(ResultSet resultset) throws SQLException {
+        return new User(
+            resultset.getLong("id"),
+            resultset.getString("login"),
+            resultset.getString("password"),
+            resultset.getBoolean("banned"),
+            resultset.getLong("role_id"),
+            resultset.getString("updated_at"),
+            resultset.getString("created_at")
+        );
+    }
     
     @Override
     public List<User> all() throws DAOException {
@@ -231,17 +236,5 @@ public class UserDAOMySQL extends DAOModel implements UserDAO {
         }
         
         return users;
-    }
-    
-    private static User map(ResultSet resultset) throws SQLException {
-        return new User(
-            resultset.getLong("id"),
-            resultset.getString("login"),
-            resultset.getString("password"),
-            resultset.getBoolean("banned"),
-            resultset.getLong("role_id"),
-            resultset.getString("updated_at"),
-            resultset.getString("created_at")
-        );
     }
 }
