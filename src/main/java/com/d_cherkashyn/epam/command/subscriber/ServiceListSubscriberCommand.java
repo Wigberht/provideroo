@@ -37,27 +37,24 @@ public class ServiceListSubscriberCommand implements Command {
     }
     
     private void fillServices(HttpServletRequest request, Connection connection) {
-        ServiceService serviceService = new ServiceService();
         List<Service> services;
         
         Object sortField = request.getParameter("sortField");
         Object sortOrder = request.getParameter("sortOrder");
         
         if (sortOrder == null || sortField == null) {
-            services = serviceService.getAllServices();
+            services = ServiceService.getAllServices();
         } else {
             String sort = (String) sortField;
             String order = (String) sortOrder;
             
-            services = serviceService.getSortedServices(sort, order);
+            services = ServiceService.getSortedServices(sort, order);
         }
         
         request.setAttribute("services", services);
     }
     
     private void fillSubscriptions(HttpServletRequest request, Connection connection) {
-        SubscriberService subscriberService = new SubscriberService(connection);
-        SubscriptionService subscriptionService = new SubscriptionService(connection);
         Subscriber subscriber;
         List<Subscription> subscriptions;
         
@@ -65,8 +62,8 @@ public class ServiceListSubscriberCommand implements Command {
         if (userObj != null && !((User) userObj).isAdmin()) {
             User user = (User) userObj;
             
-            subscriber = subscriberService.findSubscriberByUserId(user.getId());
-            subscriptions = subscriptionService.getSubscriptions(subscriber.getId());
+            subscriber = SubscriberService.findSubscriberByUserId(user.getId());
+            subscriptions = SubscriptionService.getSubscriptions(subscriber.getId());
             
             request.setAttribute("subscriptions", subscriptions);
         }

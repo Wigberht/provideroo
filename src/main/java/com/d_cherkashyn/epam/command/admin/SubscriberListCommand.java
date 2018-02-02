@@ -41,11 +41,10 @@ public class SubscriberListCommand implements Command {
             page = Integer.parseInt(request.getParameter("page"));
         }
         
-        SubscriberService ss = new SubscriberService(page, limit);
+        request.setAttribute(
+            "subscribers", SubscriberService.getSubscribers(limit, page));
         
-        request.setAttribute("subscribers", ss.getSubscribers(limit, page));
-        
-        long numberOfSubscribers = ss.getNumberOfSubscribers();
+        long numberOfSubscribers = SubscriberService.getNumberOfSubscribers();
         int pages = (int) Math.ceil((double) numberOfSubscribers / 10);
         
         Pagination pagination = new Pagination();
@@ -54,8 +53,6 @@ public class SubscriberListCommand implements Command {
         }
         request.setAttribute("pagination", pagination);
         LOGGER.info("pages: {}, users :{}", pages, numberOfSubscribers);
-        
-        ss.returnConnection();
         
         return PagesResourceManager.getPage("subscriber_list_jsp");
     }

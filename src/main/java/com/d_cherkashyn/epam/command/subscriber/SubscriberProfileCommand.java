@@ -20,14 +20,11 @@ public class SubscriberProfileCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession s = request.getSession();
-        SubscriberService subscriberService = new SubscriberService();
         
         long userId = ((User) s.getAttribute("user")).getId();
         
-        Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
+        Subscriber subscriber = SubscriberService.findSubscriberByUserId(userId);
         s.setAttribute("subscriber", subscriber);
-        
-        subscriberService.returnConnection();
         
         return PagesResourceManager.getPage("subscriber_profile_jsp");
     }

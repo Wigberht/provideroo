@@ -188,6 +188,7 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
     @Override
     public boolean delete(Long id) throws DAOException {
         
+        boolean success;
         Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
@@ -197,18 +198,21 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         ) {
             int updatedRows = statement.executeUpdate();
             
-            return updatedRows > 0;
+            success = updatedRows > 0;
             
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.returnConn(connection);
         }
+        
+        return success;
     }
     
     @Override
     public boolean update(Tariff tariff) throws DAOException {
         
+        boolean success;
         Connection connection = ConnectionPool.conn();
         try (
             PreparedStatement statement = prepareStatement(
@@ -220,13 +224,15 @@ public class TariffDAOMySQL extends DAOModel implements TariffDAO {
         ) {
             int updatedRows = statement.executeUpdate();
             
-            return updatedRows > 0;
+            success = updatedRows > 0;
             
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             ConnectionPool.returnConn(connection);
         }
+        
+        return success;
     }
     
     @Override

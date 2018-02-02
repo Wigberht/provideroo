@@ -9,22 +9,13 @@ import com.d_cherkashyn.epam.model.Tariff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class ServiceService extends ServiceHelper {
+public class ServiceService {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceService.class);
     
-    public ServiceService() {
-        super();
-    }
-    
-    public ServiceService(Connection connection) {
-        super(connection);
-    }
-    
-    public Service createService(Service service) {
+    public static Service createService(Service service) {
         Service createdService = null;
         ServiceDAO serviceDAO = DAOFactory.getFactory()
                                           .makeServiceDAO();
@@ -37,7 +28,7 @@ public class ServiceService extends ServiceHelper {
         return createdService;
     }
     
-    public List<Service> getAllServices() {
+    public static List<Service> getAllServices() {
         List<Service> services = DAOFactory.getFactory()
                                            .makeServiceDAO()
                                            .all();
@@ -51,7 +42,7 @@ public class ServiceService extends ServiceHelper {
         return services;
     }
     
-    public List<Service> getAllServices(String sortField, String sortOrder) {
+    public static List<Service> getAllServices(String sortField, String sortOrder) {
         List<Service> services = DAOFactory.getFactory()
                                            .makeServiceDAO()
                                            .all();
@@ -67,7 +58,7 @@ public class ServiceService extends ServiceHelper {
         return services;
     }
     
-    public List<Service> getSortedServices(String field, String order) {
+    public static List<Service> getSortedServices(String field, String order) {
         boolean fieldValid = false;
         boolean orderValid = false;
         for (ServiceSortFields sortFields : ServiceSortFields.values()) {

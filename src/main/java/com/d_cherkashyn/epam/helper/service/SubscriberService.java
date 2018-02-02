@@ -8,61 +8,40 @@ import com.d_cherkashyn.epam.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class SubscriberService extends ServiceHelper {
-    Logger LOGGER = LoggerFactory.getLogger(SubscriberService.class);
+public class SubscriberService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SubscriberService.class);
     
     private int limit;
     private int page;
     
-    public SubscriberService() {
-        super();
-    }
-    
-    public SubscriberService(Connection connection) {
-        super(connection);
-    }
-    
-    public SubscriberService(int page, int limit) {
-        this();
-        this.limit = limit;
-        this.page = page;
-    }
-    
-    public SubscriberService(int page, int limit, Connection connection) {
-        super(connection);
-        this.limit = limit;
-        this.page = page;
-    }
-    
-    public boolean updateSubscriberProfile(Subscriber subscriber) {
+    public static boolean updateSubscriberProfile(Subscriber subscriber) {
         boolean subscriberUpdated = updateSubscriber(subscriber);
         boolean userUpdated = updateUser(subscriber.getUser());
         
         return subscriberUpdated && userUpdated;
     }
     
-    public boolean updateAccount(Account account) {
+    public static boolean updateAccount(Account account) {
         return DAOFactory.getFactory()
                          .makeAccountDAO()
                          .update(account);
     }
     
-    public boolean updateUser(User user) {
+    public static boolean updateUser(User user) {
         return DAOFactory.getFactory()
                          .makeUserDAO()
                          .update(user);
     }
     
-    public boolean updateSubscriber(Subscriber subscriber) {
+    public static boolean updateSubscriber(Subscriber subscriber) {
         return DAOFactory.getFactory()
                          .makeSubscriberDAO()
                          .update(subscriber);
     }
     
-    public List<Subscriber> getSubscribers(int limit, int page) {
+    public static List<Subscriber> getSubscribers(int limit, int page) {
         page = (page == 0) ? 0 : page - 1;
         LOGGER.info("Get subscribers : {}, {}", limit, page);
         int offset = page * limit;
@@ -72,47 +51,43 @@ public class SubscriberService extends ServiceHelper {
                          .all(limit, offset);
     }
     
-    public Subscriber findSubscriber(long id) {
+    public static Subscriber findSubscriber(long id) {
         return DAOFactory.getFactory()
                          .makeSubscriberDAO()
                          .find(id);
     }
     
-    public List<Subscriber> expiredSubscriptionSubscribers() {
+    public static List<Subscriber> expiredSubscriptionSubscribers() {
         return DAOFactory.getFactory()
                          .makeSubscriberDAO()
                          .findSubscriptionExpirers();
     }
     
-    public double calculateDebt(long subscriberId) {
+    public static double calculateDebt(long subscriberId) {
         return DAOFactory.getFactory()
                          .makeSubscriberDAO()
                          .calculateDebt(subscriberId);
     }
     
-    public long getNumberOfSubscribers() {
+    public static long getNumberOfSubscribers() {
         return DAOFactory.getFactory()
                          .makeSubscriberDAO()
                          .numberOfSubscribers();
     }
     
-    public Subscriber findSubscriberByUserId(long userId) {
+    public static Subscriber findSubscriberByUserId(long userId) {
         return DAOFactory.getFactory()
                          .makeSubscriberDAO()
                          .findByUserId(userId);
     }
     
-    public List<Subscription> findSubscriptions(long id) {
+    public static List<Subscription> findSubscriptions(long id) {
         return DAOFactory.getFactory()
                          .makeSubscriptionDAO()
                          .findBySubscriber(id);
     }
     
-    public double collectSubscriptionFees() {
-        UserService userService = new UserService(connection);
-        AccountService accountService = new AccountService(connection);
-        SubscriptionService subscriptionService = new SubscriptionService(connection);
-        
+    public static double collectSubscriptionFees() {
         double debtCollected = 0;
         
         /* get subscribers that have atleast one expired subscription */
@@ -124,12 +99,12 @@ public class SubscriberService extends ServiceHelper {
             
             // if (poor) { ban(this.fella); }
             if (debt > subscriber.getAccount().getBalance()) {
-                userService.setBanned(subscriber.getUser().getId(), true);
+                UserService.setBanned(subscriber.getUser().getId(), true);
                 continue;
             }
             
-            if (debt > 0 && accountService.withdrawMoney(subscriber.getAccount(), debt)) {
-                subscriptionService.prolongSubscriptions(subscriber.getId());
+            if (debt > 0 && AccountService.withdrawMoney(subscriber.getAccount(), debt)) {
+                SubscriptionService.prolongSubscriptions(subscriber.getId());
                 debtCollected += debt;
             }
         }
@@ -137,17 +112,15 @@ public class SubscriberService extends ServiceHelper {
         return debtCollected;
     }
     
-    public boolean refreshSubscriptions(Subscriber subscriber) {
+    public static boolean refreshSubscriptions(Subscriber subscriber) {
         boolean success;
-        SubscriptionService subscriptionService = new SubscriptionService(connection);
-        AccountService accountService = new AccountService(connection);
         
         double debt = calculateDebt(subscriber.getId());
         if (debt > subscriber.getAccount().getBalance()) {
             success = false;
         } else {
-            accountService.withdrawMoney(subscriber.getAccount(), debt);
-            subscriptionService.prolongSubscriptions(subscriber.getId());
+            AccountService.withdrawMoney(subscriber.getAccount(), debt);
+            SubscriptionService.prolongSubscriptions(subscriber.getId());
             subscriber.getUser().setBanned(false);
             success = updateUser(subscriber.getUser());
         }
@@ -155,12 +128,12 @@ public class SubscriberService extends ServiceHelper {
         return success;
     }
     
-    public boolean updateSubscriptions() {
+    public static boolean updateSubscriptions() {
         return true;
     }
     
     
-    public List<Subscriber> search(String searchQ) {
+    public static List<Subscriber> search(String searchQ) {
         String[] strings = searchQ.split(" ");
         String str1 = strings.length > 0 ? strings[0] : null;
         String str2 = strings.length > 1 ? strings[1] : null;

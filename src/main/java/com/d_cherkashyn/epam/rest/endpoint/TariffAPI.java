@@ -32,13 +32,12 @@ public class TariffAPI extends HttpServlet {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response update(String data) {
         boolean success;
-        JSONService jsonService = new JSONService();
         
-        String title = jsonService.get(data, "title").asText();
-        String description = jsonService.get(data, "description").asText();
-        int numberOfDays = jsonService.get(data, "numberOfDays").asInt();
-        double cost = jsonService.get(data, "cost").asDouble();
-        String currency = jsonService.get(data, "currencyShortname").asText();
+        String title = JSONService.get(data, "title").asText();
+        String description = JSONService.get(data, "description").asText();
+        int numberOfDays = JSONService.get(data, "numberOfDays").asInt();
+        double cost = JSONService.get(data, "cost").asDouble();
+        String currency = JSONService.get(data, "currencyShortname").asText();
         
         
         if (!MainValidator.tariffValidator(title, description,
@@ -47,15 +46,11 @@ public class TariffAPI extends HttpServlet {
                                            currency)) {
             success = false;
         } else {
-            TariffService tariffService = new TariffService();
-            
-            Tariff tariff = (Tariff) jsonService.toObject(data, Tariff.class);
-            success = tariffService.updateTariff(tariff);
-            
-            tariffService.returnConnection();
+            Tariff tariff = (Tariff) JSONService.toObject(data, Tariff.class);
+            success = TariffService.updateTariff(tariff);
         }
         
-        String response = jsonService.toJSON(new SimpleResponse(success));
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(200).entity(response).build();
     }
@@ -67,14 +62,9 @@ public class TariffAPI extends HttpServlet {
         
         JsonNode node = JSONService.get(data, "tariffId");
         if (node != null) {
-            LOGGER.info("NODE NOT NULL");
             long id = node.asLong();
-            TariffService tariffService = new TariffService();
-            success = tariffService.deleteTariff(id);
-            tariffService.returnConnection();
-            LOGGER.info("Success in deletion: " + success);
+            success = TariffService.deleteTariff(id);
         }
-        LOGGER.info("Success in post-deletion: " + success);
         
         String response = JSONService.toJSON(new SimpleResponse(success));
         
@@ -90,9 +80,7 @@ public class TariffAPI extends HttpServlet {
         LOGGER.info("Validator ok: " + MainValidator.searchText(query));
         if (MainValidator.searchText(query)) {
             LOGGER.info("validator passed");
-            TariffService ts = new TariffService();
-            List<Tariff> tariffs = ts.search(query);
-            ts.returnConnection();
+            List<Tariff> tariffs = TariffService.search(query);
             response = JSONService.toJSON(tariffs);
         } else {
             response = "";

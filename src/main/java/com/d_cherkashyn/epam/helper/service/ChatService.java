@@ -5,26 +5,17 @@ import com.d_cherkashyn.epam.model.Chat;
 import com.d_cherkashyn.epam.model.Message;
 import com.d_cherkashyn.epam.model.User;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class ChatService extends ServiceHelper {
+public class ChatService {
     
-    public ChatService() {
-        super();
-    }
-    
-    public ChatService(Connection connection) {
-        super(connection);
-    }
-    
-    public List<Chat> getUserChats(long userId) {
+    public static List<Chat> getUserChats(long userId) {
         return DAOFactory.getFactory()
                          .makeChatDAO()
                          .findByUser(userId);
     }
     
-    public Chat getChat(long chatId) {
+    public static Chat getChat(long chatId) {
         Chat chat = DAOFactory.getFactory()
                               .makeChatDAO()
                               .find(chatId);
@@ -42,7 +33,7 @@ public class ChatService extends ServiceHelper {
         return chat;
     }
     
-    public Message pushMessage(Message message) {
+    public static Message pushMessage(Message message) {
         message = DAOFactory.getFactory()
                             .makeMessageDAO()
                             .create(message);
@@ -57,8 +48,8 @@ public class ChatService extends ServiceHelper {
         return message;
     }
     
-    public Chat createChat(long creatorId, String creatorLogin,
-                           long receiverId, String receiverLogin) {
+    public static Chat createChat(long creatorId, String creatorLogin,
+                                  long receiverId, String receiverLogin) {
         StringBuilder sb = new StringBuilder();
         
         String chatTitle;
@@ -102,7 +93,7 @@ public class ChatService extends ServiceHelper {
         }
     }
     
-    public Chat findCommonChat(long creatorId, long receiverId) {
+    public static Chat findCommonChat(long creatorId, long receiverId) {
         List<Chat> creatorChats = DAOFactory.getFactory()
                                             .makeChatDAO()
                                             .findByUser(creatorId);

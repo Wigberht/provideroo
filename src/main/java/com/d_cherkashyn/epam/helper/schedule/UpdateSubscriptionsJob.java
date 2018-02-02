@@ -13,12 +13,9 @@ public class UpdateSubscriptionsJob implements Runnable {
     @Override
     public void run() {
         LOGGER.info("Running the job");
-        SubscriberService subscriberService = new SubscriberService();
         
-        double collectedFees = subscriberService.collectSubscriptionFees();
+        double collectedFees = SubscriberService.collectSubscriptionFees();
+        
         LOGGER.info("Fees collected! Amount: {}", collectedFees);
-        
-        subscriberService.returnConnection();
-        
     }
 }

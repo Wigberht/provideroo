@@ -7,21 +7,12 @@ import com.d_cherkashyn.epam.model.Tariff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class TariffService extends ServiceHelper {
-    Logger LOGGER = LoggerFactory.getLogger(TariffService.class);
+public class TariffService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TariffService.class);
     
-    public TariffService() {
-        super();
-    }
-    
-    public TariffService(Connection connection) {
-        super(connection);
-    }
-    
-    public Tariff createTariff(Tariff tariff) {
+    public static Tariff createTariff(Tariff tariff) {
         Tariff resultingTariff = null;
         TariffDAO tariffDAO = DAOFactory.getFactory()
                                         .makeTariffDAO();
@@ -36,25 +27,25 @@ public class TariffService extends ServiceHelper {
         return resultingTariff;
     }
     
-    public Tariff getTariff(long id) {
+    public static Tariff getTariff(long id) {
         return DAOFactory.getFactory()
                          .makeTariffDAO()
                          .find(id);
     }
     
-    public boolean updateTariff(Tariff tariff) {
+    public static boolean updateTariff(Tariff tariff) {
         return DAOFactory.getFactory()
                          .makeTariffDAO()
                          .update(tariff);
     }
     
-    public boolean deleteTariff(long id) {
+    public static boolean deleteTariff(long id) {
         return DAOFactory.getFactory()
                          .makeTariffDAO()
                          .delete(id);
     }
     
-    public List<Tariff> search(String searchQ) {
+    public static List<Tariff> search(String searchQ) {
         
         /*wow, what a genius way to deal with a multiple search words, congratz*/
         String[] strings = searchQ.split(" ");

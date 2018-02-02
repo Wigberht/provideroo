@@ -20,24 +20,20 @@ public class ServiceListAdminCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         
-        ServiceService serviceService = new ServiceService();
         List<Service> services;
         
         Object sortField = request.getParameter("sortField");
         Object sortOrder = request.getParameter("sortOrder");
         
         if (sortOrder == null || sortField == null) {
-            services = serviceService.getAllServices();
+            services = ServiceService.getAllServices();
         } else {
             String sort = (String) sortField;
             String order = (String) sortOrder;
             
-            services = serviceService.getSortedServices(sort, order);
+            services = ServiceService.getSortedServices(sort, order);
         }
-        
         request.setAttribute("services", services);
-        
-        serviceService.returnConnection();
         
         return PagesResourceManager.getPage("service_list_jsp");
     }

@@ -79,10 +79,9 @@ public class ChatServerEndpoint {
     @OnMessage
     public void onMessage(Message message,
                           Session session) throws IOException, EncodeException {
-        ChatService cs = new ChatService();
         message.setChatId(chatId);
-        message = cs.pushMessage(message);
-        cs.returnConnection();
+        message = ChatService.pushMessage(message);
+        
         
         broadcast(message);
     }

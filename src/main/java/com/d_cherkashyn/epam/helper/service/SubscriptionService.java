@@ -9,30 +9,18 @@ import com.d_cherkashyn.epam.model.Tariff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
-public class SubscriptionService extends ServiceHelper {
+public class SubscriptionService {
     
-    Logger LOGGER = LoggerFactory.getLogger(SubscriptionService.class);
+    private static final Logger LOGGER = LoggerFactory
+        .getLogger(SubscriptionService.class);
     
-    public SubscriptionService() {
-        super();
-    }
-    
-    public SubscriptionService(Connection connection) {
-        super(connection);
-    }
-    
-    public boolean createSubscription(long userId, long tariffId) {
-        TariffService tariffService = new TariffService(connection);
-        SubscriberService subscriberService = new SubscriberService(connection);
-        AccountService accountService = new AccountService(connection);
+    public static boolean createSubscription(long userId, long tariffId) {
         
-        Tariff tariff = tariffService.getTariff(tariffId);
-        Subscriber subscriber = subscriberService
-            .findSubscriberByUserId(userId);
+        Tariff tariff = TariffService.getTariff(tariffId);
+        Subscriber subscriber = SubscriberService.findSubscriberByUserId(userId);
         
         Account account = subscriber.getAccount();
         
@@ -50,27 +38,27 @@ public class SubscriptionService extends ServiceHelper {
         );
         
         boolean subscriptionCreated = false;
-        if (accountService.withdrawMoney(account, tariff.getCost())) {
+        if (AccountService.withdrawMoney(account, tariff.getCost())) {
             subscriptionCreated = createSubscription(subscription) != null;
         }
         
         return subscriptionCreated;
     }
     
-    public Subscription createSubscription(Subscription subscription) {
+    public static Subscription createSubscription(Subscription subscription) {
         return DAOFactory.getFactory()
                          .makeSubscriptionDAO()
                          .create(subscription);
     }
     
-    public List<Subscription> getSubscriptions(long subscriberId) {
+    public static List<Subscription> getSubscriptions(long subscriberId) {
         return DAOFactory.getFactory()
                          .makeSubscriptionDAO()
                          .findBySubscriber(subscriberId);
     }
     
-    public boolean setSubscriptionProlong(Subscription subscription,
-                                          boolean prolong) {
+    public static boolean setSubscriptionProlong(Subscription subscription,
+                                                 boolean prolong) {
         subscription.setProlong(prolong);
         
         LOGGER.info("setSubscriptionProlong " + subscription.isProlong());
@@ -79,13 +67,13 @@ public class SubscriptionService extends ServiceHelper {
                          .update(subscription);
     }
     
-    public Subscription findSubscription(long tariffId, long subscriberId) {
+    public static Subscription findSubscription(long tariffId, long subscriberId) {
         return DAOFactory.getFactory()
                          .makeSubscriptionDAO()
                          .find(tariffId, subscriberId);
     }
     
-    public boolean prolongSubscriptions(long subscriberId) {
+    public static boolean prolongSubscriptions(long subscriberId) {
         return DAOFactory.getFactory()
                          .makeSubscriptionDAO()
                          .prolongSubscriptions(subscriberId);

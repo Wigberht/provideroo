@@ -43,9 +43,7 @@ public class TariffListPdfService {
         String[] localeParts = locale.split("_");
         resourceBundle = ResourceBundle.getBundle("messages", new Locale(localeParts[0]));
         
-        ServiceService serviceService = new ServiceService();
-        services = serviceService.getAllServices();
-        serviceService.returnConnection();
+        services = ServiceService.getAllServices();
         
         initDocument();
     }

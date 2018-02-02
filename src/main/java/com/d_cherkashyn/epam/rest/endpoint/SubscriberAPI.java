@@ -31,13 +31,8 @@ public class SubscriberAPI extends HttpServlet {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response search(@QueryParam("query") String query) {
         String response;
-        LOGGER.info("Q received: '" + query + "'");
-        LOGGER.info("Validator ok: " + MainValidator.searchText(query));
         if (MainValidator.searchText(query)) {
-            LOGGER.info("validator passed");
-            SubscriberService ss = new SubscriberService();
-            List<Subscriber> subscribers = ss.search(query);
-            ss.returnConnection();
+            List<Subscriber> subscribers = SubscriberService.search(query);
             response = JSONService.toJSON(subscribers);
         } else {
             response = "";

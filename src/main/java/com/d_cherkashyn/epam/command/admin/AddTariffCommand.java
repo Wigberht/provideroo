@@ -64,8 +64,6 @@ public class AddTariffCommand implements Command {
             return PagesResourceManager.getPage("new_tariff");
         }
         
-        
-        TariffService ts = new TariffService();
         Tariff newTariff = new Tariff(0,
                                       title,
                                       description,
@@ -74,14 +72,12 @@ public class AddTariffCommand implements Command {
                                       currency,
                                       Long.parseLong(serviceId));
         
-        if (ts.createTariff(newTariff) != null) {
+        if (TariffService.createTariff(newTariff) != null) {
             page = PagesResourceManager.getPage("service_list");
         } else {
             request.getSession().setAttribute("tariffSuccess", false);
             page = PagesResourceManager.getPage("new_tariff");
         }
-        
-        ts.returnConnection();
         
         return page;
     }

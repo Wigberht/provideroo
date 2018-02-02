@@ -33,47 +33,36 @@ public class UserAPI extends HttpServlet {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response subscribe(String data) {
         boolean success;
-        JSONService jsonService = new JSONService();
         
         
-        long userId = jsonService.get(data, "userId").asLong();
-        long tariffId = jsonService.get(data, "tariffId").asLong();
+        long userId = JSONService.get(data, "userId").asLong();
+        long tariffId = JSONService.get(data, "tariffId").asLong();
         LOGGER.info("Subscribe: userId: {}, tariffId: {}", userId, tariffId);
         
         
-        SubscriptionService subscriptionService = new SubscriptionService();
-        SubscriberService subscriberService = new SubscriberService();
-        AccountService accountService = new AccountService();
-        
-        Subscriber subscriber = subscriberService
-            .findSubscriberByUserId(userId);
-        Subscription activeSubscription = subscriptionService
+        Subscriber subscriber = SubscriberService.findSubscriberByUserId(userId);
+        Subscription activeSubscription = SubscriptionService
             .findSubscription(tariffId, subscriber.getId());
         LOGGER.info("I am here now");
         
         /*if there is such subscription - prolong it, create new otherwise*/
         // TODO: Refactor probably, or no
         if (activeSubscription != null) {
-            subscriptionService.setSubscriptionProlong(activeSubscription, true);
-            double debt = subscriberService.calculateDebt(subscriber.getId());
+            SubscriptionService.setSubscriptionProlong(activeSubscription, true);
+            double debt = SubscriberService.calculateDebt(subscriber.getId());
             LOGGER.info("Debt: " + debt);
             if (debt > subscriber.getAccount().getBalance()) {
-                subscriptionService.setSubscriptionProlong(activeSubscription, false);
+                SubscriptionService.setSubscriptionProlong(activeSubscription, false);
                 success = false;
             } else {
-                accountService.withdrawMoney(subscriber.getAccount(), debt);
-                success = subscriptionService.prolongSubscriptions(subscriber.getId());
+                AccountService.withdrawMoney(subscriber.getAccount(), debt);
+                success = SubscriptionService.prolongSubscriptions(subscriber.getId());
             }
         } else {
-            success = subscriptionService.createSubscription(userId, tariffId);
+            success = SubscriptionService.createSubscription(userId, tariffId);
         }
         
-        
-        subscriptionService.returnConnection();
-        subscriberService.returnConnection();
-        accountService.returnConnection();
-        
-        String response = jsonService.toJSON(new SimpleResponse(success));
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(200).entity(response).build();
     }
@@ -83,26 +72,17 @@ public class UserAPI extends HttpServlet {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response unsubscribe(String data) {
         boolean success;
-        JSONService jsonService = new JSONService();
         
-        long userId = jsonService.get(data, "userId").asLong();
-        long tariffId = jsonService.get(data, "tariffId").asLong();
+        long userId = JSONService.get(data, "userId").asLong();
+        long tariffId = JSONService.get(data, "tariffId").asLong();
         
-        SubscriptionService subscriptionService = new SubscriptionService();
-        SubscriberService subscriberService = new SubscriberService();
-        
-        Subscriber subscriber = subscriberService
-            .findSubscriberByUserId(userId);
-        Subscription subscription = subscriptionService
+        Subscriber subscriber = SubscriberService.findSubscriberByUserId(userId);
+        Subscription subscription = SubscriptionService
             .findSubscription(tariffId, subscriber.getId());
         
-        success = subscriptionService
-            .setSubscriptionProlong(subscription, false);
+        success = SubscriptionService.setSubscriptionProlong(subscription, false);
         
-        subscriptionService.returnConnection();
-        subscriberService.returnConnection();
-        
-        String response = jsonService.toJSON(new SimpleResponse(success));
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(200).entity(response).build();
     }
@@ -112,16 +92,12 @@ public class UserAPI extends HttpServlet {
     @Path("/ban")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response ban(String data) {
-        JSONService jsonService = new JSONService();
+        long userId = JSONService.get(data, "userId").asLong();
+        boolean banned = JSONService.get(data, "banned").asBoolean();
         
-        long userId = jsonService.get(data, "userId").asLong();
-        boolean banned = jsonService.get(data, "banned").asBoolean();
+        boolean success = UserService.setBanned(userId, banned);
         
-        UserService userService = new UserService();
-        boolean success = userService.setBanned(userId, banned);
-        userService.returnConnection();
-        
-        String response = jsonService.toJSON(new SimpleResponse(success));
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(success ? 200 : 400)
                        .entity(response)
@@ -132,8 +108,6 @@ public class UserAPI extends HttpServlet {
     @Path("/profile/update")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateProfile(String data) {
-        
-        SubscriberService subscriberService = new SubscriberService();
         boolean success;
         
         long userId = JSONService.get(data, "userId").asLong();
@@ -147,13 +121,12 @@ public class UserAPI extends HttpServlet {
             success = false;
         } else {
             
-            Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
+            Subscriber subscriber = SubscriberService.findSubscriberByUserId(userId);
             subscriber.setFirstName(firstName);
             subscriber.setLastName(lastName);
             subscriber.getUser().setLogin(login);
             
-            success = subscriberService.updateSubscriberProfile(subscriber);
-            subscriberService.returnConnection();
+            success = SubscriberService.updateSubscriberProfile(subscriber);
         }
         
         String response = JSONService.toJSON(new SimpleResponse(success));
@@ -165,14 +138,10 @@ public class UserAPI extends HttpServlet {
     @Path("/balance/replenish")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response replenishBalance(String data) {
-        JSONService jsonService = new JSONService();
         
-        SubscriberService subscriberService = new SubscriberService();
-        AccountService accountService = new AccountService();
-        SubscriptionService subscriptionService = new SubscriptionService();
         
-        long userId = jsonService.get(data, "userId").asLong();
-        double amount = jsonService.get(data, "amount").asDouble();
+        long userId = JSONService.get(data, "userId").asLong();
+        double amount = JSONService.get(data, "amount").asDouble();
         
         LOGGER.info("Amount: " + amount);
         boolean success;
@@ -180,20 +149,16 @@ public class UserAPI extends HttpServlet {
             LOGGER.error("invalid amount");
             success = false;
         } else {
-            Subscriber subscriber = subscriberService.findSubscriberByUserId(userId);
+            Subscriber subscriber = SubscriberService.findSubscriberByUserId(userId);
             
             Account account = subscriber.getAccount();
             account.setBalance(account.getBalance() + amount);
-            subscriberService.updateAccount(account);
+            SubscriberService.updateAccount(account);
             
-            success = subscriberService.refreshSubscriptions(subscriber);
+            success = SubscriberService.refreshSubscriptions(subscriber);
         }
         
-        subscriberService.returnConnection();
-        accountService.returnConnection();
-        subscriptionService.returnConnection();
-        
-        String response = jsonService.toJSON(new SimpleResponse(success));
+        String response = JSONService.toJSON(new SimpleResponse(success));
         
         return Response.status(200).entity(response).build();
     }
@@ -201,8 +166,7 @@ public class UserAPI extends HttpServlet {
     @GET
     @Path("/all")
     public Response all() {
-        UserService us = new UserService();
-        List<User> userList = us.getAllUsers();
+        List<User> userList = UserService.getAllUsers();
         userList = userList.stream().map((user) -> {
             user.setPassword(null);
             return user;
@@ -217,9 +181,7 @@ public class UserAPI extends HttpServlet {
     public Response getChats(@QueryParam("userId") long userId) {
         LOGGER.info("user id received: " + userId);
         
-        ChatService cs = new ChatService();
-        List<Chat> chats = cs.getUserChats(userId);
-        cs.returnConnection();
+        List<Chat> chats = ChatService.getUserChats(userId);
         
         String response = JSONService.toJSON(chats);
         return Response.status(200).entity(response).build();

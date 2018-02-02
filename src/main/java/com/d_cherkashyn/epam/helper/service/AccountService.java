@@ -5,22 +5,10 @@ import com.d_cherkashyn.epam.model.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-
-public class AccountService extends ServiceHelper {
+public class AccountService {
     Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
     
-    
-    public AccountService() {
-        super();
-    }
-    
-    public AccountService(Connection connection) {
-        super(connection);
-    }
-    
-    
-    public boolean withdrawMoney(Account account, double amount) {
+    public static boolean withdrawMoney(Account account, double amount) {
         if (account.withdraw(amount)) {
             return DAOFactory.getFactory()
                              .makeAccountDAO()

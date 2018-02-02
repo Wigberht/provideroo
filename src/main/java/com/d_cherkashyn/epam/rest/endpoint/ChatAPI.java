@@ -28,9 +28,7 @@ public class ChatAPI extends HttpServlet {
     public Response getChat(@QueryParam("chatId") long chatId) {
         LOGGER.info("chat id received: " + chatId);
         
-        ChatService cs = new ChatService();
-        Chat chat = cs.getChat(chatId);
-        cs.returnConnection();
+        Chat chat = ChatService.getChat(chatId);
         
         String response = JSONService.toJSON(chat);
         return Response.status(200).entity(response).build();
@@ -45,17 +43,15 @@ public class ChatAPI extends HttpServlet {
         String receiverLogin = JSONService.get(data, "receiverLogin").asText();
         
         Chat responseChat;
-        ChatService cs = new ChatService();
         
-        Chat commonChat = cs.findCommonChat(creatorId, receiverId);
+        Chat commonChat = ChatService.findCommonChat(creatorId, receiverId);
         if (commonChat != null) {
             responseChat = commonChat;
         } else {
-            responseChat = cs.createChat(creatorId, creatorLogin,
-                                         receiverId, receiverLogin);
+            responseChat = ChatService.createChat(creatorId, creatorLogin,
+                                                  receiverId, receiverLogin);
         }
         
-        cs.returnConnection();
         
         if (responseChat != null) {
             return Response.status(200).entity(JSONService.toJSON(responseChat)).build();

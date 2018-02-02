@@ -34,14 +34,9 @@ public class AddServiceCommand implements Command {
             
             page = PagesResourceManager.getPage("add_service");
         } else {
-            
-            ServiceService ss = new ServiceService();
-            
-            if (ss.createService(new Service(0, title)) != null) {
+            if (ServiceService.createService(new Service(0, title)) != null) {
                 request.getSession().setAttribute("serviceSuccess", true);
             }
-            
-            ss.returnConnection();
             
             page = PagesResourceManager.getPage("service_list");
         }

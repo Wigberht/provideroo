@@ -36,16 +36,12 @@ public class UserUpdateFilter implements Filter {
         HttpSession s = ((HttpServletRequest) req).getSession();
         
         if (s.getAttribute("user") != null) {
-            
             User user = (User) s.getAttribute("user");
-            UserService us = new UserService();
-            String updateTime = us.getUserUpdatedTime(user.getId());
+            String updateTime = UserService.getUserUpdatedTime(user.getId());
             
             if (!updateTime.equalsIgnoreCase(user.getUpdatedAt())) {
-                s.setAttribute("user", us.getUser(user.getId()));
+                s.setAttribute("user", UserService.getUser(user.getId()));
             }
-            
-            us.returnConnection();
         }
         
         chain.doFilter(req, res);
